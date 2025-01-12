@@ -1,0 +1,58 @@
+@import "@/styles/globals.scss";
+
+.container {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.inputContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  background-color: $white;
+  border-radius: 16px;
+  border: 1.6px solid $gray20;
+
+  &:focus-within {
+    border: 2px solid $green50;
+  }
+}
+
+.inputContainer.error {
+  border: 2px solid $error;
+}
+
+.label {
+  @include H4MD;
+  align-self: stretch;
+  color: $gray90;
+}
+
+.input {
+  width: 100%;
+  @include H4MD;
+  color: $gray90;
+  border: none;
+  outline: none;
+  height: 40px;
+  padding: 0;
+}
+
+.countTotal {
+  display: flex;
+  @include H5MD;
+  color: $gray40;
+}
+
+.count {
+  color: $gray90;
+}
+
+.error {
+  color: $error;
+  @include H4MD;
+}
