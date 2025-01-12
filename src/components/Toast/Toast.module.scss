@@ -1,0 +1,22 @@
+@import "@/styles/globals.scss";
+
+.toast {
+  @include H4MD;
+  color: $white;
+  @include Opacity70;
+  display: inline-flex;
+  padding: 16px 24px 16px 20px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 40px;
+  transition: opacity 0.5s ease-in-out;
+  opacity: 1;
+  position: fixed;
+  top: 130px;
+  z-index: 1000;
+  gap: 8px;
+}
+
+.toast.hide {
+  opacity: 0;
+}
