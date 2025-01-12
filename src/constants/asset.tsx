@@ -40,6 +40,7 @@ export const ICONS = {
   x: "/icon/x.svg",
   /* Image */
   logo: "/image/logo.svg",
+  banner: "/image/banner.svg",
   default: "/image/default.svg",
   temp1: "/image/temp1.jpg",
   temp2: "/image/temp2.jpg",

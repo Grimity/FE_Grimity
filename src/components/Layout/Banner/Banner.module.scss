@@ -1,0 +1,31 @@
+@import "@/styles/globals.scss";
+
+.container {
+  width: 100%;
+  height: 250px;
+  border-radius: 28px;
+  background-color: #edf9ff;
+  padding-left: 110px;
+  padding-right: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.textTop {
+  @include H4SB;
+  color: #2cc7ff;
+}
+
+.textMid {
+  @include H0SB;
+  color: $gray90;
+  margin-top: 6px;
+  margin-bottom: 12px;
+}
+
+.textBottom {
+  @include H5MD;
+  color: $gray60;
+}
