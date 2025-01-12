@@ -16,12 +16,12 @@ export default function Nav() {
         </div>
         <div className={styles.whiteBar} />
         <div className={styles.loginBottom}>
-          <p className={styles.follow}>
+          <div className={styles.follow}>
             팔로잉<p className={styles.count}>-</p>
-          </p>
-          <p className={styles.follow}>
+          </div>
+          <div className={styles.follow}>
             팔로워<p className={styles.count}>-</p>
-          </p>
+          </div>
         </div>
       </section>
       <section className={styles.menuContainer}>
@@ -50,9 +50,9 @@ export default function Nav() {
               </div>
               <div>
                 <p className={styles.author}>메구미</p>
-                <p className={styles.follow}>
+                <div className={styles.follow}>
                   팔로워<p className={styles.count}>{formatCurrency(1999)}</p>
-                </p>
+                </div>
               </div>
             </div>
             <p className={styles.update}>+27</p>
@@ -64,9 +64,9 @@ export default function Nav() {
               </div>
               <div>
                 <p className={styles.author}>닉네임</p>
-                <p className={styles.follow}>
+                <div className={styles.follow}>
                   팔로워<p className={styles.count}>{formatCurrency(1999)}</p>
-                </p>
+                </div>
               </div>
             </div>
             <p className={styles.update}>+27</p>
@@ -78,9 +78,9 @@ export default function Nav() {
               </div>
               <div>
                 <p className={styles.author}>닉네임</p>
-                <p className={styles.follow}>
+                <div className={styles.follow}>
                   팔로워<p className={styles.count}>{formatCurrency(5)}</p>
-                </p>
+                </div>
               </div>
             </div>
             <p className={styles.update}>+27</p>
@@ -92,9 +92,9 @@ export default function Nav() {
               </div>
               <div>
                 <p className={styles.author}>닉네임</p>
-                <p className={styles.follow}>
+                <div className={styles.follow}>
                   팔로워<p className={styles.count}>{formatCurrency(123456789)}</p>
-                </p>
+                </div>
               </div>
             </div>
             <p className={styles.update}>+27</p>
