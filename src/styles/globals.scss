@@ -30,103 +30,97 @@
 }
 
 // Typography
+@mixin H0SB {
+  @include SEMIBOLD;
+  font-size: 24px;
+  letter-spacing: -0.24px;
+}
+
 @mixin H1SB {
   @include SEMIBOLD;
-  font-size: 28px;
-  letter-spacing: -0.28px;
+  font-size: 20px;
+  letter-spacing: -0.2px;
 }
 
 @mixin H2SB {
   @include SEMIBOLD;
-  font-size: 24px;
-  letter-spacing: -0.24px;
+  font-size: 18px;
+  letter-spacing: -0.18px;
 }
 
 @mixin H2MD {
   @include MEDIUM;
-  font-size: 24px;
-  letter-spacing: -0.24px;
+  font-size: 18px;
+  letter-spacing: -0.18px;
 }
 
 @mixin H3SB {
   @include SEMIBOLD;
-  font-size: 20px;
-  letter-spacing: -0.2px;
+  font-size: 16px;
+  letter-spacing: -0.16px;
 }
 
 @mixin H3MD {
   @include MEDIUM;
-  font-size: 20px;
-  letter-spacing: -0.2px;
+  font-size: 16px;
+  letter-spacing: -0.16px;
 }
 
 @mixin H4SB {
   @include SEMIBOLD;
-  font-size: 18px;
-  letter-spacing: -0.18px;
+  font-size: 15px;
+  letter-spacing: -0.16px;
 }
 
 @mixin H4MD {
   @include MEDIUM;
-  font-size: 18px;
-  letter-spacing: -0.18px;
+  font-size: 15px;
+  letter-spacing: -0.15px;
 }
 
 @mixin H5SB {
   @include SEMIBOLD;
-  font-size: 16px;
-  letter-spacing: -0.16px;
+  font-size: 14px;
+  letter-spacing: -0.14px;
 }
 
 @mixin H5MD {
   @include MEDIUM;
-  font-size: 16px;
-  letter-spacing: -0.16px;
+  font-size: 14px;
+  letter-spacing: -0.14px;
 }
 
 @mixin H6SB {
   @include SEMIBOLD;
-  font-size: 14px;
-  letter-spacing: -0.14px;
+  font-size: 13px;
+  letter-spacing: -0.13px;
 }
 
 @mixin H6MD {
   @include MEDIUM;
-  font-size: 14px;
-  letter-spacing: -0.14px;
+  font-size: 13px;
+  letter-spacing: -0.13px;
 }
 
 @mixin H7SB {
   @include SEMIBOLD;
-  font-size: 13px;
-  letter-spacing: -0.13px;
+  font-size: 12px;
+  letter-spacing: -0.12px;
 }
 
 @mixin H7MD {
   @include MEDIUM;
-  font-size: 13px;
-  letter-spacing: -0.13px;
+  font-size: 12px;
+  letter-spacing: -0.12px;
 }
 
 @mixin H8SB {
-  @include SEMIBOLD;
-  font-size: 12px;
-  letter-spacing: -0.12px;
-}
-
-@mixin H8MD {
-  @include MEDIUM;
-  font-size: 12px;
-  letter-spacing: -0.12px;
-}
-
-@mixin H9SB {
   @include SEMIBOLD;
   font-size: 10px;
   letter-spacing: -0.1px;
 }
 
-@mixin H9MD {
+@mixin H8MD {
   @include MEDIUM;
   font-size: 10px;
   letter-spacing: -0.1px;
