@@ -1,4 +1,5 @@
 export const ICONS = {
+  /* Icon */
   alarmDot: "/icon/alarm-dot.svg",
   alarm: "/icon/alarm.svg",
   alert: "/icon/alert.svg",
@@ -37,4 +38,10 @@ export const ICONS = {
   up: "/icon/up.svg",
   xFull: "/icon/x-full.svg",
   x: "/icon/x.svg",
+  /* Image */
+  logo: "/image/logo.svg",
+  default: "/image/default.svg",
+  temp1: "/image/temp1.jpg",
+  temp2: "/image/temp2.jpg",
+  temp3: "/image/temp3.jpg",
 };
