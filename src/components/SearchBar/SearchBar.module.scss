@@ -1,0 +1,26 @@
+@import "@/styles/globals.scss";
+
+.container {
+  display: flex;
+  width: 370px;
+  padding: 12px 20px;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  border-radius: 40px;
+  background-color: $gray10;
+
+  .input {
+    @include H6MD;
+    width: 100%;
+    border: none;
+    outline: none;
+    background: none;
+    color: $gray90;
+    margin-right: 5px;
+  }
+}
+
+.cursor {
+  cursor: pointer;
+}
