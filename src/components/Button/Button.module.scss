@@ -8,9 +8,9 @@
 }
 
 .s {
-  @include H4SB;
+  @include H6SB;
   display: inline-flex;
-  padding: 12px 24px;
+  padding: 10px 20px;
   justify-content: center;
   align-items: center;
 }
@@ -21,9 +21,8 @@
   background-color: $green50;
   padding: 12px 24px;
   display: flex;
-  width: 460px;
-  height: 76px;
-  padding: 20px 0px;
+  width: 360px;
+  padding: 16px 0px;
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
