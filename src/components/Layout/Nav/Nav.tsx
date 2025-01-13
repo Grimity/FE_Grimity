@@ -6,7 +6,7 @@ import { useRecoilState } from "recoil";
 import { modalState } from "@/states/modalState";
 
 export default function Nav() {
-  const [modal, setModal] = useRecoilState(modalState);
+  const [, setModal] = useRecoilState(modalState);
 
   return (
     <nav className={styles.nav}>
