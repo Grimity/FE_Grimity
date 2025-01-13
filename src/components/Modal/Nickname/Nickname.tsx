@@ -34,9 +34,9 @@ export default function Nickname() {
   });
 
   const handleSubmit = () => {
-    const { accessToken } = modal[0].data;
+    const { accessToken, provider } = modal[0].data;
     registerMutation.mutate({
-      provider: "KAKAO",
+      provider: provider,
       providerAccessToken: accessToken,
       name: nickname,
     });
