@@ -4,6 +4,7 @@ import IconComponent from "@/components/Asset/Icon";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { useRecoilState } from "recoil";
 import { modalState } from "@/states/modalState";
+import Link from "next/link";
 
 export default function Nav() {
   const [, setModal] = useRecoilState(modalState);
@@ -29,10 +30,12 @@ export default function Nav() {
         </div>
       </section>
       <section className={styles.menuContainer}>
-        <div className={styles.menu}>
-          <IconComponent name="layers" width={20} height={20} />
-          <p className={styles.menuTxt}>전체 그림</p>
-        </div>
+        <Link href="/">
+          <div className={styles.menu}>
+            <IconComponent name="layers" width={20} height={20} />
+            <p className={styles.menuTxt}>전체 그림</p>
+          </div>
+        </Link>
         <div className={styles.menu}>
           <IconComponent name="lightning" width={20} height={20} />
           <p className={styles.menuTxt}>인기 그림</p>
