@@ -5,6 +5,7 @@ import { InitialPageMeta } from "@/components/MetaData/MetaData";
 import { SSRMetaProps } from "@/components/MetaData/MetaData.type";
 import { serviceUrl } from "@/constants/serviceurl";
 import { GetServerSideProps } from "next";
+import WholeGallery from "@/components/Layout/WholeGallery/WholeGallery";
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const OGTitle = "Grimity";
@@ -24,6 +25,7 @@ export default function Home({ OGTitle, OGUrl }: SSRMetaProps) {
       <div className={styles.container}>
         <Banner />
         <HotGallery />
+        <WholeGallery />
       </div>
     </>
   );

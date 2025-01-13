@@ -1,0 +1,97 @@
+@import "@/styles/globals.scss";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 280px;
+
+  .imageContainer {
+    width: 280px;
+    height: 300px;
+    border-radius: 16px;
+    object-fit: cover;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+
+    .titleOverlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 20px 24px;
+      border-radius: 0 0 16px;
+      background: linear-gradient(0deg, rgba(0, 0, 0, 0.6) 20%, rgba(0, 0, 0, 0) 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+      color: white;
+      @include H1SB;
+    }
+
+    &:hover .titleOverlay {
+      opacity: 1;
+    }
+
+    .likeBtn {
+      position: absolute;
+      top: 8px;
+      left: 12px;
+      cursor: pointer;
+    }
+
+    .overlapIcon {
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      display: flex;
+      padding: 4px 8px;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border-radius: 32.432px;
+      @include Opacity50;
+    }
+  }
+
+  .profileContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .profile {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    .profileImage {
+      width: 24px;
+      height: 24px;
+      border-radius: 50px;
+      overflow: hidden;
+      object-fit: cover;
+    }
+
+    .author {
+      @include H5SB;
+      color: $gray90;
+    }
+  }
+
+  .countContainer {
+    display: flex;
+    gap: 6px;
+  }
+
+  .likeContainer {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+
+    .count {
+      @include H6MD;
+      color: $gray40;
+    }
+  }
+}

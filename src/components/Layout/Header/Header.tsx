@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import styles from "./Header.module.scss";
 import IconComponent from "@/components/Asset/Icon";
 import SearchBar from "@/components/SearchBar/SearchBar";
@@ -13,7 +14,7 @@ export default function Header() {
   return (
     <header className={styles.header}>
       <div className={styles.cursor} onClick={handleReload}>
-        <IconComponent name="logo" width={90} height={45} alt="logo" />
+        <Image src="/image/logo.svg" width={90} height={45} alt="logo" />
       </div>
       <SearchBar placeholder="작품 정보를 검색해보세요." />
       <div className={styles.wrapper}>

@@ -18,7 +18,15 @@ export default function IconComponent({ name, alt = "", width, height }: IconCom
   }
 
   if (typeof iconSrc === "string") {
-    return <Image src={iconSrc as string} alt={alt} width={width} height={height} />;
+    return (
+      <Image
+        src={iconSrc as string}
+        alt={alt}
+        width={width}
+        height={height}
+        style={{ objectFit: "cover" }}
+      />
+    );
   }
 
   return null;

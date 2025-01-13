@@ -1,0 +1,31 @@
+@import "@/styles/globals.scss";
+
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  .titleContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .title {
+      @include H1SB;
+      color: $gray90;
+    }
+
+    .subtitle {
+      @include H4MD;
+      color: $gray50;
+    }
+  }
+
+  .galleryGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); // 한 줄에 4개씩 배치
+    gap: 40px;
+    width: 100%;
+  }
+}

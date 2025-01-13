@@ -28,7 +28,7 @@ export const ICONS = {
   minusFull: "/icon/minus-full.svg",
   minus: "/icon/minus.svg",
   palette: "/icon/palette.svg",
-  plural: "/icon/plural.svg",
+  overlap: "/icon/overlap.svg",
   plus: "/icon/plus.svg",
   rightArrow: "/icon/right-arrow.svg",
   rightSm: "/icon/right-sm.svg",
