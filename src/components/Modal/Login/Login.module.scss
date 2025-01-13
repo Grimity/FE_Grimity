@@ -1,0 +1,61 @@
+@import "@/styles/globals.scss";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 56px;
+
+  .messageContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .logoContainer {
+    margin-top: 48px;
+    margin-bottom: 12px;
+  }
+
+  .text {
+    @include H3MD;
+    color: $gray80;
+  }
+
+  .buttonContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .kakaoButton {
+      width: 100%;
+      padding: 16px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background-color: #ffe200;
+      border: none;
+      border-radius: 50px;
+      @include H3MD;
+      color: $gray90;
+      cursor: pointer;
+    }
+
+    .googleButton {
+      width: 100%;
+      padding: 16px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background-color: $white;
+      border: 1px solid $gray20;
+      border-radius: 50px;
+      @include H3MD;
+      color: $gray90;
+      cursor: pointer;
+    }
+  }
+}

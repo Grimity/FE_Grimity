@@ -20,6 +20,7 @@ export default function Document() {
         />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
+        <script defer src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
       </Head>
       <body>
         <Main />

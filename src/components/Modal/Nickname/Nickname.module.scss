@@ -1,1 +1,40 @@
 @import "@/styles/globals.scss";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+
+  .title {
+    @include H0SB;
+    color: $gray90;
+    margin-top: 48px;
+    margin-bottom: 16px;
+  }
+
+  .subtitle {
+    @include H3MD;
+    color: $gray50;
+  }
+
+  .checkbox {
+    cursor: pointer;
+  }
+
+  .label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .text {
+    color: $gray60;
+    @include H5MD;
+
+    .underline {
+      color: $green50;
+      text-decoration: underline;
+    }
+  }
+}
