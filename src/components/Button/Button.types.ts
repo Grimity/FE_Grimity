@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, MouseEventHandler } from "react";
 
 type SmallButtonProps = {
   size: "s";
@@ -13,4 +13,5 @@ type LargeButtonProps = {
 export type ButtonProps = {
   children: ReactNode;
   disabled?: boolean;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 } & (SmallButtonProps | LargeButtonProps);
