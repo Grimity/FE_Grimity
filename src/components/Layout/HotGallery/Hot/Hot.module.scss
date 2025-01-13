@@ -1,0 +1,51 @@
+@import "@/styles/globals.scss";
+
+.container {
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  cursor: pointer;
+
+  .imageContainer {
+    border-radius: 20px;
+    overflow: hidden;
+    object-fit: cover;
+  }
+
+  .profileContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .profile {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    .profileImage {
+      width: 24px;
+      height: 24px;
+      border-radius: 50px;
+      overflow: hidden;
+      object-fit: cover;
+    }
+
+    .author {
+      @include H5MD;
+      color: $gray50;
+    }
+  }
+
+  .likeContainer {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+
+    .count {
+      @include H6MD;
+      color: $gray90;
+    }
+  }
+}

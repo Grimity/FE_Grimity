@@ -1,0 +1,25 @@
+@import "@/styles/globals.scss";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 48px;
+  margin-bottom: 72px;
+
+  .title {
+    @include H1SB;
+    color: $gray90;
+  }
+
+  .hotContainer {
+    width: calc(100vw - 370px);
+    overflow: hidden;
+    padding-right: 40px;
+  }
+
+  .slide {
+    width: auto;
+    flex-shrink: 0;
+  }
+}

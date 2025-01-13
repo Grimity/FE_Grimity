@@ -12,6 +12,8 @@ export const ICONS = {
   error: "/icon/error.svg",
   eye: "/icon/eye.svg",
   heartFull: "/icon/heart-full.svg",
+  heartRed: "/icon/heart-red.svg",
+  heartGray: "/icon/heart-gray.svg",
   heart: "/icon/heart.svg",
   home: "/icon/home.svg",
   image: "/icon/image.svg",

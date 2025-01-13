@@ -1,4 +1,6 @@
 import Banner from "@/components/Layout/Banner/Banner";
+import HotGallery from "@/components/Layout/HotGallery/HotGallery";
+import styles from "@/styles/pages/home.module.scss";
 import { InitialPageMeta } from "@/components/MetaData/MetaData";
 import { SSRMetaProps } from "@/components/MetaData/MetaData.type";
 import { serviceUrl } from "@/constants/serviceurl";
@@ -19,7 +21,10 @@ export default function Home({ OGTitle, OGUrl }: SSRMetaProps) {
   return (
     <>
       <InitialPageMeta title={OGTitle} url={OGUrl} />
-      <Banner />
+      <div className={styles.container}>
+        <Banner />
+        <HotGallery />
+      </div>
     </>
   );
 }

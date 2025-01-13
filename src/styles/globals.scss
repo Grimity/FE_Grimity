@@ -169,7 +169,8 @@ $mobile: 768px;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: 100vw;
   min-height: 100vh;
   margin: 0;
+  overflow-x: hidden;
 }
