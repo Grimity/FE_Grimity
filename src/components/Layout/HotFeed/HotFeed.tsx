@@ -3,10 +3,10 @@ import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
 import { FreeMode } from "swiper/modules";
-import Hot from "./Hot/Hot";
-import styles from "./HotGallery.module.scss";
+import HotCard from "./HotCard/HotCard";
+import styles from "./HotFeed.module.scss";
 
-export default function HotGallery() {
+export default function HotFeed() {
   return (
     <div className={styles.container}>
       <h3 className={styles.title}>🔥 오늘의 핫한 그림</h3>
@@ -21,7 +21,7 @@ export default function HotGallery() {
           .fill(0)
           .map((_, index) => (
             <SwiperSlide key={index} className={styles.slide}>
-              <Hot />
+              <HotCard />
             </SwiperSlide>
           ))}
       </Swiper>

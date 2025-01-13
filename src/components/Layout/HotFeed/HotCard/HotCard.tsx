@@ -1,8 +1,8 @@
 import IconComponent from "@/components/Asset/Icon";
-import styles from "./Hot.module.scss";
+import styles from "./HotCard.module.scss";
 import { formatCurrency } from "@/utils/formatCurrency";
 
-export default function Hot() {
+export default function HotCard() {
   return (
     <div className={styles.container}>
       <div className={styles.imageContainer}>

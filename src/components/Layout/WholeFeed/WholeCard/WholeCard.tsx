@@ -1,8 +1,8 @@
 import IconComponent from "@/components/Asset/Icon";
-import styles from "./Gallery.module.scss";
+import styles from "./WholeCard.module.scss";
 import { formatCurrency } from "@/utils/formatCurrency";
 
-export default function Gallery() {
+export default function WholeCard() {
   return (
     <div className={styles.container}>
       <div className={styles.imageContainer}>

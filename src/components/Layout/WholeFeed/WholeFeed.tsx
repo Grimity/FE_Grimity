@@ -1,7 +1,7 @@
-import Gallery from "./Gallery/Gallery";
-import styles from "./WholeGallery.module.scss";
+import WholeCard from "./WholeCard/WholeCard";
+import styles from "./WholeFeed.module.scss";
 
-export default function WholeGallery() {
+export default function WholeFeed() {
   return (
     <div className={styles.container}>
       <div className={styles.titleContainer}>
@@ -12,7 +12,7 @@ export default function WholeGallery() {
         {Array(12)
           .fill(0)
           .map((_, index) => (
-            <Gallery key={index} />
+            <WholeCard key={index} />
           ))}
       </div>
     </div>
