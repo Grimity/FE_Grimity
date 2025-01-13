@@ -8,7 +8,7 @@ import { GetServerSideProps } from "next";
 import WholeGallery from "@/components/Layout/WholeGallery/WholeGallery";
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const OGTitle = "Grimity";
+  const OGTitle = "그리미티";
   const OGUrl = `${serviceUrl}`;
   return {
     props: {
