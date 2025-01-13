@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styles from "./TextField.module.scss";
 import { TextFieldProps } from "./TextField.types";
 
@@ -8,11 +7,11 @@ export default function TextField({
   isError,
   errorMessage,
   maxLength,
+  value,
+  onChange,
 }: TextFieldProps) {
-  const [inputValue, setInputValue] = useState("");
-
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value);
+    onChange(event);
   };
 
   return (
@@ -23,13 +22,15 @@ export default function TextField({
           className={styles.input}
           type="text"
           placeholder={placeholder}
-          value={inputValue}
+          value={value}
           onChange={handleChange}
           maxLength={maxLength}
         />
-        <p className={styles.countTotal}>
-          <p className={styles.count}>{inputValue.length}</p>/{maxLength}
-        </p>
+        {value && (
+          <p className={styles.countTotal}>
+            <p className={styles.count}>{value.length}</p>/{maxLength}
+          </p>
+        )}
       </div>
       {isError && <span className={styles.error}>{errorMessage}</span>}
     </div>

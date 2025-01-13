@@ -1,7 +1,7 @@
 @import "@/styles/globals.scss";
 
 .container {
-  width: 400px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -12,7 +12,7 @@
   display: flex;
   align-items: center;
   gap: 16px;
-  padding: 20px 24px;
+  padding: 16px 24px;
   background-color: $white;
   border-radius: 16px;
   border: 1.6px solid $gray20;
@@ -38,7 +38,6 @@
   color: $gray90;
   border: none;
   outline: none;
-  height: 40px;
   padding: 0;
 }
 

@@ -4,4 +4,6 @@ export interface TextFieldProps {
   isError?: boolean;
   errorMessage?: string;
   maxLength: number;
+  value: string;
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
 }
