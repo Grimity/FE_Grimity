@@ -2,12 +2,16 @@ import React from "react";
 import styles from "./Nav.module.scss";
 import IconComponent from "@/components/Asset/Icon";
 import { formatCurrency } from "@/utils/formatCurrency";
+import { useRecoilState } from "recoil";
+import { modalState } from "@/states/modalState";
 
 export default function Nav() {
+  const [modal, setModal] = useRecoilState(modalState);
+
   return (
     <nav className={styles.nav}>
       <section className={styles.loginContainer}>
-        <div className={styles.loginTop}>
+        <div className={styles.loginTop} onClick={() => setModal({ isOpen: true, type: "LOGIN" })}>
           <div className={styles.loginTopLeft}>
             <IconComponent name="default" width={40} height={40} alt="기본 프로필 이미지" />
             <p className={styles.loginBtn}>로그인</p>
