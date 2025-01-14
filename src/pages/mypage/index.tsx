@@ -1,27 +1,22 @@
 import { InitialPageMeta } from "@/components/MetaData/MetaData";
-import { SSRMetaProps } from "@/components/MetaData/MetaData.type";
+import MyProfile from "@/components/MyProfile/MyProfile";
 import { serviceUrl } from "@/constants/serviceurl";
-import { GetServerSideProps } from "next";
-import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const OGTitle = "내 프로필 - 그리미티";
-  const OGUrl = `${serviceUrl}`;
-  return {
-    props: {
-      OGTitle,
-      OGUrl,
-    },
-  };
-};
+export default function MyPage() {
+  const router = useRouter();
+  const [OGTitle] = useState("내 프로필 - 그리미티");
+  const [OGUrl, setOGUrl] = useState(serviceUrl);
 
-export default function MyPage({ OGTitle, OGUrl }: SSRMetaProps) {
+  useEffect(() => {
+    setOGUrl(serviceUrl + router.asPath);
+  }, [router.asPath]);
+
   return (
     <>
       <InitialPageMeta title={OGTitle} url={OGUrl} />
-      <Link href="/mypage/edit">
-        <button>프로필 편집</button>
-      </Link>
+      <MyProfile />
     </>
   );
 }

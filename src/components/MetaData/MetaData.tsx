@@ -1,18 +1,6 @@
 import Head from "next/head";
-import { InitialPageMetaProps, DetailsPageMetaProps } from "./MetaData.type";
+import { InitialPageMetaProps } from "./MetaData.type";
 import { serviceUrl } from "@/constants/serviceurl";
-
-export function DetailsPageMeta({ title, description, currentUrl }: DetailsPageMetaProps) {
-  return (
-    <Head>
-      <title>{`${title} - 그리미티`}</title>
-      <meta property="og:title" content={`${title} - 그리미티`} />
-      <meta property="og:description" content={description} />
-      <meta property="og:url" content={currentUrl} />
-      <meta property="og:type" content="website" />
-    </Head>
-  );
-}
 
 export function InitialPageMeta({ title, url }: InitialPageMetaProps) {
   return (
