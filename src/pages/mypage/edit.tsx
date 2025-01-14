@@ -1,4 +1,4 @@
-import Edit from "@/components/Edit/Edit";
+import Edit from "@/components/ProfileEdit/ProfileEdit";
 import { InitialPageMeta } from "@/components/MetaData/MetaData";
 import { SSRMetaProps } from "@/components/MetaData/MetaData.type";
 import { serviceUrl } from "@/constants/serviceurl";
@@ -15,7 +15,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   };
 };
 
-export default function MyPageEdit({ OGTitle, OGUrl }: SSRMetaProps) {
+export default function MyProfileEdit({ OGTitle, OGUrl }: SSRMetaProps) {
   return (
     <>
       <InitialPageMeta title={OGTitle} url={OGUrl} />

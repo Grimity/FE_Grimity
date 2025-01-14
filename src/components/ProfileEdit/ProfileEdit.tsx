@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useMutation } from "react-query";
 import TextField from "../TextField/TextField";
-import styles from "./Edit.module.scss";
+import styles from "./ProfileEdit.module.scss";
 import { MyInfoRequest, putMyInfo } from "@/api/users/putMe";
 import { useMyData } from "@/api/users/getMe";
 import { useToast } from "@/utils/useToast";
@@ -13,7 +13,7 @@ import Button from "../Button/Button";
 import { putProfileImage } from "@/api/users/putMeImage";
 import router from "next/router";
 
-export default function Edit() {
+export default function ProfileEdit() {
   const { data: userData, isLoading } = useMyData();
   const [name, setName] = useState<string | null>(null);
   const [description, setDescription] = useState<string>("");
