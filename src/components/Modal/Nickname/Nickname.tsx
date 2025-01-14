@@ -7,12 +7,14 @@ import { useMutation } from "react-query";
 import TextField from "@/components/TextField/TextField";
 import IconComponent from "@/components/Asset/Icon";
 import Button from "@/components/Button/Button";
+import router from "next/router";
+import { authState } from "@/states/authState";
 
-// TODO: 닉네임 중복 처리 확인 要
 export default function Nickname() {
   const [nickname, setNickname] = useState("");
   const [agree, setAgree] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [, setAuth] = useRecoilState(authState);
   const [, setModal] = useRecoilState(modalState);
   const modal = useRecoilState(modalState);
 
@@ -23,6 +25,11 @@ export default function Nickname() {
     },
     onSuccess: (data) => {
       setModal({ isOpen: false, type: null, data: null });
+      setAuth({
+        access_token: data.accessToken,
+        isLoggedIn: true,
+      });
+      router.push("/");
     },
     onError: (error: any) => {
       if (error?.response?.status === 409) {
@@ -38,7 +45,7 @@ export default function Nickname() {
     registerMutation.mutate({
       provider: provider,
       providerAccessToken: accessToken,
-      name: nickname,
+      name: nickname.trim(),
     });
   };
 
@@ -53,7 +60,7 @@ export default function Nickname() {
         errorMessage="중복되는 닉네임이에요."
         maxLength={10}
         value={nickname}
-        onChange={(e) => setNickname(e.target.value)}
+        onChange={(e) => setNickname(e.target.value.trimStart())}
         isError={isError}
       />
       <label className={styles.label}>

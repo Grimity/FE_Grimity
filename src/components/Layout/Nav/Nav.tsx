@@ -6,6 +6,7 @@ import { formatCurrency } from "@/utils/formatCurrency";
 import Link from "next/link";
 import InfoCard from "./InfoCard/InfoCard";
 import { authState } from "@/states/authState";
+import router from "next/router";
 
 export default function Nav() {
   const [mounted, setMounted] = useState(false);
@@ -22,6 +23,7 @@ export default function Nav() {
       isLoggedIn: false,
     });
     localStorage.removeItem("access_token");
+    router.push("/");
   };
 
   if (!mounted) {
