@@ -58,7 +58,7 @@ export default function Nickname() {
       />
       <label className={styles.label}>
         <div className={styles.checkbox} onClick={() => setAgree(!agree)}>
-          <IconComponent name={agree ? "heartFull" : "checkbox"} width={24} height={24} />
+          <IconComponent name={agree ? "checkedbox" : "checkbox"} width={24} height={24} />
         </div>
         <span className={styles.text}>
           <a
@@ -82,7 +82,7 @@ export default function Nickname() {
         </span>
       </label>
       <Button size="l" disabled={!nickname || !agree} onClick={handleSubmit}>
-        확인
+        설정 완료
       </Button>
     </div>
   );

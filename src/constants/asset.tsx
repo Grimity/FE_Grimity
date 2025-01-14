@@ -41,6 +41,7 @@ export const ICONS = {
   xFull: "/icon/x-full.svg",
   x: "/icon/x.svg",
   checkbox: "/icon/checkbox.svg",
+  checkedbox: "/icon/checkedbox.svg",
   /* Image */
   logo: "/image/logo.svg",
   banner: "/image/banner.svg",
