@@ -48,6 +48,7 @@ export default function Login() {
         isLoggedIn: true,
       });
 
+      setModal({ isOpen: false, type: null, data: null });
       localStorage.setItem("access_token", data.accessToken);
     },
     onError: (error: ErrorResponse) => {
@@ -95,8 +96,6 @@ export default function Login() {
 
   const googleLogin = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
-      console.log("Google OAuth 응답:", tokenResponse);
-
       try {
         await BASE_URL.post("/auth/login", {
           provider: "GOOGLE",

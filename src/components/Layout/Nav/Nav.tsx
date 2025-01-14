@@ -1,34 +1,36 @@
-import React from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { useEffect, useState } from "react";
 import styles from "./Nav.module.scss";
 import IconComponent from "@/components/Asset/Icon";
 import { formatCurrency } from "@/utils/formatCurrency";
-import { useRecoilState } from "recoil";
-import { modalState } from "@/states/modalState";
 import Link from "next/link";
+import InfoCard from "./InfoCard/InfoCard";
+import { authState } from "@/states/authState";
 
 export default function Nav() {
-  const [, setModal] = useRecoilState(modalState);
+  const [mounted, setMounted] = useState(false);
+  const [, setAuth] = useRecoilState(authState);
+  const { isLoggedIn } = useRecoilValue(authState);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const handleLogout = () => {
+    setAuth({
+      access_token: "",
+      isLoggedIn: false,
+    });
+    localStorage.removeItem("access_token");
+  };
+
+  if (!mounted) {
+    return null;
+  }
 
   return (
-    <nav className={styles.nav}>
-      <section className={styles.loginContainer}>
-        <div className={styles.loginTop} onClick={() => setModal({ isOpen: true, type: "LOGIN" })}>
-          <div className={styles.loginTopLeft}>
-            <IconComponent name="default" width={40} height={40} alt="기본 프로필 이미지" />
-            <p className={styles.loginBtn}>로그인</p>
-          </div>
-          <IconComponent name="rightSm" width={24} height={24} alt="로그인" />
-        </div>
-        <div className={styles.whiteBar} />
-        <div className={styles.loginBottom}>
-          <div className={styles.follow}>
-            팔로잉<p className={styles.count}>-</p>
-          </div>
-          <div className={styles.follow}>
-            팔로워<p className={styles.count}>-</p>
-          </div>
-        </div>
-      </section>
+    <div className={styles.nav}>
+      <InfoCard />
       <section className={styles.menuContainer}>
         <Link href="/">
           <div className={styles.menu}>
@@ -107,7 +109,8 @@ export default function Nav() {
             <p className={styles.update}>+27</p>
           </div>
         </div>
+        {isLoggedIn && <button onClick={handleLogout}>로그아웃</button>}
       </section>
-    </nav>
+    </div>
   );
 }
