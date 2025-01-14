@@ -1,0 +1,14 @@
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="floating button" clip-path="url(#clip0_40000715_14660)">
+<circle id="Ellipse 305" cx="20.0007" cy="19.9999" r="18.6667" fill="#F8F8F9" stroke="#EEEEEF" style="fill:#F8F8F9;fill:color(display-p3 0.9725 0.9725 0.9765);fill-opacity:1;stroke:#EEEEEF;stroke:color(display-p3 0.9333 0.9333 0.9373);stroke-opacity:1;"/>
+<g id="icon">
+<path id="Vector" d="M20 15.1389V24.8611" stroke="#18191C" style="stroke:#18191C;stroke:color(display-p3 0.0941 0.0980 0.1098);stroke-opacity:1;" stroke-width="1.38889" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_2" d="M15.1387 20H24.8609" stroke="#18191C" style="stroke:#18191C;stroke:color(display-p3 0.0941 0.0980 0.1098);stroke-opacity:1;" stroke-width="1.38889" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_40000715_14660">
+<rect width="40" height="40" fill="white" style="fill:white;fill-opacity:1;"/>
+</clipPath>
+</defs>
+</svg>

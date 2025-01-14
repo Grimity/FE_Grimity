@@ -1,0 +1,22 @@
+import BASE_URL from "@/constants/baseurl";
+
+export interface PresignedUrlRequest {
+  type: "profile" | "feed" | "communityPost";
+  ext: "jpg" | "jpeg" | "png";
+}
+
+export interface PresignedUrlResponse {
+  url: string;
+  imageName: string;
+}
+
+export async function postPresignedUrl({
+  type,
+  ext,
+}: PresignedUrlRequest): Promise<PresignedUrlResponse> {
+  const response = await BASE_URL.post("/aws/image-upload-url", {
+    type,
+    ext,
+  });
+  return response.data;
+}

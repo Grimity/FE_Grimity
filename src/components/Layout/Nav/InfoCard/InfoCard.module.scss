@@ -25,6 +25,14 @@
         @include H4SB;
         color: $gray90;
       }
+
+      .profileImage {
+        object-fit: cover;
+        border-radius: 50px;
+        overflow: hidden;
+        cursor: pointer;
+        border: 2px solid #eeeeef;
+      }
     }
   }
 

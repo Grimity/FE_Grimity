@@ -17,7 +17,11 @@ export interface MyInfoResponse {
 export async function getMyInfo(): Promise<MyInfoResponse> {
   try {
     const response = await BASE_URL.get("/users/me");
-    return response.data;
+
+    const updatedData = response.data;
+    updatedData.image = `https://image.grimity.com/${updatedData.image}`;
+
+    return updatedData;
   } catch (error) {
     console.error("Error fetching Profile:", error);
     throw new Error("Failed to fetch Profile");

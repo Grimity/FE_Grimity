@@ -20,7 +20,7 @@ export default function InfoCard() {
           <Link href="/mypage">
             <div className={styles.loginTop}>
               <div className={styles.loginTopLeft}>
-                {userData.image ? (
+                {userData.image !== "https://image.grimity.com/null" ? (
                   <Image
                     src={userData.image}
                     width={42}
@@ -30,7 +30,7 @@ export default function InfoCard() {
                   />
                 ) : (
                   <Image
-                    src="/image/default.svg"
+                    src="/image/default-card.svg"
                     width={42}
                     height={42}
                     alt="프로필 이미지"

@@ -42,6 +42,8 @@ export const ICONS = {
   x: "/icon/x.svg",
   checkbox: "/icon/checkbox.svg",
   checkedbox: "/icon/checkedbox.svg",
+  add: "/icon/add.svg",
+  profileEdit: "/icon/profile-edit.svg",
   /* Image */
   logo: "/image/logo.svg",
   banner: "/image/banner.svg",
