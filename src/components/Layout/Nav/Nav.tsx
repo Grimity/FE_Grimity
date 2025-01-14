@@ -109,8 +109,16 @@ export default function Nav() {
             <p className={styles.update}>+27</p>
           </div>
         </div>
-        {isLoggedIn && <button onClick={handleLogout}>로그아웃</button>}
       </section>
+      {isLoggedIn && (
+        <div className={styles.logoutContainer}>
+          <div className={styles.bar} />
+          <div onClick={handleLogout} className={styles.logoutButton} role="button" tabIndex={0}>
+            <IconComponent name="logout" width={24} height={24} />
+            로그아웃
+          </div>
+        </div>
+      )}
     </div>
   );
 }

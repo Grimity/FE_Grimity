@@ -10,7 +10,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  gap: 32px;
+  gap: 40px;
   padding: 24px 24px 24px 28px;
   z-index: 5;
 }
@@ -100,5 +100,22 @@
         color: $green50;
       }
     }
+  }
+}
+
+.logoutContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+
+  .logoutButton {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    align-self: flex-start;
+    @include H4MD;
+    color: $gray40;
+    cursor: pointer;
   }
 }
