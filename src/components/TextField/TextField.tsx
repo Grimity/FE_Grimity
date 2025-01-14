@@ -9,6 +9,8 @@ export default function TextField({
   maxLength,
   value,
   onChange,
+  color = "GRAY",
+  required = false,
 }: TextFieldProps) {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChange(event);
@@ -16,7 +18,10 @@ export default function TextField({
 
   return (
     <div className={styles.container}>
-      {label && <label className={styles.label}>{label}</label>}
+      <div className={styles.labelContainer}>
+        {required && <p className={styles.required}>*</p>}
+        {label && <label className={styles.label}>{label}</label>}
+      </div>
       <div className={`${styles.inputContainer} ${isError && styles.error}`}>
         <input
           className={styles.input}
@@ -26,9 +31,12 @@ export default function TextField({
           onChange={handleChange}
           maxLength={maxLength}
         />
-        {value && (
+        {value && maxLength && (
           <p className={styles.countTotal}>
-            <p className={styles.count}>{value.length}</p>/{maxLength}
+            <p className={`${color === "GRAY" ? styles.count : styles.countGreen}`}>
+              {value.length}
+            </p>
+            /{maxLength}
           </p>
         )}
       </div>

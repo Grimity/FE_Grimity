@@ -3,7 +3,9 @@ export interface TextFieldProps {
   label?: string;
   isError?: boolean;
   errorMessage?: string;
-  maxLength: number;
+  maxLength?: number;
   value: string;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
+  color?: "GRAY" | "GREEN";
+  required?: boolean;
 }

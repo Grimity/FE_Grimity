@@ -26,6 +26,15 @@
   border: 2px solid $error;
 }
 
+.labelContainer {
+  display: flex;
+}
+
+.required {
+  @include H4MD;
+  color: $green50;
+}
+
 .label {
   @include H4MD;
   align-self: stretch;
@@ -49,6 +58,10 @@
 
 .count {
   color: $gray90;
+}
+
+.countGreen {
+  color: $green50;
 }
 
 .error {
