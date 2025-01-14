@@ -1,0 +1,106 @@
+@import "@/styles/globals.scss";
+
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: $white;
+  padding-top: calc(40px - 24px);
+
+  .centerContainer {
+    width: 910px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .bar {
+    margin: 40px 0;
+    width: 100%;
+    height: 1px;
+    background: $gray5;
+  }
+
+  .infoContainer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .topContainer {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+
+      .name {
+        @include H2SB;
+        color: $gray90;
+      }
+
+      .date {
+        @include H5MD;
+        color: $gray40;
+      }
+    }
+
+    .leftContainer {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+
+      .description {
+        @include H4MD;
+        color: $gray90;
+      }
+    }
+
+    .rightContainer {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 32px;
+
+      .follower {
+        display: flex;
+        gap: 6px;
+        @include H4SB;
+        color: $gray90;
+        cursor: pointer;
+      }
+
+      .followerColor {
+        color: $green50;
+      }
+    }
+
+    .followEdit {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+
+      .follow {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+      }
+    }
+
+    .linkContainer {
+      display: flex;
+      gap: 16px;
+
+      .link {
+        @include H5MD;
+        color: $gray40;
+      }
+    }
+  }
+
+  .profileImage {
+    object-fit: cover;
+    border-radius: 50px;
+    overflow: hidden;
+    border: 2px solid #eeeeef;
+  }
+}
