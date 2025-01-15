@@ -20,7 +20,11 @@ export default function TextField({
     <div className={styles.container}>
       <div className={styles.labelContainer}>
         {required && <p className={styles.required}>*</p>}
-        {label && <label className={styles.label}>{label}</label>}
+        {label && (
+          <label className={styles.label} htmlFor="label">
+            {label}
+          </label>
+        )}
       </div>
       <div className={`${styles.inputContainer} ${isError && styles.error}`}>
         <input
@@ -30,6 +34,7 @@ export default function TextField({
           value={value}
           onChange={handleChange}
           maxLength={maxLength}
+          id="label"
         />
         {value && maxLength && (
           <p className={styles.countTotal}>
