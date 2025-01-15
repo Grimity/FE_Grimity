@@ -2,25 +2,11 @@
 
 .container {
   width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: $white;
   padding-top: calc(40px - 24px);
-
-  .centerContainer {
-    width: 910px;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .bar {
-    margin: 40px 0;
-    width: 100%;
-    height: 1px;
-    background: $gray5;
-  }
 
   .infoContainer {
     width: 100%;
