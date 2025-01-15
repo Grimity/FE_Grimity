@@ -2,7 +2,7 @@
 
 .nav {
   position: fixed;
-  top: 83px;
+  top: 66px;
   left: 0;
   bottom: 0;
   width: 280px;
@@ -11,7 +11,7 @@
   flex-direction: column;
   justify-content: flex-start;
   gap: 32px;
-  padding: 10px 24px 24px 28px;
+  padding: 24px 24px 24px 28px;
   z-index: 5;
   overflow-y: auto;
 }
