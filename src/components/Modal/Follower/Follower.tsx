@@ -6,10 +6,13 @@ import { useToast } from "@/utils/useToast";
 import SearchBar from "@/components/SearchBar/SearchBar";
 import Link from "next/link";
 import Dropdown from "@/components/Dropdown/Dropdown";
+import { modalState } from "@/states/modalState";
+import { useRecoilState } from "recoil";
 
 export default function Follower({ data }: { data: any[] }) {
   const [search, setSearch] = useState("");
   const [followers, setFollowers] = useState(data);
+  const [, setModal] = useRecoilState(modalState);
   const { showToast } = useToast();
 
   const filteredFollowers = followers.filter((user) =>
@@ -25,6 +28,10 @@ export default function Follower({ data }: { data: any[] }) {
     }
   };
 
+  const handleLinkClick = () => {
+    setModal({ isOpen: false, type: null, data: null });
+  };
+
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>팔로워</h2>
@@ -37,7 +44,7 @@ export default function Follower({ data }: { data: any[] }) {
         {filteredFollowers.length > 0 ? (
           filteredFollowers.map((user) => (
             <li key={user.id} className={styles.list}>
-              <Link href={`/users/${user.id}`}>
+              <Link href={`/users/${user.id}`} onClick={handleLinkClick}>
                 <div className={styles.profile}>
                   <Image
                     src={user.image}
