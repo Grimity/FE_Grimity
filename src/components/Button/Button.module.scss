@@ -2,9 +2,27 @@
 
 .button {
   border: none;
-  border-radius: 50px;
   transition: 0.3s;
   cursor: pointer;
+}
+
+.xs {
+  @include H7SB;
+  display: inline-flex;
+  padding: 8px 16px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 40px;
+  background-color: $gray10;
+  color: $gray90;
+
+  &:hover {
+    background-color: $gray30;
+  }
+
+  &:active {
+    background-color: $gray40;
+  }
 }
 
 .s {
@@ -13,13 +31,14 @@
   padding: 10px 20px;
   justify-content: center;
   align-items: center;
+  border-radius: 40px;
 }
 
 .l {
   @include H3MD;
+  border-radius: 50px;
   color: $white;
   background-color: $green50;
-  padding: 12px 24px;
   display: flex;
   width: 100%;
   max-width: 360px;

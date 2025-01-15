@@ -1,5 +1,10 @@
 import { ReactNode, MouseEventHandler } from "react";
 
+type XSmallButtonProps = {
+  size: "xs";
+  type?: never;
+};
+
 type SmallButtonProps = {
   size: "s";
   type: "primary" | "secondary" | "tertiary";
@@ -14,4 +19,4 @@ export type ButtonProps = {
   children: ReactNode;
   disabled?: boolean;
   onClick?: MouseEventHandler<HTMLButtonElement>;
-} & (SmallButtonProps | LargeButtonProps);
+} & (XSmallButtonProps | SmallButtonProps | LargeButtonProps);
