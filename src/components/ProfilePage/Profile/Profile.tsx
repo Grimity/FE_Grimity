@@ -1,5 +1,5 @@
 import Link from "next/link";
-import styles from "./MyProfile.module.scss";
+import styles from "./Profile.module.scss";
 import Button from "../../Button/Button";
 import { useMyData } from "@/api/users/getMe";
 import Image from "next/image";
@@ -8,11 +8,18 @@ import { formatCurrency } from "@/utils/formatCurrency";
 import { modalState } from "@/states/modalState";
 import { useRecoilState } from "recoil";
 import { useMyFollower } from "@/api/users/getMeFollowers";
+import { ProfileProps } from "./Profile.types";
+import { useUserData } from "@/api/users/getId";
+import { deleteFollow } from "@/api/users/deleteIdFollow";
+import { putFollow } from "@/api/users/putIdFollow";
+import { useToast } from "@/utils/useToast";
 
-export default function MyProfile() {
+export default function Profile({ isMyProfile, id }: ProfileProps) {
   const [, setModal] = useRecoilState(modalState);
-  const { data: userData } = useMyData();
+  const { data: myData } = useMyData();
   const { data: followerData } = useMyFollower();
+  const { data: userData, refetch: refetchUserData } = useUserData(id);
+  const { showToast } = useToast();
 
   const handleFollowerModal = () => {
     if (followerData && Array.isArray(followerData)) {
@@ -22,6 +29,24 @@ export default function MyProfile() {
         data: followerData,
         follow: true,
       });
+    }
+  };
+
+  const handleFollowClick = async () => {
+    try {
+      await putFollow({ id: id });
+      refetchUserData();
+    } catch (error) {
+      showToast("오류가 발생했습니다. 다시 시도해주세요.", "error");
+    }
+  };
+
+  const handleUnfollowClick = async () => {
+    try {
+      await deleteFollow(id);
+      refetchUserData();
+    } catch (error) {
+      showToast("오류가 발생했습니다. 다시 시도해주세요.", "error");
     }
   };
 
@@ -51,9 +76,11 @@ export default function MyProfile() {
                 )}
                 <div className={styles.nameDate}>
                   <h2 className={styles.name}>{userData.name}</h2>
-                  <p className={styles.date}>
-                    가입일 +{useMembershipDuration(userData.createdAt)}일
-                  </p>
+                  {myData && isMyProfile && (
+                    <p className={styles.date}>
+                      가입일 +{useMembershipDuration(myData.createdAt)}일
+                    </p>
+                  )}
                 </div>
               </div>
               <p className={styles.description}>{userData.description}</p>
@@ -72,11 +99,21 @@ export default function MyProfile() {
                     <p className={styles.followerColor}>{formatCurrency(userData.followerCount)}</p>
                   </p>
                 </div>
-                <Link href="/mypage/edit">
-                  <Button size="s" type="tertiary">
-                    프로필 편집
-                  </Button>
-                </Link>
+                {isMyProfile ? (
+                  <Link href="/profile-edit">
+                    <Button size="s" type="tertiary">
+                      프로필 편집
+                    </Button>
+                  </Link>
+                ) : userData.isFollowing ? (
+                  <button className={styles.unfollowBtn} onClick={handleUnfollowClick}>
+                    언 팔로우
+                  </button>
+                ) : (
+                  <button className={styles.followBtn} onClick={handleFollowClick}>
+                    팔로우
+                  </button>
+                )}
               </div>
               <div className={styles.linkContainer}>
                 {userData.links.map(({ linkName, link }, index) => (

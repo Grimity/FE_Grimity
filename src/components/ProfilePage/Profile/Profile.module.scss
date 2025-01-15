@@ -1,5 +1,17 @@
 @import "@/styles/globals.scss";
 
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 .container {
   width: 100%;
   display: flex;
@@ -80,6 +92,38 @@
       .link {
         @include H5MD;
         color: $gray40;
+      }
+    }
+
+    .unfollowBtn {
+      display: inline-flex;
+      padding: 10px 20px;
+      justify-content: center;
+      align-items: center;
+      @include H5SB;
+      color: $white;
+      background-color: $gray30;
+      border-radius: 40px;
+      border: none;
+      outline: none;
+      cursor: pointer;
+
+      &:hover {
+        background-color: darken($gray30, 10%);
+      }
+    }
+
+    .followBtn {
+      @extend .unfollowBtn;
+      background-color: $green50;
+
+      &:hover {
+        background-color: darken($green50, 10%);
+        animation: pulse 0.6s ease-in-out;
+      }
+
+      &:active {
+        animation: pulse 0.6s ease-in-out;
       }
     }
   }

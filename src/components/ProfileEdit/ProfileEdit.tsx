@@ -14,7 +14,7 @@ import { putProfileImage } from "@/api/users/putMeImage";
 import router from "next/router";
 
 export default function ProfileEdit() {
-  const { data: userData, isLoading } = useMyData();
+  const { data: myData, isLoading } = useMyData();
   const [name, setName] = useState<string | null>(null);
   const [description, setDescription] = useState<string>("");
   const [links, setLinks] = useState<{ linkName: string; link: string }[]>([
@@ -25,13 +25,13 @@ export default function ProfileEdit() {
   const { showToast } = useToast();
 
   useEffect(() => {
-    if (userData) {
-      setName(userData.name?.replace(/\s+$/, "") || "");
-      setDescription(userData.description || "");
-      setLinks(userData.links?.length ? userData.links : [{ linkName: "", link: "" }]);
-      setProfileImage(userData.image || "/image/default.svg");
+    if (myData) {
+      setName(myData.name?.replace(/\s+$/, "") || "");
+      setDescription(myData.description || "");
+      setLinks(myData.links?.length ? myData.links : [{ linkName: "", link: "" }]);
+      setProfileImage(myData.image || "/image/default.svg");
     }
-  }, [userData]);
+  }, [myData]);
 
   const mutation = useMutation((newInfo: MyInfoRequest) => putMyInfo(newInfo), {
     onSuccess: () => {
@@ -58,7 +58,7 @@ export default function ProfileEdit() {
 
       await uploadImageToServer(file);
     } catch (error) {
-      setProfileImage(userData?.image || "/image/default.svg");
+      setProfileImage(myData?.image || "/image/default.svg");
       console.error("File change error:", error);
     }
   };
@@ -151,11 +151,11 @@ export default function ProfileEdit() {
 
   return (
     <div className={styles.container}>
-      {userData && (
+      {myData && (
         <div className={styles.profileContainer}>
           <div className={styles.profileImage}>
             <label htmlFor="upload-image">
-              {userData.image !== "https://image.grimity.com/null" ? (
+              {myData.image !== "https://image.grimity.com/null" ? (
                 <Image
                   src={profileImage}
                   width={80}

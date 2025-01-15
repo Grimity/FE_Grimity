@@ -11,7 +11,7 @@ import { useMyFollower } from "@/api/users/getMeFollowers";
 
 export default function InfoCard() {
   const [, setModal] = useRecoilState(modalState);
-  const { data: userData } = useMyData();
+  const { data: myData } = useMyData();
   const { isLoggedIn } = useRecoilValue(authState);
   const { data: followerData } = useMyFollower();
 
@@ -28,14 +28,14 @@ export default function InfoCard() {
 
   return (
     <section className={styles.loginContainer}>
-      {isLoggedIn && userData ? (
+      {isLoggedIn && myData ? (
         <>
-          <Link href="/mypage">
+          <Link href={`/users/${myData.id}`}>
             <div className={styles.loginTop}>
               <div className={styles.loginTopLeft}>
-                {userData.image !== "https://image.grimity.com/null" ? (
+                {myData.image !== "https://image.grimity.com/null" ? (
                   <Image
-                    src={userData.image}
+                    src={myData.image}
                     width={44}
                     height={44}
                     alt="프로필 이미지"
@@ -50,7 +50,7 @@ export default function InfoCard() {
                     className={styles.profileImage}
                   />
                 )}
-                <p className={styles.loginBtn}>{userData.name}</p>
+                <p className={styles.loginBtn}>{myData.name}</p>
               </div>
               <IconComponent name="rightSm" width={24} height={24} alt="프로필 보기" />
             </div>
@@ -58,10 +58,10 @@ export default function InfoCard() {
           <div className={styles.whiteBar} />
           <div className={styles.loginBottom}>
             <div className={styles.follow}>
-              팔로잉<p className={styles.count}>{formatCurrency(userData.followingCount)}</p>
+              팔로잉<p className={styles.count}>{formatCurrency(myData.followingCount)}</p>
             </div>
             <div className={styles.follow} onClick={handleFollowerModal}>
-              팔로워<p className={styles.count}>{formatCurrency(userData.followerCount)}</p>
+              팔로워<p className={styles.count}>{formatCurrency(myData.followerCount)}</p>
             </div>
           </div>
         </>
