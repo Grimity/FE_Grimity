@@ -19,11 +19,15 @@
     .loginTopLeft {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 8px;
 
       .loginBtn {
         @include H4SB;
         color: $gray90;
+        max-width: 110px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
       }
 
       .profileImage {
