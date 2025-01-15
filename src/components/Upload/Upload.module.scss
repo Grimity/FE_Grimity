@@ -1,0 +1,176 @@
+@import "@/styles/globals.scss";
+
+.background {
+  background-color: $gray5;
+  width: 100vw;
+  height: 100%;
+
+  .container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 28px;
+    padding-top: 32px;
+
+    .title {
+      @include H0SB;
+      color: $gray90;
+    }
+
+    .stroke {
+      @include H4SB;
+      color: $green50;
+    }
+
+    .subtitle {
+      @include H4SB;
+      color: $gray90;
+      display: flex;
+    }
+
+    .description {
+      @include H5MD;
+      color: $gray40;
+      margin-top: 8px;
+      margin-bottom: 24px;
+    }
+
+    .sectionContainer {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 140px;
+
+      .imageSection {
+        width: 420px;
+        display: flex;
+        flex-direction: column;
+        gap: 28px;
+
+        .uploadBtn {
+          cursor: pointer;
+        }
+      }
+
+      .writeSection {
+        width: 700px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 28px;
+
+        .textField {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+
+          .contentContainer {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+
+            .textareaContainer {
+              width: 100%;
+              height: 244px;
+              padding: 16px 24px;
+              border-radius: 12px;
+              background-color: $white;
+
+              &:focus-within {
+                border: 1px solid $green50;
+              }
+
+              .textarea {
+                width: 100%;
+                height: 90%;
+                border: none;
+                outline: none;
+                @include H5MD;
+                color: $gray90;
+                resize: none;
+
+                &::-webkit-scrollbar {
+                  width: 5px;
+                }
+
+                &::-webkit-scrollbar-track {
+                  background: #f1f1f1;
+                  border-radius: 10px;
+                }
+
+                &::-webkit-scrollbar-thumb {
+                  background: $green50;
+                  border-radius: 10px;
+                }
+
+                &::-webkit-scrollbar-thumb:hover {
+                  background: $green50;
+                }
+              }
+
+              .countTotal {
+                display: flex;
+                justify-self: flex-end;
+                @include H5MD;
+                color: $gray40;
+              }
+
+              .countGreen {
+                color: $green50;
+              }
+            }
+          }
+
+          .tagList {
+            width: 100%;
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+
+            .tag {
+              display: flex;
+              padding: 8px 12px 8px 16px;
+              justify-content: center;
+              align-items: center;
+              gap: 4px;
+              border-radius: 40px;
+              border: 1px solid $green50;
+              background-color: $white;
+              @include H7MD;
+              color: $green50;
+
+              .closeBtn {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+              }
+            }
+          }
+        }
+
+        .options {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+
+          .option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            @include H5MD;
+            color: $gray90;
+            cursor: pointer;
+            transition: opacity 0.3s ease-in-out;
+          }
+        }
+      }
+    }
+  }
+}
