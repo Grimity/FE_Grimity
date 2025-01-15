@@ -34,8 +34,9 @@
       gap: 16px;
 
       .name {
-        @include H2SB;
+        @include H1SB;
         color: $gray90;
+        margin-bottom: 2px;
       }
 
       .date {

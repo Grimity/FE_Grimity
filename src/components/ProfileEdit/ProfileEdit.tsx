@@ -199,7 +199,7 @@ export default function ProfileEdit() {
             <TextField
               label="소개"
               placeholder="소개 문구를 입력해 주세요."
-              maxLength={60}
+              maxLength={50}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               color="GREEN"

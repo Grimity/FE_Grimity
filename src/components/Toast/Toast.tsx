@@ -10,9 +10,9 @@ export default function Toast() {
   return (
     <div className={styles.toast}>
       {toast.type === "success" ? (
-        <IconComponent name="checkFull" width={28} height={28} />
+        <IconComponent name="checkFull" width={24} height={24} />
       ) : (
-        <IconComponent name="errorFull" width={28} height={28} />
+        <IconComponent name="errorFull" width={24} height={24} />
       )}
       {toast.message}
     </div>

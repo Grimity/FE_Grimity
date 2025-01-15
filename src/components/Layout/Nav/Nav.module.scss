@@ -5,14 +5,15 @@
   top: 83px;
   left: 0;
   bottom: 0;
-  width: 330px;
+  width: 286px;
   background-color: $white;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  gap: 40px;
+  gap: 32px;
   padding: 24px 24px 24px 28px;
   z-index: 5;
+  overflow-y: auto;
 }
 
 .bar {
@@ -98,6 +99,7 @@
       .update {
         @include H7MD;
         color: $green50;
+        margin: 0 12px 0 8px;
       }
     }
   }
@@ -106,6 +108,7 @@
 .logoutContainer {
   display: flex;
   flex-direction: column;
+  justify-self: flex-end;
   gap: 40px;
 
   .logoutButton {

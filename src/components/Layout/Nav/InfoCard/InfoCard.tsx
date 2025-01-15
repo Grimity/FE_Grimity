@@ -23,16 +23,16 @@ export default function InfoCard() {
                 {userData.image !== "https://image.grimity.com/null" ? (
                   <Image
                     src={userData.image}
-                    width={42}
-                    height={42}
+                    width={44}
+                    height={44}
                     alt="프로필 이미지"
                     className={styles.profileImage}
                   />
                 ) : (
                   <Image
-                    src="/image/default-card.svg"
-                    width={42}
-                    height={42}
+                    src="/image/default.svg"
+                    width={44}
+                    height={44}
                     alt="프로필 이미지"
                     className={styles.profileImage}
                   />

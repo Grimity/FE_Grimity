@@ -20,16 +20,16 @@ export default function MyProfile() {
                   {userData.image !== "https://image.grimity.com/null" ? (
                     <Image
                       src={userData.image}
-                      width={64}
-                      height={64}
+                      width={70}
+                      height={70}
                       alt="프로필 이미지"
                       className={styles.profileImage}
                     />
                   ) : (
                     <Image
                       src="/image/default-card.svg"
-                      width={64}
-                      height={64}
+                      width={70}
+                      height={70}
                       alt="프로필 이미지"
                       className={styles.profileImage}
                     />

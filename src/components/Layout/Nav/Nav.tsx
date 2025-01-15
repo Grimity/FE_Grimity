@@ -7,6 +7,7 @@ import Link from "next/link";
 import InfoCard from "./InfoCard/InfoCard";
 import { authState } from "@/states/authState";
 import router from "next/router";
+import Image from "next/image";
 
 export default function Nav() {
   const [mounted, setMounted] = useState(false);
@@ -57,7 +58,7 @@ export default function Nav() {
           <div className={styles.recommend}>
             <div className={styles.left}>
               <div className={styles.profileImage}>
-                <IconComponent name="temp1" width={32} height={32} alt="프로필 사진" />
+                <Image src="/image/temp1.jpg" width={32} height={32} alt="프로필 사진" />
               </div>
               <div>
                 <p className={styles.author}>메구미</p>
@@ -71,7 +72,7 @@ export default function Nav() {
           <div className={styles.recommend}>
             <div className={styles.left}>
               <div className={styles.profileImage}>
-                <IconComponent name="default" width={32} height={32} alt="프로필 사진" />
+                <Image src="/image/default.svg" width={32} height={32} alt="프로필 사진" />
               </div>
               <div>
                 <p className={styles.author}>닉네임</p>
@@ -85,7 +86,7 @@ export default function Nav() {
           <div className={styles.recommend}>
             <div className={styles.left}>
               <div className={styles.profileImage}>
-                <IconComponent name="temp2" width={32} height={32} alt="프로필 사진" />
+                <Image src="/image/temp2.jpg" width={32} height={32} alt="프로필 사진" />
               </div>
               <div>
                 <p className={styles.author}>닉네임</p>
@@ -99,12 +100,12 @@ export default function Nav() {
           <div className={styles.recommend}>
             <div className={styles.left}>
               <div className={styles.profileImage}>
-                <IconComponent name="temp3" width={32} height={32} alt="프로필 사진" />
+                <Image src="/image/temp3.jpg" width={32} height={32} alt="프로필 사진" />
               </div>
               <div>
                 <p className={styles.author}>닉네임</p>
                 <div className={styles.follow}>
-                  팔로워<p className={styles.count}>{formatCurrency(123456789)}</p>
+                  팔로워<p className={styles.count}>{formatCurrency(123456)}</p>
                 </div>
               </div>
             </div>
