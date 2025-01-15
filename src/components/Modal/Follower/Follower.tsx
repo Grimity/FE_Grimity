@@ -8,6 +8,7 @@ import Link from "next/link";
 import Dropdown from "@/components/Dropdown/Dropdown";
 import { modalState } from "@/states/modalState";
 import { useRecoilState } from "recoil";
+import IconComponent from "@/components/Asset/Icon";
 
 export default function Follower({ data, isMine }: { data: any[]; isMine?: boolean }) {
   const [search, setSearch] = useState("");
@@ -88,7 +89,10 @@ export default function Follower({ data, isMine }: { data: any[]; isMine?: boole
             </li>
           ))
         ) : (
-          <p className={styles.noResult}>사용자를 찾을 수 없습니다.</p>
+          <div className={styles.noResult}>
+            <IconComponent name="userX" width={32} height={32} />
+            나를 팔로우하는 유저가 없어요.
+          </div>
         )}
       </ul>
     </div>

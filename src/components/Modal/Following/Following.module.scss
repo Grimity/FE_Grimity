@@ -103,8 +103,12 @@
   }
 
   .noResult {
-    @include H4MD;
-    color: $gray70;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    @include H3MD;
+    color: $gray50;
     align-self: center;
     margin-top: 70px;
   }
