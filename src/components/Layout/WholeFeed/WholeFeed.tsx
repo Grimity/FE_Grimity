@@ -1,4 +1,4 @@
-import WholeCard from "./WholeCard/WholeCard";
+import Card from "./Card/Card";
 import styles from "./WholeFeed.module.scss";
 
 export default function WholeFeed() {
@@ -12,7 +12,7 @@ export default function WholeFeed() {
         {Array(12)
           .fill(0)
           .map((_, index) => (
-            <WholeCard key={index} />
+            <Card key={index} isMain />
           ))}
       </div>
     </div>

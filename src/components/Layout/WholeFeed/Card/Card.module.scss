@@ -98,5 +98,15 @@
       @include H6MD;
       color: $gray40;
     }
+
+    .count2 {
+      @include H6MD;
+      color: $gray50;
+    }
   }
+}
+
+.date {
+  @include H5MD;
+  color: $gray40;
 }
