@@ -7,9 +7,10 @@ export interface ModalState {
   type: ModalType | null;
   data?: any;
   follow?: boolean;
+  isMine?: boolean;
 }
 
 export const modalState = atom<ModalState>({
   key: "modalState",
-  default: { isOpen: false, type: null, data: null, follow: false },
+  default: { isOpen: false, type: null, data: null, follow: false, isMine: false },
 });

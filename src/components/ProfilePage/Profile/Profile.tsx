@@ -14,12 +14,14 @@ import { deleteFollow } from "@/api/users/deleteIdFollow";
 import { putFollow } from "@/api/users/putIdFollow";
 import { useToast } from "@/utils/useToast";
 import { useFollower } from "@/api/users/getIdFollowers";
+import { useFollowing } from "@/api/users/getIdFollowings";
 
 export default function Profile({ isMyProfile, id }: ProfileProps) {
   const [, setModal] = useRecoilState(modalState);
   const { data: myData } = useMyData();
   const { data: myFollowerData } = useMyFollower();
   const { data: followerData } = useFollower(id);
+  const { data: followingData } = useFollowing(id);
   const { data: userData, refetch: refetchUserData } = useUserData(id);
   const { showToast } = useToast();
 
@@ -31,6 +33,7 @@ export default function Profile({ isMyProfile, id }: ProfileProps) {
           type: "FOLLOWER_LIST",
           data: myFollowerData,
           follow: true,
+          isMine: isMyProfile,
         });
       }
     } else {
@@ -42,6 +45,18 @@ export default function Profile({ isMyProfile, id }: ProfileProps) {
           follow: true,
         });
       }
+    }
+  };
+
+  const handleFollowingModal = () => {
+    if (followingData && Array.isArray(followingData)) {
+      setModal({
+        isOpen: true,
+        type: "FOLLOWING_LIST",
+        data: followingData,
+        follow: true,
+        isMine: isMyProfile,
+      });
     }
   };
 
@@ -101,7 +116,7 @@ export default function Profile({ isMyProfile, id }: ProfileProps) {
             <div className={styles.rightContainer}>
               <div className={styles.followEdit}>
                 <div className={styles.follow}>
-                  <p className={styles.follower}>
+                  <p className={styles.follower} onClick={handleFollowingModal}>
                     팔로잉
                     <p className={styles.followerColor}>
                       {formatCurrency(userData.followingCount)}

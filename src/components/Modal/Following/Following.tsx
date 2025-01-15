@@ -1,15 +1,16 @@
 import { useState } from "react";
 import Image from "next/image";
-import styles from "./Follower.module.scss";
-import { deleteMyFollowers } from "@/api/users/deleteMeFollowers";
+import styles from "./Following.module.scss";
 import { useToast } from "@/utils/useToast";
 import SearchBar from "@/components/SearchBar/SearchBar";
 import Link from "next/link";
 import Dropdown from "@/components/Dropdown/Dropdown";
-import { modalState } from "@/states/modalState";
+import { deleteFollow } from "@/api/users/deleteIdFollow";
+import router from "next/router";
 import { useRecoilState } from "recoil";
+import { modalState } from "@/states/modalState";
 
-export default function Follower({ data, isMine }: { data: any[]; isMine?: boolean }) {
+export default function Following({ data, isMine }: { data: any[]; isMine?: boolean }) {
   const [search, setSearch] = useState("");
   const [followers, setFollowers] = useState(data);
   const [, setModal] = useRecoilState(modalState);
@@ -19,12 +20,13 @@ export default function Follower({ data, isMine }: { data: any[]; isMine?: boole
     user.name.toLowerCase().includes(search.toLowerCase())
   );
 
-  const handleDeleteFollower = async (id: string) => {
+  const handleDeleteFollowing = async (id: string) => {
     try {
-      await deleteMyFollowers(id);
+      await deleteFollow(id);
       setFollowers((prev) => prev.filter((user) => user.id !== id));
+      router.reload();
     } catch (error) {
-      showToast("팔로워 삭제를 실패했습니다.", "error");
+      showToast("언팔로우를 실패했습니다.", "error");
     }
   };
 
@@ -34,7 +36,7 @@ export default function Follower({ data, isMine }: { data: any[]; isMine?: boole
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>팔로워</h2>
+      <h2 className={styles.title}>팔로잉</h2>
       <SearchBar
         placeholder="닉네임을 검색해보세요."
         value={search}
@@ -50,7 +52,7 @@ export default function Follower({ data, isMine }: { data: any[]; isMine?: boole
                     src={user.image}
                     width={48}
                     height={48}
-                    alt="팔로워 프로필 이미지"
+                    alt="팔로잉 프로필 이미지"
                     className={styles.image}
                   />
                   <div className={styles.nameCount}>
@@ -67,8 +69,8 @@ export default function Follower({ data, isMine }: { data: any[]; isMine?: boole
                   <Dropdown
                     menuItems={[
                       {
-                        label: "팔로워 삭제",
-                        onClick: () => handleDeleteFollower(user.id),
+                        label: "팔로잉 취소",
+                        onClick: () => handleDeleteFollowing(user.id),
                         isDelete: true,
                       },
                     ]}

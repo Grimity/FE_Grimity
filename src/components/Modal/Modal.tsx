@@ -6,6 +6,7 @@ import Nickname from "./Nickname/Nickname";
 import Follower from "./Follower/Follower";
 import { usePreventScroll } from "@/utils/usePreventScroll";
 import IconComponent from "../Asset/Icon";
+import Following from "./Following/Following";
 
 export default function Modal() {
   const [modal, setModal] = useRecoilState(modalState);
@@ -14,7 +15,7 @@ export default function Modal() {
   if (!modal.isOpen) return null;
 
   const closeModal = () => {
-    setModal({ isOpen: false, type: null, data: null });
+    setModal({ isOpen: false, type: null, data: null, follow: false, isMine: false });
   };
 
   const renderModalContent = () => {
@@ -24,9 +25,9 @@ export default function Modal() {
       case "NICKNAME":
         return <Nickname />;
       case "FOLLOWER_LIST":
-        return <Follower data={modal.data} />;
-      // case "FOLLOWING_LIST":
-      //   return <FollowingModal data={modal.data} />;
+        return <Follower data={modal.data} isMine={modal.isMine} />;
+      case "FOLLOWING_LIST":
+        return <Following data={modal.data} isMine={modal.isMine} />;
       default:
         return null;
     }

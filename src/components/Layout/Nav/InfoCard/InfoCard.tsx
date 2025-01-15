@@ -8,12 +8,14 @@ import { formatCurrency } from "@/utils/formatCurrency";
 import Link from "next/link";
 import { authState } from "@/states/authState";
 import { useMyFollower } from "@/api/users/getMeFollowers";
+import { useFollowing } from "@/api/users/getIdFollowings";
 
 export default function InfoCard() {
   const [, setModal] = useRecoilState(modalState);
   const { data: myData } = useMyData();
-  const { isLoggedIn } = useRecoilValue(authState);
+  const { isLoggedIn, user_id } = useRecoilValue(authState);
   const { data: followerData } = useMyFollower();
+  const { data: followingData } = useFollowing(user_id);
 
   const handleFollowerModal = () => {
     if (followerData && Array.isArray(followerData)) {
@@ -22,6 +24,19 @@ export default function InfoCard() {
         type: "FOLLOWER_LIST",
         data: followerData,
         follow: true,
+        isMine: true,
+      });
+    }
+  };
+
+  const handleFollowingModal = () => {
+    if (followingData && Array.isArray(followingData)) {
+      setModal({
+        isOpen: true,
+        type: "FOLLOWING_LIST",
+        data: followingData,
+        follow: true,
+        isMine: true,
       });
     }
   };
@@ -57,7 +72,7 @@ export default function InfoCard() {
           </Link>
           <div className={styles.whiteBar} />
           <div className={styles.loginBottom}>
-            <div className={styles.follow}>
+            <div className={styles.follow} onClick={handleFollowingModal}>
               팔로잉<p className={styles.count}>{formatCurrency(myData.followingCount)}</p>
             </div>
             <div className={styles.follow} onClick={handleFollowerModal}>
