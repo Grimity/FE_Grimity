@@ -25,7 +25,6 @@
     "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
   font-weight: 400;
-  line-height: 24px;
 }
 
 @mixin MEDIUM {
@@ -33,7 +32,6 @@
     "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
   font-weight: 500;
-  line-height: 24px;
 }
 
 @mixin SEMIBOLD {
@@ -41,7 +39,6 @@
     "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
   font-weight: 600;
-  line-height: 24px;
 }
 
 // Typography
@@ -49,102 +46,119 @@
   @include SEMIBOLD;
   font-size: 24px;
   letter-spacing: -0.24px;
+  line-height: 36px;
 }
 
 @mixin H1SB {
   @include SEMIBOLD;
   font-size: 20px;
   letter-spacing: -0.2px;
+  line-height: 30px;
 }
 
 @mixin H2SB {
   @include SEMIBOLD;
   font-size: 18px;
   letter-spacing: -0.18px;
+  line-height: 27px;
 }
 
 @mixin H2MD {
   @include MEDIUM;
   font-size: 18px;
   letter-spacing: -0.18px;
+  line-height: 27px;
 }
 
 @mixin H3SB {
   @include SEMIBOLD;
   font-size: 16px;
   letter-spacing: -0.16px;
+  line-height: 24px;
 }
 
 @mixin H3MD {
   @include MEDIUM;
   font-size: 16px;
   letter-spacing: -0.16px;
+  line-height: 24px;
 }
 
 @mixin H4SB {
   @include SEMIBOLD;
   font-size: 15px;
   letter-spacing: -0.16px;
+  line-height: 22.5px;
 }
 
 @mixin H4MD {
   @include MEDIUM;
   font-size: 15px;
   letter-spacing: -0.15px;
+  line-height: 22.5px;
 }
 
 @mixin H4RG {
   @include REGULAR;
   font-size: 15px;
   letter-spacing: -0.15px;
+  line-height: 22.5px;
 }
 
 @mixin H5SB {
   @include SEMIBOLD;
   font-size: 14px;
   letter-spacing: -0.14px;
+  line-height: 21px;
 }
 
 @mixin H5MD {
   @include MEDIUM;
   font-size: 14px;
   letter-spacing: -0.14px;
+  line-height: 21px;
 }
 
 @mixin H6SB {
   @include SEMIBOLD;
   font-size: 13px;
   letter-spacing: -0.13px;
+  line-height: 19.5px;
 }
 
 @mixin H6MD {
   @include MEDIUM;
   font-size: 13px;
   letter-spacing: -0.13px;
+  line-height: 19.5px;
 }
 
 @mixin H7SB {
   @include SEMIBOLD;
   font-size: 12px;
   letter-spacing: -0.12px;
+  line-height: 18px;
 }
 
 @mixin H7MD {
   @include MEDIUM;
   font-size: 12px;
   letter-spacing: -0.12px;
+  line-height: 18px;
 }
 
 @mixin H8SB {
   @include SEMIBOLD;
   font-size: 10px;
   letter-spacing: -0.1px;
+  line-height: 15px;
 }
 
 @mixin H8MD {
   @include MEDIUM;
   font-size: 10px;
   letter-spacing: -0.1px;
+  line-height: 15px;
 }
 
 // Color
