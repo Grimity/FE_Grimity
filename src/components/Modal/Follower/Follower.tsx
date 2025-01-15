@@ -46,13 +46,23 @@ export default function Follower({ data, isMine }: { data: any[]; isMine?: boole
             <li key={user.id} className={styles.list}>
               <Link href={`/users/${user.id}`} onClick={handleLinkClick}>
                 <div className={styles.profile}>
-                  <Image
-                    src={user.image}
-                    width={48}
-                    height={48}
-                    alt="팔로워 프로필 이미지"
-                    className={styles.image}
-                  />
+                  {user.image !== "https://image.grimity.com/null" || user.image === null ? (
+                    <Image
+                      src={user.image}
+                      width={48}
+                      height={48}
+                      alt="팔로워 프로필 이미지"
+                      className={styles.image}
+                    />
+                  ) : (
+                    <Image
+                      src="/image/default.svg"
+                      width={48}
+                      height={48}
+                      alt="팔로워 프로필 이미지"
+                      className={styles.image}
+                    />
+                  )}
                   <div className={styles.nameCount}>
                     <p className={styles.name}>{user.name}</p>
                     <p className={styles.followerCount}>

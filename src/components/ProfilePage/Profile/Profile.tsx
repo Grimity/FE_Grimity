@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useMembershipDuration } from "@/utils/useMembershipDuration";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { modalState } from "@/states/modalState";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { useMyFollower } from "@/api/users/getMeFollowers";
 import { ProfileProps } from "./Profile.types";
 import { useUserData } from "@/api/users/getId";
@@ -15,9 +15,11 @@ import { putFollow } from "@/api/users/putIdFollow";
 import { useToast } from "@/utils/useToast";
 import { useFollower } from "@/api/users/getIdFollowers";
 import { useFollowing } from "@/api/users/getIdFollowings";
+import { authState } from "@/states/authState";
 
 export default function Profile({ isMyProfile, id }: ProfileProps) {
   const [, setModal] = useRecoilState(modalState);
+  const { isLoggedIn } = useRecoilValue(authState);
   const { data: myData } = useMyData();
   const { data: myFollowerData } = useMyFollower();
   const { data: followerData } = useFollower(id);
@@ -26,37 +28,45 @@ export default function Profile({ isMyProfile, id }: ProfileProps) {
   const { showToast } = useToast();
 
   const handleFollowerModal = () => {
-    if (isMyProfile) {
-      if (myFollowerData && Array.isArray(myFollowerData)) {
-        setModal({
-          isOpen: true,
-          type: "FOLLOWER_LIST",
-          data: myFollowerData,
-          follow: true,
-          isMine: isMyProfile,
-        });
-      }
+    if (!isLoggedIn) {
+      showToast("로그인 후 조회가 가능합니다!", "error");
     } else {
-      if (followerData && Array.isArray(followerData)) {
-        setModal({
-          isOpen: true,
-          type: "FOLLOWER_LIST",
-          data: followerData,
-          follow: true,
-        });
+      if (isMyProfile) {
+        if (myFollowerData && Array.isArray(myFollowerData)) {
+          setModal({
+            isOpen: true,
+            type: "FOLLOWER_LIST",
+            data: myFollowerData,
+            follow: true,
+            isMine: isMyProfile,
+          });
+        }
+      } else {
+        if (followerData && Array.isArray(followerData)) {
+          setModal({
+            isOpen: true,
+            type: "FOLLOWER_LIST",
+            data: followerData,
+            follow: true,
+          });
+        }
       }
     }
   };
 
   const handleFollowingModal = () => {
-    if (followingData && Array.isArray(followingData)) {
-      setModal({
-        isOpen: true,
-        type: "FOLLOWING_LIST",
-        data: followingData,
-        follow: true,
-        isMine: isMyProfile,
-      });
+    if (!isLoggedIn) {
+      showToast("로그인 후 조회가 가능합니다!", "error");
+    } else {
+      if (followingData && Array.isArray(followingData)) {
+        setModal({
+          isOpen: true,
+          type: "FOLLOWING_LIST",
+          data: followingData,
+          follow: true,
+          isMine: isMyProfile,
+        });
+      }
     }
   };
 
@@ -95,7 +105,7 @@ export default function Profile({ isMyProfile, id }: ProfileProps) {
                   />
                 ) : (
                   <Image
-                    src="/image/default-card.svg"
+                    src="/image/default.svg"
                     width={70}
                     height={70}
                     alt="프로필 이미지"
@@ -127,21 +137,23 @@ export default function Profile({ isMyProfile, id }: ProfileProps) {
                     <p className={styles.followerColor}>{formatCurrency(userData.followerCount)}</p>
                   </p>
                 </div>
-                {isMyProfile ? (
-                  <Link href="/profile-edit">
-                    <Button size="s" type="tertiary">
-                      프로필 편집
-                    </Button>
-                  </Link>
-                ) : userData.isFollowing ? (
-                  <button className={styles.unfollowBtn} onClick={handleUnfollowClick}>
-                    언 팔로우
-                  </button>
-                ) : (
-                  <button className={styles.followBtn} onClick={handleFollowClick}>
-                    팔로우
-                  </button>
-                )}
+                {isLoggedIn ? (
+                  isMyProfile ? (
+                    <Link href="/profile-edit">
+                      <Button size="s" type="tertiary">
+                        프로필 편집
+                      </Button>
+                    </Link>
+                  ) : userData.isFollowing ? (
+                    <button className={styles.unfollowBtn} onClick={handleUnfollowClick}>
+                      언 팔로우
+                    </button>
+                  ) : (
+                    <button className={styles.followBtn} onClick={handleFollowClick}>
+                      팔로우
+                    </button>
+                  )
+                ) : null}
               </div>
               <div className={styles.linkContainer}>
                 {userData.links.map(({ linkName, link }, index) => (
