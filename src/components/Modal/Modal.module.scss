@@ -21,6 +21,11 @@
   position: relative;
 }
 
+.modal2 {
+  @extend .modal;
+  padding: 32px 36px 40px;
+}
+
 .closeButton {
   position: absolute;
   top: 20px;

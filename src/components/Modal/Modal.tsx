@@ -34,7 +34,10 @@ export default function Modal() {
 
   return (
     <div className={styles.overlay} onClick={closeModal}>
-      <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+      <div
+        className={modal.follow ? styles.modal2 : styles.modal}
+        onClick={(e) => e.stopPropagation()}
+      >
         {renderModalContent()}
         <button className={styles.closeButton} onClick={closeModal}>
           <IconComponent name="x" width={32} height={32} />

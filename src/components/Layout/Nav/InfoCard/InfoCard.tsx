@@ -7,11 +7,24 @@ import Image from "next/image";
 import { formatCurrency } from "@/utils/formatCurrency";
 import Link from "next/link";
 import { authState } from "@/states/authState";
+import { useMyFollower } from "@/api/users/getMeFollowers";
 
 export default function InfoCard() {
   const [, setModal] = useRecoilState(modalState);
   const { data: userData } = useMyData();
   const { isLoggedIn } = useRecoilValue(authState);
+  const { data: followerData } = useMyFollower();
+
+  const handleFollowerModal = () => {
+    if (followerData && Array.isArray(followerData)) {
+      setModal({
+        isOpen: true,
+        type: "FOLLOWER_LIST",
+        data: followerData,
+        follow: true,
+      });
+    }
+  };
 
   return (
     <section className={styles.loginContainer}>
@@ -47,7 +60,7 @@ export default function InfoCard() {
             <div className={styles.follow}>
               팔로잉<p className={styles.count}>{formatCurrency(userData.followingCount)}</p>
             </div>
-            <div className={styles.follow}>
+            <div className={styles.follow} onClick={handleFollowerModal}>
               팔로워<p className={styles.count}>{formatCurrency(userData.followerCount)}</p>
             </div>
           </div>

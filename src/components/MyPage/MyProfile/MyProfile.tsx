@@ -5,9 +5,25 @@ import { useMyData } from "@/api/users/getMe";
 import Image from "next/image";
 import { useMembershipDuration } from "@/utils/useMembershipDuration";
 import { formatCurrency } from "@/utils/formatCurrency";
+import { modalState } from "@/states/modalState";
+import { useRecoilState } from "recoil";
+import { useMyFollower } from "@/api/users/getMeFollowers";
 
 export default function MyProfile() {
+  const [, setModal] = useRecoilState(modalState);
   const { data: userData } = useMyData();
+  const { data: followerData } = useMyFollower();
+
+  const handleFollowerModal = () => {
+    if (followerData && Array.isArray(followerData)) {
+      setModal({
+        isOpen: true,
+        type: "FOLLOWER_LIST",
+        data: followerData,
+        follow: true,
+      });
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -51,7 +67,7 @@ export default function MyProfile() {
                       {formatCurrency(userData.followingCount)}
                     </p>
                   </p>
-                  <p className={styles.follower}>
+                  <p className={styles.follower} onClick={handleFollowerModal}>
                     팔로워
                     <p className={styles.followerColor}>{formatCurrency(userData.followerCount)}</p>
                   </p>
