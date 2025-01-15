@@ -13,22 +13,35 @@ import { useUserData } from "@/api/users/getId";
 import { deleteFollow } from "@/api/users/deleteIdFollow";
 import { putFollow } from "@/api/users/putIdFollow";
 import { useToast } from "@/utils/useToast";
+import { useFollower } from "@/api/users/getIdFollowers";
 
 export default function Profile({ isMyProfile, id }: ProfileProps) {
   const [, setModal] = useRecoilState(modalState);
   const { data: myData } = useMyData();
-  const { data: followerData } = useMyFollower();
+  const { data: myFollowerData } = useMyFollower();
+  const { data: followerData } = useFollower(id);
   const { data: userData, refetch: refetchUserData } = useUserData(id);
   const { showToast } = useToast();
 
   const handleFollowerModal = () => {
-    if (followerData && Array.isArray(followerData)) {
-      setModal({
-        isOpen: true,
-        type: "FOLLOWER_LIST",
-        data: followerData,
-        follow: true,
-      });
+    if (isMyProfile) {
+      if (myFollowerData && Array.isArray(myFollowerData)) {
+        setModal({
+          isOpen: true,
+          type: "FOLLOWER_LIST",
+          data: myFollowerData,
+          follow: true,
+        });
+      }
+    } else {
+      if (followerData && Array.isArray(followerData)) {
+        setModal({
+          isOpen: true,
+          type: "FOLLOWER_LIST",
+          data: followerData,
+          follow: true,
+        });
+      }
     }
   };
 
