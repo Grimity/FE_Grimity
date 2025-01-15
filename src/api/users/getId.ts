@@ -32,9 +32,5 @@ export async function getUserInfo({ id }: UserInfoRequest): Promise<UserInfoResp
 }
 
 export function useUserData(id: string) {
-  const accessToken = typeof window !== "undefined" ? localStorage.getItem("access_token") : null;
-
-  return useQuery<UserInfoResponse>(["userInfo", id], () => getUserInfo({ id }), {
-    enabled: Boolean(accessToken),
-  });
+  return useQuery<UserInfoResponse>(["userInfo", id], () => getUserInfo({ id }));
 }
