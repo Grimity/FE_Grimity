@@ -26,4 +26,10 @@
   .cursor {
     cursor: pointer;
   }
+
+  .uploadBtn {
+    &:hover {
+      animation: pulse 0.6s ease-in-out;
+    }
+  }
 }

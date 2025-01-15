@@ -1,17 +1,5 @@
 @import "@/styles/globals.scss";
 
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.1);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
 .container {
   width: 100%;
   display: flex;

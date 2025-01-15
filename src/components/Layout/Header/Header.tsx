@@ -29,9 +29,11 @@ export default function Header() {
       <div className={styles.wrapper}>
         {isLoggedIn && (
           <>
-            <Button size="s" type="primary">
-              그림 올리기
-            </Button>
+            <div className={styles.uploadBtn}>
+              <Button size="s" type="primary">
+                그림 올리기
+              </Button>
+            </div>
             <div className={styles.cursor}>
               <IconComponent name="alarm" width={24} height={24} alt="알림" />
             </div>
