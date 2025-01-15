@@ -188,7 +188,7 @@ export default function ProfileEdit() {
             <TextField
               label="닉네임"
               placeholder="닉네임을 입력해 주세요."
-              maxLength={10}
+              maxLength={12}
               value={name}
               onChange={handleNameChange}
               color="GREEN"

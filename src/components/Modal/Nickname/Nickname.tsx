@@ -61,7 +61,7 @@ export default function Nickname() {
       <TextField
         placeholder="프로필에 노출될 닉네임을 입력해 주세요."
         errorMessage="중복되는 닉네임이에요."
-        maxLength={10}
+        maxLength={12}
         value={nickname}
         onChange={(e) => setNickname(e.target.value.trimStart())}
         isError={isError}

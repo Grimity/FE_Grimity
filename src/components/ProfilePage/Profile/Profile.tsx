@@ -113,7 +113,7 @@ export default function Profile({ isMyProfile, id }: ProfileProps) {
                 )}
                 <div className={styles.nameDate}>
                   <h2 className={styles.name}>{userData.name}</h2>
-                  {myData && isMyProfile && <p className={styles.date}>이메일 여기에</p>}
+                  {myData && <p className={styles.date}>{userData.email}</p>}
                 </div>
               </div>
               <p className={styles.description}>{userData.description}</p>
