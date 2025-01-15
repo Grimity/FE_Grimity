@@ -17,11 +17,13 @@ function InitializeAuthState() {
 
   useEffect(() => {
     const access_token = localStorage.getItem("access_token");
+    const user_id = localStorage.getItem("user_id");
 
-    if (access_token) {
+    if (access_token && user_id) {
       setAuth({
         access_token,
         isLoggedIn: true,
+        user_id,
       });
     }
   }, [setAuth]);
@@ -35,8 +37,12 @@ function PersistAuthState() {
 
     if (auth.isLoggedIn) {
       localStorage.setItem("access_token", auth.access_token);
+      if (auth.id) {
+        localStorage.setItem("user_id", auth.id);
+      }
     } else {
       localStorage.removeItem("access_token");
+      localStorage.removeItem("user_id");
     }
   });
 

@@ -6,6 +6,7 @@ import { useMutation } from "react-query";
 import { authState } from "@/states/authState";
 import { modalState } from "@/states/modalState";
 import { useGoogleLogin } from "@react-oauth/google";
+import { useToast } from "@/utils/useToast";
 
 interface AuthObj {
   access_token: string;
@@ -27,6 +28,7 @@ export default function Login() {
   const APP_KEY = process.env.NEXT_PUBLIC_KAKAO_APP_KEY;
   const [, setAuth] = useRecoilState(authState);
   const [, setModal] = useRecoilState(modalState);
+  const { showToast } = useToast();
 
   const loginMutation = useMutation({
     mutationFn: async ({
@@ -46,13 +48,15 @@ export default function Login() {
       setAuth({
         access_token: data.accessToken,
         isLoggedIn: true,
+        user_id: data.id,
       });
 
       setModal({ isOpen: false, type: null, data: null });
       localStorage.setItem("access_token", data.accessToken);
+      localStorage.setItem("user_id", data.id);
     },
     onError: (error: ErrorResponse) => {
-      console.error("로그인 실패:", error);
+      showToast("오류가 발생했습니다. 다시 시도해주세요.", "error");
     },
   });
 
@@ -84,7 +88,7 @@ export default function Login() {
               data: { accessToken: authObj.access_token, provider: "KAKAO" },
             });
           } else {
-            console.error("로그인 처리 중 오류 발생:", error);
+            console.error("로그인 실패");
           }
         }
       },
@@ -115,7 +119,7 @@ export default function Login() {
                 data: { accessToken: tokenResponse.access_token, provider: "GOOGLE" },
               });
             } else {
-              console.error("로그인 처리 중 오류:", error);
+              console.error("Google 로그인 처리 중 오류 발생");
             }
           });
       } catch (error) {

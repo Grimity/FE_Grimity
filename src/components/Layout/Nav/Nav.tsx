@@ -22,8 +22,10 @@ export default function Nav() {
     setAuth({
       access_token: "",
       isLoggedIn: false,
+      user_id: "",
     });
     localStorage.removeItem("access_token");
+    localStorage.removeItem("user_id");
     router.push("/");
   };
 

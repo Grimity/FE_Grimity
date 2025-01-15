@@ -9,6 +9,7 @@ import IconComponent from "@/components/Asset/Icon";
 import Button from "@/components/Button/Button";
 import router from "next/router";
 import { authState } from "@/states/authState";
+import { useToast } from "@/utils/useToast";
 
 export default function Nickname() {
   const [nickname, setNickname] = useState("");
@@ -17,6 +18,7 @@ export default function Nickname() {
   const [, setAuth] = useRecoilState(authState);
   const [, setModal] = useRecoilState(modalState);
   const modal = useRecoilState(modalState);
+  const { showToast } = useToast();
 
   const registerMutation = useMutation({
     mutationFn: async (data: { provider: string; providerAccessToken: string; name: string }) => {
@@ -28,6 +30,7 @@ export default function Nickname() {
       setAuth({
         access_token: data.accessToken,
         isLoggedIn: true,
+        user_id: data.id,
       });
       router.push("/");
     },
@@ -35,7 +38,7 @@ export default function Nickname() {
       if (error?.response?.status === 409) {
         setIsError(true);
       } else {
-        console.error("회원가입 실패:", error);
+        showToast("오류가 발생했습니다. 다시 시도해주세요.", "error");
       }
     },
   });
