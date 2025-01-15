@@ -8,4 +8,6 @@ export interface TextFieldProps {
   onChange: React.ChangeEventHandler<HTMLInputElement>;
   color?: "GRAY" | "GREEN";
   required?: boolean;
+  isUpload?: boolean;
+  onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 }

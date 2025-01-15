@@ -7,6 +7,11 @@
   gap: 4px;
 }
 
+.isUploadContainer {
+  @extend .container;
+  gap: 12px;
+}
+
 .inputContainer {
   width: 100%;
   display: flex;
@@ -22,7 +27,20 @@
   }
 }
 
+.isUploadInputContainer {
+  @extend .inputContainer;
+  border: none;
+
+  &:focus-within {
+    border: 1px solid $green50;
+  }
+}
+
 .inputContainer.error {
+  border: 2px solid $error;
+}
+
+.isUploadInputContainer.error {
   border: 2px solid $error;
 }
 
@@ -41,9 +59,14 @@
   color: $gray90;
 }
 
+.isUploadLabel {
+  @extend .label;
+  @include H4SB;
+}
+
 .input {
   width: 100%;
-  @include H4MD;
+  @include H5MD;
   color: $gray90;
   border: none;
   outline: none;
