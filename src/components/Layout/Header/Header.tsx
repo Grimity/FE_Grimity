@@ -6,9 +6,11 @@ import SearchBar from "@/components/SearchBar/SearchBar";
 import Button from "@/components/Button/Button";
 import Link from "next/link";
 import { authState } from "@/states/authState";
+import { useState } from "react";
 
 export default function Header() {
   const { isLoggedIn } = useRecoilValue(authState);
+  const [search, setSearch] = useState("");
 
   return (
     <header className={styles.header}>
@@ -17,7 +19,13 @@ export default function Header() {
           <Image src="/image/logo.svg" width={90} height={45} alt="logo" />
         </div>
       </Link>
-      <SearchBar placeholder="작품 정보를 검색해보세요." />
+      <div className={styles.searchBar}>
+        <SearchBar
+          placeholder="작품 정보를 검색해보세요."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+      </div>
       <div className={styles.wrapper}>
         {isLoggedIn && (
           <>
