@@ -1,37 +1,40 @@
 import BASE_URL from "@/constants/baseurl";
 import { useQuery } from "react-query";
 
-export interface MyInfoResponse {
+export interface UserInfoRequest {
   id: string;
-  provider: "GOOGLE" | "KAKAO";
-  email: string;
+}
+
+export interface UserInfoResponse {
+  id: string;
   name: string;
   image: string;
   description: string;
   links: { linkName: string; link: string }[];
-  createdAt: Date;
   followerCount: number;
   followingCount: number;
+  feedCount: number;
+  isFollowing: boolean;
 }
 
-export async function getMyInfo(): Promise<MyInfoResponse> {
+export async function getUserInfo({ id }: UserInfoRequest): Promise<UserInfoResponse> {
   try {
-    const response = await BASE_URL.get("/users/me");
+    const response = await BASE_URL.get(`/users/${id}`);
 
     const updatedData = response.data;
     updatedData.image = `https://image.grimity.com/${updatedData.image}`;
 
     return updatedData;
   } catch (error) {
-    console.error("Error fetching Profile:", error);
-    throw new Error("Failed to fetch Profile");
+    console.error("Error fetching User Profile:", error);
+    throw new Error("Failed to fetch User Profile");
   }
 }
 
-export function useMyData() {
+export function useUserData(id: string) {
   const accessToken = typeof window !== "undefined" ? localStorage.getItem("access_token") : null;
 
-  return useQuery<MyInfoResponse>("myInfo", getMyInfo, {
+  return useQuery<UserInfoResponse>(["userInfo", id], () => getUserInfo({ id }), {
     enabled: Boolean(accessToken),
   });
 }
