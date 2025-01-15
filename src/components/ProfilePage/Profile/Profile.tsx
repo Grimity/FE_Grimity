@@ -3,7 +3,6 @@ import styles from "./Profile.module.scss";
 import Button from "../../Button/Button";
 import { useMyData } from "@/api/users/getMe";
 import Image from "next/image";
-import { useMembershipDuration } from "@/utils/useMembershipDuration";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { modalState } from "@/states/modalState";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -114,11 +113,7 @@ export default function Profile({ isMyProfile, id }: ProfileProps) {
                 )}
                 <div className={styles.nameDate}>
                   <h2 className={styles.name}>{userData.name}</h2>
-                  {myData && isMyProfile && (
-                    <p className={styles.date}>
-                      가입일 +{useMembershipDuration(myData.createdAt)}일
-                    </p>
-                  )}
+                  {myData && isMyProfile && <p className={styles.date}>이메일 여기에</p>}
                 </div>
               </div>
               <p className={styles.description}>{userData.description}</p>
