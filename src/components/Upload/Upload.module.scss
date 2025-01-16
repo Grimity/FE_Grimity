@@ -58,7 +58,7 @@
           display: flex;
           flex-wrap: wrap;
           gap: 12px;
-          max-height: 530px;
+          max-height: 480px;
           overflow-y: auto;
 
           &::-webkit-scrollbar {
@@ -73,10 +73,11 @@
           &::-webkit-scrollbar-thumb {
             background: $gray20;
             border-radius: 10px;
+            cursor: pointer;
           }
 
           &::-webkit-scrollbar-thumb:hover {
-            background: $green50;
+            background: $gray30;
           }
         }
 
@@ -106,6 +107,11 @@
           align-items: center;
           width: 40px;
           height: 40px;
+          transition: transform 0.2s ease-in-out;
+
+          &:hover {
+            transform: scale(1.1);
+          }
         }
       }
 
@@ -160,10 +166,11 @@
                 &::-webkit-scrollbar-thumb {
                   background: $green50;
                   border-radius: 10px;
+                  cursor: pointer;
                 }
 
                 &::-webkit-scrollbar-thumb:hover {
-                  background: $green50;
+                  background: $green60;
                 }
               }
 
