@@ -20,7 +20,7 @@
   padding: 16px 24px;
   background-color: $white;
   border-radius: 16px;
-  border: 2px solid $gray20;
+  border: 1px solid $gray15;
 
   &:focus-within {
     border: 2px solid $green50;
@@ -54,7 +54,7 @@
 }
 
 .label {
-  @include H4MD;
+  @include H5SB;
   align-self: stretch;
   color: $gray90;
 }

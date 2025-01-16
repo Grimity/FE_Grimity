@@ -64,10 +64,10 @@
         }
 
         .message {
-          @include H4MD;
+          @include H6MD;
           color: $gray40;
-          margin-top: 8px;
-          margin-bottom: 24px;
+          margin-top: 4px;
+          margin-bottom: 16px;
         }
 
         .linkInputContainer {
