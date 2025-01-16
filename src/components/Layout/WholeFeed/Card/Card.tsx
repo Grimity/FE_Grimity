@@ -14,7 +14,7 @@ export default function Card({
   commentCount,
   createdAt,
 }: CardProps) {
-  const hasMultipleImages = cards.length > 1;
+  const hasMultipleImages = cards && cards.length > 1;
 
   return (
     <div className={styles.container}>
@@ -29,16 +29,28 @@ export default function Card({
             <IconComponent name="overlap" width={12} height={12} />
           </div>
         )}
-        <Image src={cards[0]} alt={title} width={280} height={300} className={styles.image} />
+        <Image
+          src={cards[0]}
+          alt={title}
+          layout="fill"
+          objectFit="cover"
+          className={styles.image}
+        />
         <div className={styles.titleOverlay}>{title}</div>
       </div>
       <div className={styles.profileContainer}>
-        {isMain ? (
+        {isMain && author ? (
           <div className={styles.profile}>
             <div className={styles.profileImage}>
-              <IconComponent name="temp3" width={24} height={24} />
+              <Image
+                src={author.image}
+                alt={author.name}
+                width={24}
+                height={24}
+                className={styles.profileImage}
+              />
             </div>
-            <p className={styles.author}>{author}</p>
+            <p className={styles.author}>{author.name}</p>
           </div>
         ) : (
           <div className={styles.countContainer}>

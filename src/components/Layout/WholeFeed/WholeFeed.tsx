@@ -1,7 +1,18 @@
+import { useFeeds } from "@/api/feeds/getFeeds";
 import Card from "./Card/Card";
 import styles from "./WholeFeed.module.scss";
 
 export default function WholeFeed() {
+  const { data, isLoading, isError } = useFeeds({});
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error loading feeds</div>;
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.titleContainer}>
@@ -9,11 +20,18 @@ export default function WholeFeed() {
         <p className={styles.subtitle}>그리미티 작가들의 훌륭한 그림을 살펴보세요!</p>
       </div>
       <div className={styles.galleryGrid}>
-        {Array(12)
-          .fill(0)
-          .map((_, index) => (
-            <Card key={index} isMain />
-          ))}
+        {data?.map((feed) => (
+          <Card
+            key={feed.id}
+            isMain
+            title={feed.title}
+            cards={feed.cards}
+            author={feed.author}
+            likeCount={feed.likeCount}
+            commentCount={feed.commentCount}
+            createdAt={feed.createdAt}
+          />
+        ))}
       </div>
     </div>
   );
