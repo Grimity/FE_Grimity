@@ -216,8 +216,9 @@ export default function Detail({ id }: DetailProps) {
                   <Image
                     src={card}
                     alt={`Card image ${index + 3}`}
-                    width={300}
-                    height={200}
+                    width={600}
+                    height={0}
+                    layout="intrinsic"
                     className={styles.cardImage}
                   />
                 </div>
