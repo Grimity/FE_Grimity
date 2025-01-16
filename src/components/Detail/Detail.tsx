@@ -28,10 +28,6 @@ export default function Detail({ id }: DetailProps) {
   const [currentLikeCount, setCurrentLikeCount] = useState(0);
   const [viewCounted, setViewCounted] = useState(false);
 
-  if (isLoading) {
-    return <div>로딩 중...</div>;
-  }
-
   useEffect(() => {
     if (!details) return;
     setIsFollowing(details.author.isFollowing ?? false);
@@ -54,6 +50,10 @@ export default function Detail({ id }: DetailProps) {
 
     incrementViewCount();
   }, [id, viewCounted]);
+
+  if (isLoading) {
+    return <div>로딩 중...</div>;
+  }
 
   const handleShowMore = () => {
     setIsExpanded(!isExpanded);
