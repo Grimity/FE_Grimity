@@ -1,6 +1,7 @@
 import { useFeeds } from "@/api/feeds/getFeeds";
 import Card from "./Card/Card";
 import styles from "./WholeFeed.module.scss";
+import Link from "next/link";
 
 export default function WholeFeed() {
   const { data, isLoading, isError } = useFeeds({});
@@ -21,18 +22,19 @@ export default function WholeFeed() {
       </div>
       <div className={styles.galleryGrid}>
         {data?.map((feed) => (
-          <Card
-            key={feed.id}
-            isMain
-            title={feed.title}
-            cards={feed.cards}
-            author={feed.author}
-            likeCount={feed.likeCount}
-            commentCount={feed.commentCount}
-            createdAt={feed.createdAt}
-            id={feed.id}
-            isLike={feed.isLike}
-          />
+          <Link href={`/feeds/${feed.id}`} key={feed.id}>
+            <Card
+              isMain
+              title={feed.title}
+              cards={feed.cards}
+              author={feed.author}
+              likeCount={feed.likeCount}
+              commentCount={feed.commentCount}
+              createdAt={feed.createdAt}
+              id={feed.id}
+              isLike={feed.isLike}
+            />
+          </Link>
         ))}
       </div>
     </div>

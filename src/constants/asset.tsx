@@ -48,6 +48,11 @@ export const ICONS = {
   add: "/icon/add.svg",
   profileEdit: "/icon/profile-edit.svg",
   userX: "/icon/user-x.svg",
+  shareDetail: "/icon/detail-share.svg",
+  heartDetail: "/icon/detail-heart.svg",
+  heartFullDetail: "/icon/detail-heart-full.svg",
+  viewCount: "/icon/view-count.svg",
+  likeCount: "/icon/like-count.svg",
   /* Image */
   logo: "/image/logo.svg",
   banner: "/image/banner.svg",

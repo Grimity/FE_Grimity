@@ -61,13 +61,23 @@ export default function Card({
         {isMain && author ? (
           <div className={styles.profile}>
             <div className={styles.profileImage}>
-              <Image
-                src={author.image}
-                alt={author.name}
-                width={24}
-                height={24}
-                className={styles.profileImage}
-              />
+              {author.image !== "https://image.grimity.com/null" ? (
+                <Image
+                  src={author.image}
+                  alt={author.name}
+                  width={24}
+                  height={24}
+                  className={styles.profileImage}
+                />
+              ) : (
+                <Image
+                  src="/image/default-border.svg"
+                  width={24}
+                  height={24}
+                  alt="프로필 이미지"
+                  className={styles.profileImage}
+                />
+              )}
             </div>
             <p className={styles.author}>{author.name}</p>
           </div>

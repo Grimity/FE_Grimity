@@ -71,7 +71,7 @@ export default function Profile({ isMyProfile, id }: ProfileProps) {
 
   const handleFollowClick = async () => {
     try {
-      await putFollow({ id: id });
+      await putFollow(id);
       refetchUserData();
     } catch (error) {
       showToast("오류가 발생했습니다. 다시 시도해주세요.", "error");

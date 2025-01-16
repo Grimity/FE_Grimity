@@ -5,6 +5,7 @@ import Card from "../Layout/WholeFeed/Card/Card";
 import { ProfilePageProps } from "./ProfilePage.types";
 import { useUserData } from "@/api/users/getId";
 import { useUserFeeds } from "@/api/users/getIdFeeds";
+import Link from "next/link";
 
 export default function ProfilePage({ isMyProfile, id }: ProfilePageProps) {
   const { data: userData } = useUserData(id);
@@ -28,15 +29,17 @@ export default function ProfilePage({ isMyProfile, id }: ProfilePageProps) {
           <section className={styles.cardContainer}>
             {userFeeds
               ? userFeeds.map((feed) => (
-                  <Card
-                    key={feed.id}
-                    title={feed.title}
-                    cards={feed.cards || []}
-                    likeCount={feed.likeCount}
-                    commentCount={feed.commentCount}
-                    createdAt={feed.createdAt}
-                    id={id}
-                  />
+                  <Link href={`/feeds/${feed.id}`}>
+                    <Card
+                      key={feed.id}
+                      title={feed.title}
+                      cards={feed.cards || []}
+                      likeCount={feed.likeCount}
+                      commentCount={feed.commentCount}
+                      createdAt={feed.createdAt}
+                      id={id}
+                    />
+                  </Link>
                 ))
               : null}
           </section>

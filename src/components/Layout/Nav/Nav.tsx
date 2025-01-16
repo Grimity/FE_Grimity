@@ -66,8 +66,8 @@ export default function Nav() {
         <div className={styles.recommendList}>
           {popularData &&
             popularData.map((author) => (
-              <Link href={`/users/${author.id}`}>
-                <div key={author.id} className={styles.recommend}>
+              <Link href={`/users/${author.id}`} key={author.id}>
+                <div className={styles.recommend}>
                   <div className={styles.left}>
                     <div className={styles.profileImage}>
                       {author.image !== "https://image.grimity.com/null" ? (
