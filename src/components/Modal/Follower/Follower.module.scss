@@ -19,10 +19,10 @@
     margin-top: 8px;
     display: flex;
     flex-direction: column;
-    gap: 24px;
 
     &::-webkit-scrollbar {
       width: 5px;
+      margin-left: 6px;
     }
 
     &::-webkit-scrollbar-track {
@@ -33,16 +33,26 @@
     &::-webkit-scrollbar-thumb {
       background: $green50;
       border-radius: 10px;
+      cursor: pointer;
     }
 
     &::-webkit-scrollbar-thumb:hover {
-      background: $green50;
+      background: $green60;
     }
 
     .list {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      background-color: $white;
+      padding: 8px 0 8px 4px;
+      border-radius: 10px;
+      gap: 4px;
+      margin-right: 6px;
+
+      &:hover {
+        background-color: $gray5;
+      }
 
       .profile {
         display: flex;

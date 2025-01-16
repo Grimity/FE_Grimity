@@ -91,7 +91,7 @@ export default function Follower({ data, isMine }: { data: any[]; isMine?: boole
         ) : (
           <div className={styles.noResult}>
             <IconComponent name="userX" width={32} height={32} />
-            나를 팔로우하는 유저가 없어요.
+            팔로우하는 유저가 없어요.
           </div>
         )}
       </ul>
