@@ -15,6 +15,7 @@ import { deleteLike } from "@/api/feeds/deleteFeedsIdLike";
 import { putLike } from "@/api/feeds/putFeedsIdLike";
 import { timeAgoOrFormattedDate } from "@/utils/timeAgo";
 import Button from "../Button/Button";
+import Link from "next/link";
 
 export default function Detail({ id }: DetailProps) {
   const { user_id } = useRecoilValue(authState);
@@ -75,36 +76,38 @@ export default function Detail({ id }: DetailProps) {
         {details && (
           <>
             <section className={styles.profileContainer}>
-              <div className={styles.profileLeft}>
-                <div className={styles.profileImage}>
-                  {details.author.image !== "https://image.grimity.com/null" ? (
-                    <Image
-                      src={details.author.image}
-                      alt={details.author.name}
-                      className={styles.authorImage}
-                      width={48}
-                      height={48}
-                    />
-                  ) : (
-                    <Image
-                      src="/image/default-border.svg"
-                      width={48}
-                      height={48}
-                      alt="프로필 이미지"
-                      className={styles.authorImage}
-                    />
-                  )}
-                </div>
-                <div className={styles.authorInfo}>
-                  <p className={styles.authorName}>{details.author.name}</p>
-                  <div className={styles.follower}>
-                    팔로워
-                    <p className={styles.followerColor}>
-                      {formatCurrency(details.author.followerCount)}
-                    </p>
+              <Link href={`/users/${details.author.id}`}>
+                <div className={styles.profileLeft}>
+                  <div className={styles.profileImage}>
+                    {details.author.image !== "https://image.grimity.com/null" ? (
+                      <Image
+                        src={details.author.image}
+                        alt={details.author.name}
+                        className={styles.authorImage}
+                        width={48}
+                        height={48}
+                      />
+                    ) : (
+                      <Image
+                        src="/image/default-border.svg"
+                        width={48}
+                        height={48}
+                        alt="프로필 이미지"
+                        className={styles.authorImage}
+                      />
+                    )}
+                  </div>
+                  <div className={styles.authorInfo}>
+                    <p className={styles.authorName}>{details.author.name}</p>
+                    <div className={styles.follower}>
+                      팔로워
+                      <p className={styles.followerColor}>
+                        {formatCurrency(details.author.followerCount)}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </Link>
               <div className={styles.followDropdown}>
                 {user_id !== details.author.id &&
                   (isFollowing ? (
