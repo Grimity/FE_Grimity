@@ -8,11 +8,14 @@ import InfoCard from "./InfoCard/InfoCard";
 import { authState } from "@/states/authState";
 import router from "next/router";
 import Image from "next/image";
+import { usePopular } from "@/api/users/getPopular";
 
 export default function Nav() {
   const [mounted, setMounted] = useState(false);
   const [, setAuth] = useRecoilState(authState);
   const { isLoggedIn } = useRecoilValue(authState);
+
+  const { data: popularData, isLoading } = usePopular();
 
   useEffect(() => {
     setMounted(true);
@@ -31,6 +34,10 @@ export default function Nav() {
 
   if (!mounted) {
     return null;
+  }
+
+  if (isLoading) {
+    return <div>Loading...</div>;
   }
 
   return (
@@ -57,86 +64,41 @@ export default function Nav() {
       <section className={styles.recommendContainer}>
         <p className={styles.title}>인기 작가</p>
         <div className={styles.recommendList}>
-          <div className={styles.recommend}>
-            <div className={styles.left}>
-              <div className={styles.profileImage}>
-                <Image
-                  src="/image/temp1.jpg"
-                  width={32}
-                  height={32}
-                  alt="프로필 사진"
-                  className={styles.image}
-                />
-              </div>
-              <div>
-                <p className={styles.author}>메구미</p>
-                <div className={styles.follow}>
-                  팔로워<p className={styles.count}>{formatCurrency(1999)}</p>
+          {popularData &&
+            popularData.map((author) => (
+              <Link href={`/users/${author.id}`}>
+                <div key={author.id} className={styles.recommend}>
+                  <div className={styles.left}>
+                    <div className={styles.profileImage}>
+                      {author.image !== "https://image.grimity.com/null" ? (
+                        <Image
+                          src={author.image}
+                          width={32}
+                          height={32}
+                          alt={author.name}
+                          className={styles.image}
+                        />
+                      ) : (
+                        <Image
+                          src="/image/default.svg"
+                          width={32}
+                          height={32}
+                          alt="프로필 이미지"
+                          className={styles.image}
+                        />
+                      )}
+                    </div>
+                    <div>
+                      <p className={styles.author}>{author.name}</p>
+                      <div className={styles.follow}>
+                        팔로워<p className={styles.count}>{formatCurrency(author.followerCount)}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <p className={styles.update}>+{author.feedCount}</p>
                 </div>
-              </div>
-            </div>
-            <p className={styles.update}>+27</p>
-          </div>
-          <div className={styles.recommend}>
-            <div className={styles.left}>
-              <div className={styles.profileImage}>
-                <Image
-                  src="/image/default.svg"
-                  width={32}
-                  height={32}
-                  alt="프로필 사진"
-                  className={styles.image}
-                />
-              </div>
-              <div>
-                <p className={styles.author}>닉네임</p>
-                <div className={styles.follow}>
-                  팔로워<p className={styles.count}>{formatCurrency(1999)}</p>
-                </div>
-              </div>
-            </div>
-            <p className={styles.update}>+27</p>
-          </div>
-          <div className={styles.recommend}>
-            <div className={styles.left}>
-              <div className={styles.profileImage}>
-                <Image
-                  src="/image/temp2.jpg"
-                  width={32}
-                  height={32}
-                  alt="프로필 사진"
-                  className={styles.image}
-                />
-              </div>
-              <div>
-                <p className={styles.author}>닉네임</p>
-                <div className={styles.follow}>
-                  팔로워<p className={styles.count}>{formatCurrency(5)}</p>
-                </div>
-              </div>
-            </div>
-            <p className={styles.update}>+27</p>
-          </div>
-          <div className={styles.recommend}>
-            <div className={styles.left}>
-              <div className={styles.profileImage}>
-                <Image
-                  src="/image/temp3.jpg"
-                  width={32}
-                  height={32}
-                  alt="프로필 사진"
-                  className={styles.image}
-                />
-              </div>
-              <div>
-                <p className={styles.author}>닉네임</p>
-                <div className={styles.follow}>
-                  팔로워<p className={styles.count}>{formatCurrency(123456)}</p>
-                </div>
-              </div>
-            </div>
-            <p className={styles.update}>+27</p>
-          </div>
+              </Link>
+            ))}
         </div>
       </section>
       {isLoggedIn && (
