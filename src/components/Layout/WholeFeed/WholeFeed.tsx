@@ -30,6 +30,8 @@ export default function WholeFeed() {
             likeCount={feed.likeCount}
             commentCount={feed.commentCount}
             createdAt={feed.createdAt}
+            id={feed.id}
+            isLike={feed.isLike}
           />
         ))}
       </div>

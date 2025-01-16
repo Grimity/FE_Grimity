@@ -1,9 +1,12 @@
+import { useState, useEffect } from "react";
 import IconComponent from "@/components/Asset/Icon";
 import styles from "./Card.module.scss";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { formattedDate } from "@/utils/formatDate";
 import Image from "next/image";
 import { CardProps } from "./Card.types";
+import { deleteLike } from "@/api/feeds/deleteFeedsIdLike";
+import { putLike } from "@/api/feeds/putFeedsIdLike";
 
 export default function Card({
   isMain = false,
@@ -13,15 +16,31 @@ export default function Card({
   likeCount,
   commentCount,
   createdAt,
+  id,
+  isLike,
 }: CardProps) {
+  const [isLiked, setIsLiked] = useState(isLike);
+  const [currentLikeCount, setCurrentLikeCount] = useState(likeCount);
+
   const hasMultipleImages = cards && cards.length > 1;
+
+  const handleLikeClick = async () => {
+    if (isLiked) {
+      await deleteLike(id);
+      setCurrentLikeCount((prev) => prev - 1);
+    } else {
+      await putLike(id);
+      setCurrentLikeCount((prev) => prev + 1);
+    }
+    setIsLiked(!isLiked);
+  };
 
   return (
     <div className={styles.container}>
       <div className={styles.imageContainer}>
         {isMain && (
-          <div className={styles.likeBtn}>
-            <IconComponent name="heartGray" width={28} height={28} />
+          <div className={styles.likeBtn} onClick={handleLikeClick}>
+            <IconComponent name={isLiked ? "heartRed" : "heartGray"} width={28} height={28} />
           </div>
         )}
         {hasMultipleImages && (
@@ -56,7 +75,7 @@ export default function Card({
           <div className={styles.countContainer}>
             <div className={styles.likeContainer}>
               <IconComponent name="heart2" width={16} height={16} />
-              <p className={styles.count2}>{formatCurrency(likeCount)}</p>
+              <p className={styles.count2}>{formatCurrency(currentLikeCount)}</p>
             </div>
             <div className={styles.likeContainer}>
               <IconComponent name="message2" width={16} height={16} />
@@ -68,7 +87,7 @@ export default function Card({
           <div className={styles.countContainer}>
             <div className={styles.likeContainer}>
               <IconComponent name="heart" width={16} height={16} />
-              <p className={styles.count}>{formatCurrency(likeCount)}</p>
+              <p className={styles.count}>{formatCurrency(currentLikeCount)}</p>
             </div>
             <div className={styles.likeContainer}>
               <IconComponent name="message" width={16} height={16} />

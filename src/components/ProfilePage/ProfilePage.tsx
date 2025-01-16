@@ -35,6 +35,7 @@ export default function ProfilePage({ isMyProfile, id }: ProfilePageProps) {
                     likeCount={feed.likeCount}
                     commentCount={feed.commentCount}
                     createdAt={feed.createdAt}
+                    id={id}
                   />
                 ))
               : null}

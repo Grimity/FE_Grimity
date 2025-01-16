@@ -1,4 +1,5 @@
 export interface CardProps {
+  id: string;
   isMain?: boolean;
   title: string;
   cards: string[];
@@ -10,4 +11,5 @@ export interface CardProps {
   likeCount: number;
   commentCount: number;
   createdAt: Date;
+  isLike?: boolean;
 }
