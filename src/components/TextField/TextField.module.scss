@@ -20,10 +20,10 @@
   padding: 16px 24px;
   background-color: $white;
   border-radius: 16px;
-  border: 1px solid $gray15;
+  border: 1.6px solid $gray15;
 
   &:focus-within {
-    border: 2px solid $green50;
+    border: 1.6px solid $green50;
   }
 }
 
@@ -32,16 +32,16 @@
   border: none;
 
   &:focus-within {
-    border: 1px solid $green50;
+    border: 1.6px solid $green50;
   }
 }
 
 .inputContainer.error {
-  border: 2px solid $error;
+  border: 1.6px solid $error;
 }
 
 .isUploadInputContainer.error {
-  border: 2px solid $error;
+  border: 1.6px solid $error;
 }
 
 .labelContainer {
