@@ -45,13 +45,67 @@
       gap: 140px;
 
       .imageSection {
-        width: 420px;
+        width: 430px;
         display: flex;
         flex-direction: column;
         gap: 28px;
 
         .uploadBtn {
           cursor: pointer;
+        }
+
+        .imageContainer {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 12px;
+          max-height: 530px;
+          overflow-y: auto;
+
+          &::-webkit-scrollbar {
+            width: 5px;
+          }
+
+          &::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+          }
+
+          &::-webkit-scrollbar-thumb {
+            background: $gray20;
+            border-radius: 10px;
+          }
+
+          &::-webkit-scrollbar-thumb:hover {
+            background: $green50;
+          }
+        }
+
+        .imageWrapper {
+          position: relative;
+          width: fit-content;
+        }
+
+        .removeImage {
+          position: absolute;
+          top: 8px;
+          right: 8px;
+          cursor: pointer;
+        }
+
+        .addBtnContainer {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          margin-top: 16px;
+        }
+
+        .addImageBtn {
+          cursor: pointer;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 40px;
+          height: 40px;
         }
       }
 
