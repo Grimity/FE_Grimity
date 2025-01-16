@@ -16,6 +16,7 @@ import { putLike } from "@/api/feeds/putFeedsIdLike";
 import { timeAgoOrFormattedDate } from "@/utils/timeAgo";
 import Button from "../Button/Button";
 import Link from "next/link";
+import { putView } from "@/api/feeds/putIdView";
 
 export default function Detail({ id }: DetailProps) {
   const { isLoggedIn, user_id } = useRecoilValue(authState);
@@ -25,6 +26,11 @@ export default function Detail({ id }: DetailProps) {
   const [isFollowing, setIsFollowing] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const [currentLikeCount, setCurrentLikeCount] = useState(0);
+  const [viewCounted, setViewCounted] = useState(false);
+
+  if (isLoading) {
+    return <div>로딩 중...</div>;
+  }
 
   useEffect(() => {
     if (!details) return;
@@ -33,9 +39,21 @@ export default function Detail({ id }: DetailProps) {
     setCurrentLikeCount(details.likeCount ?? 0);
   }, [details]);
 
-  if (isLoading) {
-    return <div>로딩 중...</div>;
-  }
+  // 새로고침 조회수 증가
+  useEffect(() => {
+    const incrementViewCount = async () => {
+      if (!id || viewCounted) return;
+
+      try {
+        await putView(id);
+        setViewCounted(true);
+      } catch (error) {
+        console.error("조회수 증가 에러", error);
+      }
+    };
+
+    incrementViewCount();
+  }, [id, viewCounted]);
 
   const handleShowMore = () => {
     setIsExpanded(!isExpanded);
@@ -135,7 +153,6 @@ export default function Detail({ id }: DetailProps) {
                 {isLoggedIn &&
                   (user_id === details.author.id ? (
                     <div className={styles.dropdownContainer}>
-                      {/* TODO: dropdown 버튼 핸들링 함수 추가 */}
                       <Dropdown
                         menuItems={[
                           {
@@ -214,7 +231,6 @@ export default function Detail({ id }: DetailProps) {
                     height={40}
                   />
                 </div>
-                {/* TODO: 공유 버튼 핸들링 추가  */}
                 <div className={styles.likeBtn}>
                   <IconComponent name="shareDetail" width={40} height={40} />
                 </div>
