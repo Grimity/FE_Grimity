@@ -1,21 +1,13 @@
 import { useFeeds } from "@/api/feeds/getFeeds";
 import Card from "./Card/Card";
 import styles from "./WholeFeed.module.scss";
-import { useRouter } from "next/router";
-import { putView } from "@/api/feeds/putIdView";
 
 export default function WholeFeed() {
   const { data, isLoading } = useFeeds({});
-  const router = useRouter();
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
-
-  const handleLinkClick = async (id: string) => {
-    await putView(id);
-    router.push(`/feeds/${id}`);
-  };
 
   return (
     <div className={styles.container}>
@@ -25,19 +17,18 @@ export default function WholeFeed() {
       </div>
       <div className={styles.galleryGrid}>
         {data?.map((feed) => (
-          <div key={feed.id} onClick={() => handleLinkClick(feed.id)} style={{ cursor: "pointer" }}>
-            <Card
-              isMain
-              title={feed.title}
-              cards={feed.cards}
-              author={feed.author}
-              likeCount={feed.likeCount}
-              commentCount={feed.commentCount}
-              createdAt={feed.createdAt}
-              id={feed.id}
-              isLike={feed.isLike}
-            />
-          </div>
+          <Card
+            key={feed.id}
+            isMain
+            title={feed.title}
+            cards={feed.cards}
+            author={feed.author}
+            likeCount={feed.likeCount}
+            commentCount={feed.commentCount}
+            createdAt={feed.createdAt}
+            id={feed.id}
+            isLike={feed.isLike}
+          />
         ))}
       </div>
     </div>

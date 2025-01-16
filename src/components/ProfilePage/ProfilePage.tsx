@@ -5,18 +5,10 @@ import Card from "../Layout/WholeFeed/Card/Card";
 import { ProfilePageProps } from "./ProfilePage.types";
 import { useUserData } from "@/api/users/getId";
 import { useUserFeeds } from "@/api/users/getIdFeeds";
-import { useRouter } from "next/router";
-import { putView } from "@/api/feeds/putIdView";
 
 export default function ProfilePage({ isMyProfile, id }: ProfilePageProps) {
   const { data: userData } = useUserData(id);
   const { data: userFeeds } = useUserFeeds({ id });
-  const router = useRouter();
-
-  const handleLinkClick = async (id: string) => {
-    await putView(id);
-    router.push(`/feeds/${id}`);
-  };
 
   return (
     <div className={styles.container}>
@@ -36,18 +28,14 @@ export default function ProfilePage({ isMyProfile, id }: ProfilePageProps) {
           <section className={styles.cardContainer}>
             {userFeeds
               ? userFeeds.map((feed) => (
-                  <div
-                    key={feed.id}
-                    onClick={() => handleLinkClick(feed.id)}
-                    style={{ cursor: "pointer" }}
-                  >
+                  <div key={feed.id}>
                     <Card
                       title={feed.title}
                       cards={feed.cards || []}
                       likeCount={feed.likeCount}
                       commentCount={feed.commentCount}
                       createdAt={feed.createdAt}
-                      id={id}
+                      id={feed.id}
                     />
                   </div>
                 ))
