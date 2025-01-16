@@ -18,7 +18,7 @@ import Button from "../Button/Button";
 import Link from "next/link";
 
 export default function Detail({ id }: DetailProps) {
-  const { user_id } = useRecoilValue(authState);
+  const { isLoggedIn, user_id } = useRecoilValue(authState);
   const { data: details, isLoading } = useDetails(id);
   const [isExpanded, setIsExpanded] = useState(false);
   const { showToast } = useToast();
@@ -60,6 +60,11 @@ export default function Detail({ id }: DetailProps) {
   };
 
   const handleLikeClick = async () => {
+    if (!isLoggedIn) {
+      showToast("로그인 후 좋아요를 누를 수 있어요.", "error");
+      return;
+    }
+
     if (isLiked) {
       await deleteLike(id);
       setCurrentLikeCount((prev) => prev - 1);
@@ -109,7 +114,8 @@ export default function Detail({ id }: DetailProps) {
                 </div>
               </Link>
               <div className={styles.followDropdown}>
-                {user_id !== details.author.id &&
+                {isLoggedIn &&
+                  user_id !== details.author.id &&
                   (isFollowing ? (
                     <div
                       className={styles.followBtn}
@@ -126,36 +132,37 @@ export default function Detail({ id }: DetailProps) {
                       팔로우
                     </Button>
                   ))}
-                {user_id === details.author.id ? (
-                  <div className={styles.dropdownContainer}>
-                    {/* TODO: dropdown 버튼 핸들링 함수 추가 */}
-                    <Dropdown
-                      menuItems={[
-                        {
-                          label: "수정하기",
-                          onClick: handleShowMore,
-                        },
-                        {
-                          label: "삭제하기",
-                          onClick: handleShowMore,
-                          isDelete: true,
-                        },
-                      ]}
-                    />
-                  </div>
-                ) : (
-                  <div className={styles.dropdownContainer}>
-                    <Dropdown
-                      menuItems={[
-                        {
-                          label: "신고하기",
-                          onClick: handleShowMore,
-                          isDelete: true,
-                        },
-                      ]}
-                    />
-                  </div>
-                )}
+                {isLoggedIn &&
+                  (user_id === details.author.id ? (
+                    <div className={styles.dropdownContainer}>
+                      {/* TODO: dropdown 버튼 핸들링 함수 추가 */}
+                      <Dropdown
+                        menuItems={[
+                          {
+                            label: "수정하기",
+                            onClick: handleShowMore,
+                          },
+                          {
+                            label: "삭제하기",
+                            onClick: handleShowMore,
+                            isDelete: true,
+                          },
+                        ]}
+                      />
+                    </div>
+                  ) : (
+                    <div className={styles.dropdownContainer}>
+                      <Dropdown
+                        menuItems={[
+                          {
+                            label: "신고하기",
+                            onClick: handleShowMore,
+                            isDelete: true,
+                          },
+                        ]}
+                      />
+                    </div>
+                  ))}
               </div>
             </section>
             <section className={styles.imageGallery}>

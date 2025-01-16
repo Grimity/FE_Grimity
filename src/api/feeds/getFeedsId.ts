@@ -46,9 +46,5 @@ export async function getDetails(id: string): Promise<DetailsResponse> {
 }
 
 export function useDetails(id: string) {
-  const accessToken = typeof window !== "undefined" ? localStorage.getItem("access_token") : null;
-
-  return useQuery<DetailsResponse>(["details", id], () => getDetails(id), {
-    enabled: Boolean(accessToken),
-  });
+  return useQuery<DetailsResponse>(["details", id], () => getDetails(id), {});
 }

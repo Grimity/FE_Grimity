@@ -7,6 +7,8 @@ import Image from "next/image";
 import { CardProps } from "./Card.types";
 import { deleteLike } from "@/api/feeds/deleteFeedsIdLike";
 import { putLike } from "@/api/feeds/putFeedsIdLike";
+import { useRecoilValue } from "recoil";
+import { authState } from "@/states/authState";
 
 export default function Card({
   isMain = false,
@@ -19,6 +21,7 @@ export default function Card({
   id,
   isLike,
 }: CardProps) {
+  const { isLoggedIn } = useRecoilValue(authState);
   const [isLiked, setIsLiked] = useState(isLike);
   const [currentLikeCount, setCurrentLikeCount] = useState(likeCount);
 
@@ -38,7 +41,7 @@ export default function Card({
   return (
     <div className={styles.container}>
       <div className={styles.imageContainer}>
-        {isMain && (
+        {isLoggedIn && isMain && (
           <div className={styles.likeBtn} onClick={handleLikeClick}>
             <IconComponent name={isLiked ? "heartRed" : "heartGray"} width={28} height={28} />
           </div>
