@@ -25,11 +25,13 @@ export default function HotFeed() {
         {hotFeeds?.map((feed) => (
           <SwiperSlide key={feed.id} className={styles.slide}>
             <HotCard
+              key={feed.id}
+              id={feed.id}
               imageUrl={feed.cards[0]}
               authorName={feed.author.name}
               authorImage={feed.author.image}
+              authorId={feed.author.id}
               likeCount={feed.likeCount}
-              key={feed.id}
             />
           </SwiperSlide>
         ))}
