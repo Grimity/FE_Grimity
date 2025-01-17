@@ -37,6 +37,7 @@ export default function ProfileEdit() {
     onSuccess: () => {
       showToast("프로필 정보가 변경되었습니다!", "success");
       setNameError("");
+      router.push(`/users/${myData?.id}`);
     },
     onError: (error: AxiosError) => {
       showToast("오류가 발생했습니다. 다시 시도해주세요.", "error");
