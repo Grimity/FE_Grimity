@@ -1,0 +1,144 @@
+@import "@/styles/globals.scss";
+
+.container {
+  width: 100%;
+
+  .countContainer {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    @include H3SB;
+    color: $gray90;
+
+    .count {
+      @extend .countContainer;
+      color: $green50;
+    }
+  }
+
+  .inputContainer {
+    margin-top: 20px;
+    margin-bottom: 24px;
+
+    .inputWrapper {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      .input {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 13px;
+      }
+
+      .message {
+        @include H7MD;
+        color: $gray80;
+        display: flex;
+        margin-left: 56px;
+      }
+
+      .messageGreen {
+        @include H7MD;
+        color: $green50;
+      }
+    }
+
+    .writerImage {
+      object-fit: cover;
+      border-radius: 50px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .uploadBtn {
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+  }
+}
+
+.commentBox {
+  width: 100%;
+  display: flex;
+  gap: 4px;
+  padding: 16px 0;
+  border-bottom: 1px solid $gray10;
+
+  .commentBody {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .writerReply {
+      width: 100%;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+
+    .writerName {
+      display: flex;
+      gap: 4px;
+      @include H4SB;
+      color: $gray90;
+
+      .ownerTag {
+        @extend .writerName;
+        color: $green50;
+      }
+    }
+
+    .commentText {
+      @include H4RG;
+      color: $gray90;
+      white-space: pre-line;
+    }
+
+    .createdAt {
+      @include H7MD;
+      color: $gray40;
+    }
+  }
+
+  .writerImage {
+    object-fit: cover;
+    border-radius: 50px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .replyBtnDropdown {
+    display: flex;
+    align-items: center;
+    .replyBtn {
+      display: flex;
+      padding: 4px 12px;
+      justify-content: center;
+      align-items: center;
+      border-radius: 8px;
+      background-color: $gray10;
+      @include H7MD;
+      color: $gray90;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      margin: 0 16px;
+    }
+  }
+}
+
+.nestedComment {
+  width: 100%;
+  padding-left: 32px;
+  display: flex;
+}
+
+.replyIcon {
+  width: 28px;
+  height: 28px;
+  margin: 16px 16px 0 0;
+}

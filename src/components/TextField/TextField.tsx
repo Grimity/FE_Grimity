@@ -12,6 +12,7 @@ export default function TextField({
   color = "GRAY",
   required = false,
   isUpload = false,
+  isComment = false,
   onKeyDown,
 }: TextFieldProps) {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,7 +26,11 @@ export default function TextField({
   };
 
   return (
-    <div className={!isUpload ? styles.container : styles.isUploadContainer}>
+    <div
+      className={`${isComment ? styles.isCommentContainer : styles.container} ${
+        isUpload ? styles.isUploadContainer : ""
+      }`}
+    >
       <div className={styles.labelContainer}>
         {required && <p className={styles.required}>*</p>}
         {label && (
@@ -36,8 +41,8 @@ export default function TextField({
       </div>
       <div
         className={`${!isUpload ? styles.inputContainer : styles.isUploadInputContainer} ${
-          isError && styles.error
-        }`}
+          !isComment ? styles.inputContainer : styles.isCommentInputContainer
+        } ${isError && styles.error}`}
       >
         <input
           className={styles.input}

@@ -12,6 +12,11 @@
   gap: 12px;
 }
 
+.isCommentContainer {
+  width: 100%;
+  display: flex;
+}
+
 .inputContainer {
   width: 100%;
   display: flex;
@@ -21,6 +26,7 @@
   background-color: $white;
   border-radius: 16px;
   border: 1.6px solid $gray15;
+  @include H5MD;
 
   &:focus-within {
     border: 1.6px solid $green50;
@@ -42,6 +48,11 @@
 
 .isUploadInputContainer.error {
   border: 1.6px solid $error;
+}
+
+.isCommentInputContainer {
+  @extend .inputContainer;
+  padding: 14px 20px;
 }
 
 .labelContainer {

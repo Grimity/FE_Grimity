@@ -20,6 +20,7 @@ import { putView } from "@/api/feeds/putIdView";
 import { deleteFeeds } from "@/api/feeds/deleteFeedsId";
 import { useRouter } from "next/router";
 import Tooltip from "../Tooltip/Tooltip";
+import Comment from "../Comment/Comment";
 
 export default function Detail({ id }: DetailProps) {
   const { isLoggedIn, user_id } = useRecoilValue(authState);
@@ -310,6 +311,7 @@ export default function Detail({ id }: DetailProps) {
               </div>
             </section>
             <div className={styles.bar} />
+            <Comment feedId={id} feedWriterId={details.author.id} />
           </>
         )}
       </div>

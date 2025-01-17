@@ -9,5 +9,6 @@ export interface TextFieldProps {
   color?: "GRAY" | "GREEN";
   required?: boolean;
   isUpload?: boolean;
+  isComment?: boolean;
   onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 }
