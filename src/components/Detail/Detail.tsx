@@ -17,6 +17,8 @@ import { timeAgoOrFormattedDate } from "@/utils/timeAgo";
 import Button from "../Button/Button";
 import Link from "next/link";
 import { putView } from "@/api/feeds/putIdView";
+import { deleteFeeds } from "@/api/feeds/deleteFeedsId";
+import { useRouter } from "next/router";
 
 export default function Detail({ id }: DetailProps) {
   const { isLoggedIn, user_id } = useRecoilValue(authState);
@@ -27,6 +29,7 @@ export default function Detail({ id }: DetailProps) {
   const [isLiked, setIsLiked] = useState(false);
   const [currentLikeCount, setCurrentLikeCount] = useState(0);
   const [viewCounted, setViewCounted] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     if (!details) return;
@@ -74,6 +77,18 @@ export default function Detail({ id }: DetailProps) {
       setIsFollowing(false);
     } catch (error) {
       showToast("오류가 발생했습니다. 다시 시도해주세요.", "error");
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!id) return;
+
+    try {
+      await deleteFeeds(id);
+      showToast("삭제가 완료되었습니다.", "success");
+      router.back();
+    } catch (error) {
+      showToast("삭제 중 오류가 발생했습니다.", "error");
     }
   };
 
@@ -161,7 +176,7 @@ export default function Detail({ id }: DetailProps) {
                           },
                           {
                             label: "삭제하기",
-                            onClick: handleShowMore,
+                            onClick: handleDelete,
                             isDelete: true,
                           },
                         ]}
