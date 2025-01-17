@@ -11,6 +11,8 @@ import { CommentProps } from "./Comment.types";
 import { timeAgoOrFormattedDate } from "@/utils/timeAgo";
 import Dropdown from "../Dropdown/Dropdown";
 import { useToast } from "@/utils/useToast";
+import { deleteComments } from "@/api/feeds-comments/deleteFeedComment";
+import { useMutation } from "react-query";
 
 export default function Comment({ feedId, feedWriterId }: CommentProps) {
   const { isLoggedIn, user_id } = useRecoilValue(authState);
@@ -23,6 +25,15 @@ export default function Comment({ feedId, feedWriterId }: CommentProps) {
 
   const { data: commentsData, refetch } = useGetFeedsComments({ feedId });
   const postCommentMutation = usePostFeedsComments();
+  const deleteCommentMutation = useMutation(deleteComments, {
+    onSuccess: () => {
+      showToast("댓글이 삭제되었습니다.", "success");
+      refetch();
+    },
+    onError: () => {
+      showToast("댓글 삭제에 실패했습니다.", "error");
+    },
+  });
 
   const handleCommentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setComment(e.target.value);
@@ -32,8 +43,8 @@ export default function Comment({ feedId, feedWriterId }: CommentProps) {
     setReplyTo(commentId);
   };
 
-  const handleCommentDelete = () => {
-    console.log("댓글 삭제! 아직 api 연결 안 함 ㅎ");
+  const handleCommentDelete = async (id: string) => {
+    deleteCommentMutation.mutate(id);
   };
 
   const handleSubmit = async () => {
@@ -116,12 +127,8 @@ export default function Comment({ feedId, feedWriterId }: CommentProps) {
                   <Dropdown
                     menuItems={[
                       {
-                        label: "수정하기",
-                        onClick: handleCommentDelete,
-                      },
-                      {
                         label: "삭제하기",
-                        onClick: handleCommentDelete,
+                        onClick: () => handleCommentDelete(comment.id),
                         isDelete: true,
                       },
                     ]}
