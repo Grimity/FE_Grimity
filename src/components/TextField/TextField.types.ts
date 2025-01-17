@@ -11,4 +11,5 @@ export interface TextFieldProps {
   isUpload?: boolean;
   isComment?: boolean;
   onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+  onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
 }

@@ -10,13 +10,14 @@ import { useGetFeedsComments } from "@/api/feeds-comments/getFeedComments";
 import { CommentProps } from "./Comment.types";
 import { timeAgoOrFormattedDate } from "@/utils/timeAgo";
 import Dropdown from "../Dropdown/Dropdown";
+import { useToast } from "@/utils/useToast";
 
 export default function Comment({ feedId, feedWriterId }: CommentProps) {
   const { isLoggedIn, user_id } = useRecoilValue(authState);
   const { data: userData, isLoading } = isLoggedIn
     ? useUserData(user_id)
     : { data: null, isLoading: false };
-
+  const { showToast } = useToast();
   const [comment, setComment] = useState("");
   const [replyTo, setReplyTo] = useState<string | null>(null);
 
@@ -33,6 +34,14 @@ export default function Comment({ feedId, feedWriterId }: CommentProps) {
 
   const handleCommentDelete = () => {
     console.log("댓글 삭제! 아직 api 연결 안 함 ㅎ");
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter" && comment.trim() !== "") {
+      event.preventDefault();
+      handleSubmit();
+      setComment("");
+    }
   };
 
   const handleSubmit = async () => {
@@ -96,35 +105,37 @@ export default function Comment({ feedId, feedWriterId }: CommentProps) {
                   <span className={styles.ownerTag}>(작성자)</span>
                 )}
               </div>
-              <div className={styles.replyBtnDropdown}>
-                {!isNested && (
-                  <>
-                    {!replyTo ? (
-                      <button onClick={() => handleReply(comment.id)} className={styles.replyBtn}>
-                        답글
-                      </button>
-                    ) : (
-                      <button onClick={() => setReplyTo(null)} className={styles.replyBtn}>
-                        취소
-                      </button>
-                    )}
-                  </>
-                )}
+              {isLoggedIn && (
+                <div className={styles.replyBtnDropdown}>
+                  {!isNested && (
+                    <>
+                      {!replyTo ? (
+                        <button onClick={() => handleReply(comment.id)} className={styles.replyBtn}>
+                          답글
+                        </button>
+                      ) : (
+                        <button onClick={() => setReplyTo(null)} className={styles.replyBtn}>
+                          취소
+                        </button>
+                      )}
+                    </>
+                  )}
 
-                <Dropdown
-                  menuItems={[
-                    {
-                      label: "수정하기",
-                      onClick: handleCommentDelete,
-                    },
-                    {
-                      label: "삭제하기",
-                      onClick: handleCommentDelete,
-                      isDelete: true,
-                    },
-                  ]}
-                />
-              </div>
+                  <Dropdown
+                    menuItems={[
+                      {
+                        label: "수정하기",
+                        onClick: handleCommentDelete,
+                      },
+                      {
+                        label: "삭제하기",
+                        onClick: handleCommentDelete,
+                        isDelete: true,
+                      },
+                    ]}
+                  />
+                </div>
+              )}
             </div>
             <p className={styles.commentText}>{comment.content}</p>
             <p className={styles.createdAt}>{timeAgoOrFormattedDate(comment.createdAt)}</p>
@@ -176,6 +187,12 @@ export default function Comment({ feedId, feedWriterId }: CommentProps) {
               isComment
               value={comment}
               onChange={handleCommentChange}
+              onFocus={() => {
+                if (!isLoggedIn) {
+                  showToast("회원만 댓글 달 수 있어요!", "error");
+                }
+              }}
+              onKeyDown={handleKeyDown}
             />
 
             {isLoggedIn ? (

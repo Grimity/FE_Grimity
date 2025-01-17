@@ -14,6 +14,7 @@ export default function TextField({
   isUpload = false,
   isComment = false,
   onKeyDown,
+  onFocus,
 }: TextFieldProps) {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChange(event);
@@ -52,6 +53,7 @@ export default function TextField({
           onChange={handleChange}
           onKeyDown={handleEnter}
           maxLength={maxLength}
+          onFocus={onFocus}
           id="label"
         />
         {value && maxLength && (
