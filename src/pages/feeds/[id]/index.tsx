@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 
 export default function FeedDetail() {
   const router = useRouter();
-  const { data: myData } = useMyData();
   const [OGTitle] = useState("그림 상세 - 그리미티");
   const [OGUrl, setOGUrl] = useState(serviceUrl);
 

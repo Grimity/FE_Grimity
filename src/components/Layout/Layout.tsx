@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 
 export default function Layout({ children }: LayoutProps) {
   const router = useRouter();
-  const hideNav = ["/write"].includes(router.pathname);
+  const hideNav = ["/write", "/feeds/[id]/edit"].includes(router.pathname);
 
   return (
     <div className={styles.layout}>

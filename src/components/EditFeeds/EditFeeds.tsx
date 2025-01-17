@@ -1,17 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "../Button/Button";
 import TextField from "../TextField/TextField";
-import styles from "./Upload.module.scss";
+import styles from "./EditFeeds.module.scss";
 import Image from "next/image";
 import IconComponent from "../Asset/Icon";
 import { useToast } from "@/utils/useToast";
 import { postPresignedUrl } from "@/api/aws/postPresigned";
-import router from "next/router";
 import { useMutation } from "react-query";
-import { FeedsRequest, FeedsResponse, postFeeds } from "@/api/feeds/postFeeds";
 import { AxiosError } from "axios";
+import { useRouter } from "next/router";
+import { EditFeedsRequest, putEditFeeds } from "@/api/feeds/putFeedsId";
+import { useDetails } from "@/api/feeds/getFeedsId";
+import { EditFeedsProps } from "./EditFeeds.type";
 
-export default function Upload() {
+export default function EditFeeds({ id }: EditFeedsProps) {
+  const router = useRouter();
   const [images, setImages] = useState<{ name: string; url: string }[]>([]);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -19,19 +22,64 @@ export default function Upload() {
   const [tag, setTag] = useState("");
   const [tags, setTags] = useState<string[]>([]);
   const { showToast } = useToast();
+  const { data: feedDetails } = useDetails(id as string);
 
-  const { mutate: uploadFeed } = useMutation<FeedsResponse, AxiosError, FeedsRequest>(postFeeds, {
-    onSuccess: (response: FeedsResponse) => {
-      showToast("그림이 업로드되었습니다!", "success");
-      router.push(`/feeds/${response.id}`);
-    },
-    onError: (error: AxiosError) => {
-      showToast("업로드 중 오류가 발생했습니다. 다시 시도해주세요.", "error");
-      if (error.response?.status === 400) {
-        showToast("잘못된 요청입니다. 입력값을 확인해주세요.", "error");
-      }
-    },
-  });
+  const [originalData, setOriginalData] = useState<{
+    title: string;
+    content: string;
+    isAI: boolean;
+    tags: string[];
+    images: { name: string; url: string }[];
+  } | null>(null);
+
+  // 기존 데이터로 초기화
+  useEffect(() => {
+    if (feedDetails) {
+      const initialImages = feedDetails.cards.map((name) => ({
+        name,
+        url: name,
+      }));
+
+      setTitle(feedDetails.title || "");
+      setContent(feedDetails.content || "");
+      setIsAI(feedDetails.isAI || false);
+      setTags(feedDetails.tags || []);
+      setImages(initialImages);
+
+      // 원본 상태 저장
+      setOriginalData({
+        title: feedDetails.title || "",
+        content: feedDetails.content || "",
+        isAI: feedDetails.isAI || false,
+        tags: feedDetails.tags || [],
+        images: initialImages,
+      });
+    }
+  }, [feedDetails]);
+
+  const isEdited =
+    originalData &&
+    (title !== originalData.title ||
+      content !== originalData.content ||
+      isAI !== originalData.isAI ||
+      JSON.stringify(tags) !== JSON.stringify(originalData.tags) ||
+      JSON.stringify(images) !== JSON.stringify(originalData.images));
+
+  const { mutate: editFeed } = useMutation<Response, AxiosError, EditFeedsRequest>(
+    (data) => putEditFeeds(id as string, data),
+    {
+      onSuccess: () => {
+        showToast("그림이 수정되었습니다!", "success");
+        router.push(`/feeds/${id}`);
+      },
+      onError: (error: AxiosError) => {
+        showToast("수정 중 오류가 발생했습니다. 다시 시도해주세요.", "error");
+        if (error.response?.status === 400) {
+          showToast("잘못된 요청입니다. 입력값을 확인해주세요.", "error");
+        }
+      },
+    }
+  );
 
   const uploadImageToServer = async (file: File) => {
     try {
@@ -84,9 +132,9 @@ export default function Upload() {
       return;
     }
 
-    uploadFeed({
+    editFeed({
       title,
-      cards: images.map((image) => image.name),
+      cards: images.map((image) => image.name.replace("https://image.grimity.com/", "")),
       isAI,
       content,
       tags,
@@ -111,8 +159,6 @@ export default function Upload() {
     setTags(tags.filter((_, i) => i !== index));
   };
 
-  const isDisabled = title.trim() === "" || isAI === null;
-
   return (
     <div className={styles.background}>
       <div className={styles.container}>
@@ -121,7 +167,7 @@ export default function Upload() {
             <h2 className={styles.title}>그림 올리기</h2>
             <div>
               <div className={styles.subtitle}>
-                <p className={styles.stroke}>*</p>이미지 (0/10)
+                <p className={styles.stroke}>*</p>이미지 ({images.length}/10)
               </div>
               <p className={styles.description}>
                 jpg, jpeg, png / 파일 크기 무제한 / 최대 10장 업로드
@@ -174,8 +220,8 @@ export default function Upload() {
             </div>
           </section>
           <section className={styles.writeSection}>
-            <Button size="s" type="secondary" disabled={isDisabled} onClick={handleSubmit}>
-              그림 올리기
+            <Button size="s" type="secondary" disabled={!isEdited} onClick={handleSubmit}>
+              수정 완료
             </Button>
             <div className={styles.textField}>
               <TextField

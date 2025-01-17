@@ -9,7 +9,7 @@ export interface DetailsResponse {
   createdAt: Date;
   viewCount: number;
   likeCount: number;
-  content: number;
+  content: string;
   tags: string[];
   author: {
     id: string;

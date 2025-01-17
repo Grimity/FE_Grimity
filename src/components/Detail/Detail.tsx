@@ -86,10 +86,14 @@ export default function Detail({ id }: DetailProps) {
     try {
       await deleteFeeds(id);
       showToast("삭제가 완료되었습니다.", "success");
-      router.back();
+      router.push("/");
     } catch (error) {
       showToast("삭제 중 오류가 발생했습니다.", "error");
     }
+  };
+
+  const handleOpenEditPage = () => {
+    router.push(`/feeds/${id}/edit`);
   };
 
   const handleLikeClick = async () => {
@@ -172,7 +176,7 @@ export default function Detail({ id }: DetailProps) {
                         menuItems={[
                           {
                             label: "수정하기",
-                            onClick: handleShowMore,
+                            onClick: handleOpenEditPage,
                           },
                           {
                             label: "삭제하기",
