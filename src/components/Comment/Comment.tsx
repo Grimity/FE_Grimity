@@ -36,14 +36,6 @@ export default function Comment({ feedId, feedWriterId }: CommentProps) {
     console.log("댓글 삭제! 아직 api 연결 안 함 ㅎ");
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter" && comment.trim() !== "") {
-      event.preventDefault();
-      handleSubmit();
-      setComment("");
-    }
-  };
-
   const handleSubmit = async () => {
     if (!isLoggedIn || !comment.trim()) return;
 
@@ -192,7 +184,6 @@ export default function Comment({ feedId, feedWriterId }: CommentProps) {
                   showToast("회원만 댓글 달 수 있어요!", "error");
                 }
               }}
-              onKeyDown={handleKeyDown}
             />
 
             {isLoggedIn ? (
