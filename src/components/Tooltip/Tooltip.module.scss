@@ -1,0 +1,122 @@
+@import "@/styles/globals.scss";
+
+.tooltip {
+  position: absolute;
+  display: inline-flex;
+  padding: 10px 16px;
+  justify-content: center;
+  align-items: center;
+  background-color: $gray90;
+  color: $white;
+  border-radius: 10px;
+  @include H5MD;
+  white-space: nowrap;
+
+  .message {
+    margin-right: 8px;
+  }
+
+  .closeButton {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  .arrow {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: $gray90;
+    transform: rotate(45deg);
+  }
+}
+
+.top {
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  .arrow {
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+  }
+}
+
+.bottom {
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  .arrow {
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+  }
+}
+
+.left {
+  right: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+
+  .arrow {
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+  }
+}
+
+.right {
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+
+  .arrow {
+    right: 100%;
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+  }
+}
+
+.top-left {
+  bottom: 100%;
+  left: 0;
+
+  .arrow {
+    top: 100%;
+    left: 10px;
+  }
+}
+
+.top-right {
+  bottom: 100%;
+  right: 0;
+
+  .arrow {
+    top: 100%;
+    right: 10px;
+  }
+}
+
+.bottom-left {
+  bottom: 120%;
+  left: 0;
+
+  .arrow {
+    bottom: -10%;
+    left: 15px;
+  }
+}
+
+.bottom-right {
+  top: 100%;
+  right: 0;
+
+  .arrow {
+    bottom: 100%;
+    right: 10px;
+  }
+}

@@ -19,6 +19,7 @@ import Link from "next/link";
 import { putView } from "@/api/feeds/putIdView";
 import { deleteFeeds } from "@/api/feeds/deleteFeedsId";
 import { useRouter } from "next/router";
+import Tooltip from "../Tooltip/Tooltip";
 
 export default function Detail({ id }: DetailProps) {
   const { isLoggedIn, user_id } = useRecoilValue(authState);
@@ -29,6 +30,7 @@ export default function Detail({ id }: DetailProps) {
   const [isLiked, setIsLiked] = useState(false);
   const [currentLikeCount, setCurrentLikeCount] = useState(0);
   const [viewCounted, setViewCounted] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -53,6 +55,14 @@ export default function Detail({ id }: DetailProps) {
 
     incrementViewCount();
   }, [id, viewCounted]);
+
+  useEffect(() => {
+    const firstVisit = localStorage.getItem("firstDetailVisit");
+    if (!firstVisit) {
+      setShowTooltip(true);
+      localStorage.setItem("firstDetailVisit", "true");
+    }
+  }, []);
 
   if (isLoading) {
     return <div>로딩 중...</div>;
@@ -243,6 +253,13 @@ export default function Detail({ id }: DetailProps) {
                 </div>
               ))}
             <section className={styles.btnStats}>
+              {showTooltip && (
+                <Tooltip
+                  message="마음에 든다면 좋아요를 눌러보세요!"
+                  position="bottom-left"
+                  onClose={() => setShowTooltip(false)}
+                />
+              )}
               <div className={styles.btnContainer}>
                 <div className={styles.likeBtn} onClick={handleLikeClick}>
                   <IconComponent
