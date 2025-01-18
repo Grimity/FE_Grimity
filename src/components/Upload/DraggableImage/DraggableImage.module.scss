@@ -1,0 +1,11 @@
+.imageWrapper {
+  position: relative;
+  width: fit-content;
+}
+
+.removeImage {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  cursor: pointer;
+}

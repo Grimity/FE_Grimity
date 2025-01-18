@@ -20,3 +20,10 @@ export async function postPresignedUrl({
   });
   return response.data;
 }
+
+export async function postPresignedUrls(
+  requests: PresignedUrlRequest[]
+): Promise<PresignedUrlResponse[]> {
+  const response = await BASE_URL.post("/aws/image-upload-urls", requests);
+  return response.data;
+}

@@ -1,15 +1,18 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import Button from "../Button/Button";
 import TextField from "../TextField/TextField";
 import styles from "./Upload.module.scss";
 import Image from "next/image";
 import IconComponent from "../Asset/Icon";
 import { useToast } from "@/utils/useToast";
-import { postPresignedUrl } from "@/api/aws/postPresigned";
+import { postPresignedUrls } from "@/api/aws/postPresigned";
 import router from "next/router";
 import { useMutation } from "react-query";
 import { FeedsRequest, FeedsResponse, postFeeds } from "@/api/feeds/postFeeds";
 import { AxiosError } from "axios";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import DraggableImage from "./DraggableImage/DraggableImage";
 
 export default function Upload() {
   const [images, setImages] = useState<{ name: string; url: string }[]>([]);
@@ -33,41 +36,64 @@ export default function Upload() {
     },
   });
 
-  const uploadImageToServer = async (file: File) => {
+  const uploadImagesToServer = async (files: FileList) => {
     try {
-      if (images.length >= 10) {
+      const remainingSlots = 10 - images.length;
+      const filesToUpload = Array.from(files).slice(0, remainingSlots);
+
+      if (remainingSlots <= 0) {
         showToast("최대 10장의 그림만 업로드할 수 있습니다.", "error");
         return;
       }
 
-      const fileExt = file.name.split(".").pop()?.toLowerCase();
-      if (!fileExt || !["jpg", "jpeg", "png"].includes(fileExt)) {
+      const requests = filesToUpload.map((file) => ({
+        type: "feed" as const,
+        ext: file.name.split(".").pop()?.toLowerCase() as "jpg" | "jpeg" | "png",
+      }));
+
+      const invalidFiles = filesToUpload.some(
+        (file) => !["jpg", "jpeg", "png"].includes(file.name.split(".").pop()?.toLowerCase() || "")
+      );
+
+      if (invalidFiles) {
         showToast("JPG, JPEG, PNG 파일만 업로드 가능합니다.", "error");
         return;
       }
 
-      const { imageName, url } = await postPresignedUrl({
-        type: "feed",
-        ext: fileExt as "jpg" | "jpeg" | "png",
-      });
+      const presignedUrls = await postPresignedUrls(requests);
 
-      const uploadResponse = await fetch(url, {
-        method: "PUT",
-        body: file,
-        headers: {
-          "Content-Type": file.type,
-        },
-      });
+      const uploadPromises = filesToUpload.map((file, index) =>
+        fetch(presignedUrls[index].url, {
+          method: "PUT",
+          body: file,
+          headers: {
+            "Content-Type": file.type,
+          },
+        })
+      );
 
-      if (!uploadResponse.ok) {
-        throw new Error("이미지 업로드 실패");
-      }
+      await Promise.all(uploadPromises);
 
-      setImages([...images, { name: imageName, url: URL.createObjectURL(file) }]);
+      const newImages = filesToUpload.map((file, index) => ({
+        name: presignedUrls[index].imageName,
+        url: URL.createObjectURL(file),
+      }));
+
+      setImages([...images, ...newImages]);
     } catch (error) {
-      showToast("이미지 업로드 실패", "error");
+      showToast("이미지 업로드를 실패했어요.", "error");
     }
   };
+
+  const moveImage = useCallback((dragIndex: number, hoverIndex: number) => {
+    setImages((prevImages) => {
+      const newImages = [...prevImages];
+      const draggedImage = newImages[dragIndex];
+      newImages.splice(dragIndex, 1);
+      newImages.splice(hoverIndex, 0, draggedImage);
+      return newImages;
+    });
+  }, []);
 
   const removeImage = (index: number) => {
     setImages(images.filter((_, i) => i !== index));
@@ -126,7 +152,7 @@ export default function Upload() {
               <p className={styles.description}>
                 jpg, jpeg, png / 파일 크기 무제한 / 최대 10장 업로드
               </p>
-              <div className={styles.imageSection}>
+              <DndProvider backend={HTML5Backend}>
                 <div>
                   {images.length === 0 && (
                     <label htmlFor="file-upload" className={styles.uploadBtn}>
@@ -135,27 +161,16 @@ export default function Upload() {
                   )}
                   <div className={styles.imageContainer}>
                     {images.map((image, index) => (
-                      <div key={index} className={styles.imageWrapper}>
-                        <Image
-                          src={image.url}
-                          width={images.length >= 2 ? 200 : 420}
-                          height={0}
-                          layout="intrinsic"
-                          alt="Uploaded"
-                          className={styles.image}
-                        />
-                        <div className={styles.removeImage} onClick={() => removeImage(index)}>
-                          <Image
-                            src="/icon/image-delete.svg"
-                            width={28}
-                            height={28}
-                            alt="사진 제거"
-                          />
-                        </div>
-                      </div>
+                      <DraggableImage
+                        key={image.name}
+                        image={image}
+                        index={index}
+                        moveImage={moveImage}
+                        removeImage={removeImage}
+                      />
                     ))}
                   </div>
-                  {images.length > 0 && (
+                  {images.length > 0 && images.length < 10 && (
                     <div className={styles.addBtnContainer}>
                       <label htmlFor="file-upload" className={styles.addImageBtn}>
                         <Image src="/icon/image-add.svg" width={40} height={40} alt="이미지 추가" />
@@ -163,14 +178,15 @@ export default function Upload() {
                     </div>
                   )}
                 </div>
-                <input
-                  id="file-upload"
-                  type="file"
-                  accept="image/png, image/jpeg"
-                  style={{ display: "none" }}
-                  onChange={(e) => e.target.files && uploadImageToServer(e.target.files[0])}
-                />
-              </div>
+              </DndProvider>
+              <input
+                id="file-upload"
+                type="file"
+                multiple
+                accept="image/png, image/jpeg"
+                style={{ display: "none" }}
+                onChange={(e) => e.target.files && uploadImagesToServer(e.target.files)}
+              />
             </div>
           </section>
           <section className={styles.writeSection}>
