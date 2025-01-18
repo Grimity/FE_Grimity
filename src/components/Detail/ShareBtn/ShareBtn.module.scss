@@ -1,0 +1,9 @@
+@import "@/styles/globals.scss";
+
+.shareBtn {
+  cursor: pointer;
+
+  &:hover {
+    animation: pulse 0.5s ease-in-out;
+  }
+}

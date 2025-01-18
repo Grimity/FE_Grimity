@@ -21,6 +21,7 @@ import { deleteFeeds } from "@/api/feeds/deleteFeedsId";
 import { useRouter } from "next/router";
 import Tooltip from "../Tooltip/Tooltip";
 import Comment from "../Comment/Comment";
+import ShareBtn from "./ShareBtn/ShareBtn";
 
 export default function Detail({ id }: DetailProps) {
   const { isLoggedIn, user_id } = useRecoilValue(authState);
@@ -269,9 +270,7 @@ export default function Detail({ id }: DetailProps) {
                     height={40}
                   />
                 </div>
-                <div className={styles.likeBtn}>
-                  <IconComponent name="shareDetail" width={40} height={40} />
-                </div>
+                <ShareBtn feedId={id} title={details.title} image={details.cards[0]} />
               </div>
               <div className={styles.stats}>
                 <div className={styles.stat}>

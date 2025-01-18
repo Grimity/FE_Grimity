@@ -7,6 +7,7 @@ import Follower from "./Follower/Follower";
 import { usePreventScroll } from "@/utils/usePreventScroll";
 import IconComponent from "../Asset/Icon";
 import Following from "./Following/Following";
+import Share from "./Share/Share";
 
 export default function Modal() {
   const [modal, setModal] = useRecoilState(modalState);
@@ -22,6 +23,8 @@ export default function Modal() {
     switch (modal.type) {
       case "LOGIN":
         return <Login />;
+      case "SHARE":
+        return <Share {...modal.data} />;
       case "NICKNAME":
         return <Nickname />;
       case "FOLLOWER_LIST":
