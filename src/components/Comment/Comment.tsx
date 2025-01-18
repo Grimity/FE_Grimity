@@ -190,7 +190,7 @@ export default function Comment({ feedId, feedWriterId }: CommentProps) {
                 src={
                   userData.image !== "https://image.grimity.com/null"
                     ? userData.image
-                    : "/image/default-border.svg"
+                    : "/image/default.svg"
                 }
                 width={40}
                 height={40}
@@ -199,7 +199,7 @@ export default function Comment({ feedId, feedWriterId }: CommentProps) {
               />
             ) : (
               <Image
-                src="/image/default-border.svg"
+                src="/image/default.svg"
                 width={40}
                 height={40}
                 alt="프로필 이미지"
