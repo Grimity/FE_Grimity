@@ -8,7 +8,7 @@ import { useRecoilState } from "recoil";
 export default function Share({ feedId, title, image }: ShareBtnProps) {
   const { showToast } = useToast();
   const [, setModal] = useRecoilState(modalState);
-  const url = `https://grimity/feeds/${feedId}`;
+  const url = `https://www.grimity.com/feeds/${feedId}`;
 
   const copyToClipboard = async () => {
     try {
