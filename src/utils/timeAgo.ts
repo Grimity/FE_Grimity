@@ -1,4 +1,4 @@
-export function timeAgoOrFormattedDate(timestamp: Date): string {
+export function timeAgoOrFormattedDate(timestamp: string): string {
   try {
     const now = new Date();
     const past = new Date(timestamp);

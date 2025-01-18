@@ -6,7 +6,7 @@ import { authState } from "@/states/authState";
 import { useRecoilValue } from "recoil";
 import { useUserData } from "@/api/users/getId";
 import { usePostFeedsComments } from "@/api/feeds-comments/postFeedComments";
-import { useGetFeedsComments } from "@/api/feeds-comments/getFeedComments";
+import { FeedsCommentsResponse, useGetFeedsComments } from "@/api/feeds-comments/getFeedComments";
 import { CommentProps } from "./Comment.types";
 import { timeAgoOrFormattedDate } from "@/utils/timeAgo";
 import Dropdown from "../Dropdown/Dropdown";
@@ -23,7 +23,10 @@ export default function Comment({ feedId, feedWriterId }: CommentProps) {
   const [comment, setComment] = useState("");
   const [replyTo, setReplyTo] = useState<string | null>(null);
 
-  const { data: commentsData, refetch } = useGetFeedsComments({ feedId });
+  const { data: commentsData, refetch } = useGetFeedsComments({ feedId }) as {
+    data: FeedsCommentsResponse | undefined;
+    refetch: () => void;
+  };
   const postCommentMutation = usePostFeedsComments();
   const deleteCommentMutation = useMutation(deleteComments, {
     onSuccess: () => {
@@ -74,7 +77,7 @@ export default function Comment({ feedId, feedWriterId }: CommentProps) {
     return <div>로딩 중...</div>;
   }
 
-  const renderComment = (comment: any, isNested = false) => {
+  const renderComment = (comment: FeedsCommentsResponse["comments"][number], isNested = false) => {
     return (
       <div key={comment.id} className={`${styles.comment} ${isNested && styles.nestedComment}`}>
         {isNested && (
@@ -159,7 +162,9 @@ export default function Comment({ feedId, feedWriterId }: CommentProps) {
         {/* 답글이 있는 경우 */}
         {comment.childComments?.length > 0 && (
           <div className={styles.childComments}>
-            {comment.childComments.map((reply: any) => renderComment(reply, true))}
+            {comment.childComments.map((reply) =>
+              renderComment(reply as FeedsCommentsResponse["comments"][number], true)
+            )}
           </div>
         )}
       </div>
