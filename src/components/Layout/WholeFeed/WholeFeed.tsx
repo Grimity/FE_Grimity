@@ -1,13 +1,45 @@
-import { useFeeds } from "@/api/feeds/getFeeds";
+import { useInfiniteQuery } from "react-query";
+import { useInView } from "react-intersection-observer";
+import { useEffect } from "react";
 import Card from "./Card/Card";
 import styles from "./WholeFeed.module.scss";
+import { getFeeds, FeedsResponse } from "@/api/feeds/getFeeds";
+
+const ITEMS_PER_PAGE = 12;
 
 export default function WholeFeed() {
-  const { data, isLoading } = useFeeds({});
+  const { ref, inView } = useInView();
+
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useInfiniteQuery(
+    ["feeds"],
+    ({ pageParam = { lastCreatedAt: undefined, lastId: undefined } }) =>
+      getFeeds({
+        lastCreatedAt: pageParam.lastCreatedAt,
+        lastId: pageParam.lastId,
+      }),
+    {
+      getNextPageParam: (lastPage) => {
+        if (!lastPage || lastPage.length < ITEMS_PER_PAGE) return undefined;
+        const lastItem = lastPage[lastPage.length - 1];
+        return {
+          lastCreatedAt: lastItem.createdAt,
+          lastId: lastItem.id,
+        };
+      },
+    }
+  );
+
+  useEffect(() => {
+    if (inView && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
+
+  const allFeeds = data?.pages.flat() ?? [];
 
   return (
     <div className={styles.container}>
@@ -16,7 +48,7 @@ export default function WholeFeed() {
         <p className={styles.subtitle}>그리미티 작가들의 훌륭한 그림을 살펴보세요!</p>
       </div>
       <div className={styles.galleryGrid}>
-        {data?.map((feed) => (
+        {allFeeds.map((feed) => (
           <Card
             key={feed.id}
             isMain
@@ -30,6 +62,7 @@ export default function WholeFeed() {
             isLike={feed.isLike}
           />
         ))}
+        <div ref={ref} style={{ height: "10px", gridColumn: "1/-1" }} />
       </div>
     </div>
   );
