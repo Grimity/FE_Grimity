@@ -12,9 +12,10 @@ import { postPresignedUrl } from "@/api/aws/postPresigned";
 import Button from "../Button/Button";
 import { putProfileImage } from "@/api/users/putMeImage";
 import router from "next/router";
+import { deleteMyProfileImage } from "@/api/users/deleteMeImage";
 
 export default function ProfileEdit() {
-  const { data: myData, isLoading } = useMyData();
+  const { data: myData, isLoading, refetch } = useMyData();
   const [name, setName] = useState<string | null>(null);
   const [description, setDescription] = useState<string>("");
   const [links, setLinks] = useState<{ linkName: string; link: string }[]>([
@@ -37,7 +38,8 @@ export default function ProfileEdit() {
     onSuccess: () => {
       showToast("프로필 정보가 변경되었습니다!", "success");
       setNameError("");
-      router.push(`/users/${myData?.id}`);
+      refetch();
+      // router.push(`/users/${myData?.id}`);
     },
     onError: (error: AxiosError) => {
       showToast("오류가 발생했습니다. 다시 시도해주세요.", "error");
@@ -100,6 +102,22 @@ export default function ProfileEdit() {
     }
   };
 
+  const deleteImageMutation = useMutation(deleteMyProfileImage, {
+    onSuccess: () => {
+      showToast("프로필 이미지가 삭제되었습니다.", "success");
+      setProfileImage("/image/default.svg");
+      refetch();
+    },
+    onError: (error: AxiosError) => {
+      showToast("프로필 이미지 삭제에 실패했습니다.", "error");
+      console.error("Image delete error:", error);
+    },
+  });
+
+  const handleDeleteImage = () => {
+    deleteImageMutation.mutate();
+  };
+
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
     setName(inputValue);
@@ -154,36 +172,43 @@ export default function ProfileEdit() {
     <div className={styles.container}>
       {myData && (
         <div className={styles.profileContainer}>
-          <div className={styles.profileImage}>
-            <label htmlFor="upload-image">
-              {myData.image !== "https://image.grimity.com/null" ? (
-                <Image
-                  src={profileImage}
-                  width={80}
-                  height={80}
-                  alt="프로필 이미지"
-                  className={styles.image}
-                />
-              ) : (
-                <Image
-                  src="/image/default-card.svg"
-                  width={80}
-                  height={80}
-                  alt="프로필 이미지"
-                  className={styles.image}
-                />
-              )}
-              <div className={styles.imageLabel}>
-                <IconComponent name="profileEdit" width={30} height={30} alt="프로필 사진 편집" />
-              </div>
-            </label>
-            <input
-              id="upload-image"
-              type="file"
-              accept="image/*"
-              className={styles.hidden}
-              onChange={handleFileChange}
-            />
+          <div className={styles.imageBtn}>
+            <div className={styles.profileImage}>
+              <label htmlFor="upload-image">
+                {myData.image !== "https://image.grimity.com/null" ? (
+                  <Image
+                    src={profileImage}
+                    width={80}
+                    height={80}
+                    alt="프로필 이미지"
+                    className={styles.image}
+                  />
+                ) : (
+                  <Image
+                    src="/image/default.svg"
+                    width={80}
+                    height={80}
+                    alt="프로필 이미지"
+                    className={styles.image}
+                  />
+                )}
+                <div className={styles.imageLabel}>
+                  <IconComponent name="profileEdit" width={30} height={30} alt="프로필 사진 편집" />
+                </div>
+              </label>
+              <input
+                id="upload-image"
+                type="file"
+                accept="image/*"
+                className={styles.hidden}
+                onChange={handleFileChange}
+              />
+            </div>
+            {myData.image !== "https://image.grimity.com/null" && (
+              <Button size="s" type="tertiary" onClick={handleDeleteImage}>
+                사진 삭제
+              </Button>
+            )}
           </div>
           <div className={styles.listContainer}>
             <TextField
