@@ -13,6 +13,7 @@ import Dropdown from "../Dropdown/Dropdown";
 import { useToast } from "@/utils/useToast";
 import { deleteComments } from "@/api/feeds-comments/deleteFeedComment";
 import { useMutation } from "react-query";
+import Link from "next/link";
 
 export default function Comment({ feedId, feedWriterId }: CommentProps) {
   const { isLoggedIn, user_id } = useRecoilValue(authState);
@@ -90,31 +91,35 @@ export default function Comment({ feedId, feedWriterId }: CommentProps) {
           />
         )}
         <div className={styles.commentBox}>
-          {comment.writer.image !== "https://image.grimity.com/null" ? (
-            <Image
-              src={comment.writer.image}
-              width={28}
-              height={28}
-              alt="댓글 프로필"
-              className={styles.writerImage}
-            />
-          ) : (
-            <Image
-              src="/icon/comment-upload-disabled.svg"
-              width={28}
-              height={28}
-              alt="댓글 프로필"
-              className={styles.writerImage}
-            />
-          )}
+          <Link href={`/users/${comment.writer.id}`}>
+            {comment.writer.image !== "https://image.grimity.com/null" ? (
+              <Image
+                src={comment.writer.image}
+                width={28}
+                height={28}
+                alt="댓글 프로필"
+                className={styles.writerImage}
+              />
+            ) : (
+              <Image
+                src="/icon/comment-upload-disabled.svg"
+                width={28}
+                height={28}
+                alt="댓글 프로필"
+                className={styles.writerImage}
+              />
+            )}
+          </Link>
           <div className={styles.commentBody}>
             <div className={styles.writerReply}>
-              <div className={styles.writerName}>
-                {comment.writer.name}
-                {comment.writer.id === feedWriterId && (
-                  <span className={styles.ownerTag}>(작성자)</span>
-                )}
-              </div>
+              <Link href={`/users/${comment.writer.id}`}>
+                <div className={styles.writerName}>
+                  {comment.writer.name}
+                  {comment.writer.id === feedWriterId && (
+                    <span className={styles.ownerTag}>(작성자)</span>
+                  )}
+                </div>
+              </Link>
               {isLoggedIn && (
                 <div className={styles.replyBtnDropdown}>
                   {!isNested && (
