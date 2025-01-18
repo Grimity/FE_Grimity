@@ -17,9 +17,8 @@ import Link from "next/link";
 
 export default function Comment({ feedId, feedWriterId }: CommentProps) {
   const { isLoggedIn, user_id } = useRecoilValue(authState);
-  const { data: userData, isLoading } = isLoggedIn
-    ? useUserData(user_id)
-    : { data: null, isLoading: false };
+  const { data: userData, isLoading } = useUserData(isLoggedIn ? user_id : null);
+
   const { showToast } = useToast();
   const [comment, setComment] = useState("");
   const [replyTo, setReplyTo] = useState<string | null>(null);

@@ -32,6 +32,8 @@ export async function getUserInfo({ id }: UserInfoRequest): Promise<UserInfoResp
   }
 }
 
-export function useUserData(id: string) {
-  return useQuery<UserInfoResponse>(["userInfo", id], () => getUserInfo({ id }));
-}
+export const useUserData = (userId: string | null) => {
+  return useQuery(["userData", userId], () => getUserInfo({ id: userId! }), {
+    enabled: Boolean(userId),
+  });
+};

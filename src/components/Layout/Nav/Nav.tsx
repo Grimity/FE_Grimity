@@ -27,9 +27,9 @@ export default function Nav() {
       isLoggedIn: false,
       user_id: "",
     });
+    router.push("/");
     localStorage.removeItem("access_token");
     localStorage.removeItem("user_id");
-    router.push("/");
   };
 
   if (!mounted) {
