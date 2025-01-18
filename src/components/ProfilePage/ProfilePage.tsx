@@ -1,14 +1,50 @@
+import { useInfiniteQuery } from "react-query";
+import { useInView } from "react-intersection-observer";
+import { useEffect } from "react";
 import Profile from "./Profile/Profile";
 import styles from "./ProfilePage.module.scss";
 import IconComponent from "../Asset/Icon";
 import Card from "../Layout/WholeFeed/Card/Card";
 import { ProfilePageProps } from "./ProfilePage.types";
 import { useUserData } from "@/api/users/getId";
-import { useUserFeeds } from "@/api/users/getIdFeeds";
+import { getUserFeeds } from "@/api/users/getIdFeeds";
 
 export default function ProfilePage({ isMyProfile, id }: ProfilePageProps) {
   const { data: userData } = useUserData(id);
-  const { data: userFeeds } = useUserFeeds({ id });
+  const { ref, inView } = useInView();
+
+  const {
+    data: feedsData,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery(
+    ["userFeeds", id],
+    ({ pageParam = { lastCreatedAt: undefined, lastId: undefined } }) =>
+      getUserFeeds({
+        id,
+        lastCreatedAt: pageParam.lastCreatedAt,
+        lastId: pageParam.lastId,
+      }),
+    {
+      getNextPageParam: (lastPage) => {
+        if (!lastPage || lastPage.length < 12) return undefined;
+        const lastItem = lastPage[lastPage.length - 1];
+        return {
+          lastCreatedAt: lastItem.createdAt,
+          lastId: lastItem.id,
+        };
+      },
+    }
+  );
+
+  useEffect(() => {
+    if (inView && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
+
+  const allFeeds = feedsData?.pages.flat() ?? [];
 
   return (
     <div className={styles.container}>
@@ -26,21 +62,21 @@ export default function ProfilePage({ isMyProfile, id }: ProfilePageProps) {
             </div>
           </section>
           <section className={styles.cardContainer}>
-            {userFeeds
-              ? userFeeds.map((feed) => (
-                  <div key={feed.id}>
-                    <Card
-                      title={feed.title}
-                      cards={feed.cards || []}
-                      likeCount={feed.likeCount}
-                      commentCount={feed.commentCount}
-                      createdAt={feed.createdAt}
-                      id={feed.id}
-                    />
-                  </div>
-                ))
-              : null}
+            {allFeeds.map((feed) => (
+              <div key={feed.id}>
+                <Card
+                  title={feed.title}
+                  cards={feed.cards || []}
+                  likeCount={feed.likeCount}
+                  commentCount={feed.commentCount}
+                  createdAt={feed.createdAt}
+                  id={feed.id}
+                />
+              </div>
+            ))}
+            <div ref={ref} style={{ height: "10px" }} />
           </section>
+          {isFetchingNextPage && <div className={styles.loading}>Loading more...</div>}
         </div>
       </div>
     </div>
