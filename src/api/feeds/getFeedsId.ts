@@ -6,7 +6,7 @@ export interface DetailsResponse {
   title: string;
   cards: string[];
   isAI: boolean;
-  createdAt: Date;
+  createdAt: string;
   viewCount: number;
   likeCount: number;
   content: string;

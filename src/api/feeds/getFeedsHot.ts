@@ -5,7 +5,7 @@ export interface HotFeedResponse {
   id: string;
   title: string;
   cards: string[];
-  createdAt: Date;
+  createdAt: string;
   viewCount: number;
   likeCount: number;
   author: {

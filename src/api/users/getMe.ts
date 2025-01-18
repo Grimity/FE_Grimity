@@ -9,7 +9,7 @@ export interface MyInfoResponse {
   image: string;
   description: string;
   links: { linkName: string; link: string }[];
-  createdAt: Date;
+  createdAt: string;
   followerCount: number;
   followingCount: number;
 }

@@ -11,7 +11,7 @@ export interface FeedsResponse {
   id: string;
   title: string;
   cards: string[];
-  createdAt: Date;
+  createdAt: string;
   viewCount: number;
   likeCount: number;
   commentCount: number;
@@ -30,7 +30,7 @@ export async function getFeeds({
 }: FeedsRequest): Promise<FeedsResponse[]> {
   try {
     const response = await BASE_URL.get("/feeds", {
-      params: { tag, lastCreatedAt, lastId },
+      params: { tag, lastCreatedAt, lastId, limit: 12 },
     });
 
     const updatedData = response.data.map((data: FeedsResponse) => ({

@@ -10,6 +10,6 @@ export interface CardProps {
   };
   likeCount: number;
   commentCount: number;
-  createdAt: Date;
+  createdAt: string;
   isLike?: boolean;
 }
