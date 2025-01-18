@@ -43,6 +43,10 @@ export default function Comment({ feedId, feedWriterId }: CommentProps) {
     setReplyTo(commentId);
   };
 
+  const handleReport = () => {
+    showToast("신고 처리 로직 추가 필요합니다.", "success");
+  };
+
   const handleCommentDelete = async (id: string) => {
     deleteCommentMutation.mutate(id);
   };
@@ -124,15 +128,27 @@ export default function Comment({ feedId, feedWriterId }: CommentProps) {
                     </>
                   )}
 
-                  <Dropdown
-                    menuItems={[
-                      {
-                        label: "삭제하기",
-                        onClick: () => handleCommentDelete(comment.id),
-                        isDelete: true,
-                      },
-                    ]}
-                  />
+                  {comment.writer.id === user_id ? (
+                    <Dropdown
+                      menuItems={[
+                        {
+                          label: "삭제하기",
+                          onClick: () => handleCommentDelete(comment.id),
+                          isDelete: true,
+                        },
+                      ]}
+                    />
+                  ) : (
+                    <Dropdown
+                      menuItems={[
+                        {
+                          label: "신고하기",
+                          onClick: handleReport,
+                          isDelete: true,
+                        },
+                      ]}
+                    />
+                  )}
                 </div>
               )}
             </div>

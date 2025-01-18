@@ -51,6 +51,7 @@
       border-radius: 50px;
       overflow: hidden;
       flex-shrink: 0;
+      border: 1px solid $gray15;
     }
 
     .uploadBtn {
@@ -63,7 +64,7 @@
 .commentBox {
   width: 100%;
   display: flex;
-  gap: 4px;
+  gap: 8px;
   padding: 16px 0;
   border-bottom: 1px solid $gray10;
 
@@ -109,6 +110,7 @@
     border-radius: 50px;
     overflow: hidden;
     flex-shrink: 0;
+    border: 1px solid $gray15;
   }
 
   .replyBtnDropdown {
