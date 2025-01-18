@@ -102,7 +102,7 @@ export default function Comment({ feedId, feedWriterId }: CommentProps) {
               />
             ) : (
               <Image
-                src="/icon/comment-upload-disabled.svg"
+                src="/image/default.svg"
                 width={28}
                 height={28}
                 alt="댓글 프로필"
