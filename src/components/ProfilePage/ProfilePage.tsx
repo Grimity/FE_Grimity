@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
-import { useInfiniteQuery } from "react-query";
+import { useInfiniteQuery, useQueryClient } from "react-query";
 import { useUserData } from "@/api/users/getId";
 import { getUserFeeds } from "@/api/users/getIdFeeds";
 import Profile from "./Profile/Profile";
@@ -26,6 +26,9 @@ export default function ProfilePage({ isMyProfile, id }: ProfilePageProps) {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const { data: userData } = useUserData(id);
   const { ref, inView } = useInView();
+  const [feeds, setFeeds] = useState<any[]>([]);
+  const [pageIndex, setPageIndex] = useState(0);
+  const queryClient = useQueryClient();
 
   const {
     data: feedsData,
@@ -54,16 +57,37 @@ export default function ProfilePage({ isMyProfile, id }: ProfilePageProps) {
     }
   );
 
+  // Sort 변경 시 데이터 초기화, 인덱스를 0으로
+  useEffect(() => {
+    // 쿼리 데이터 리셋
+    queryClient.resetQueries(["userFeeds", id, sortBy]);
+
+    setPageIndex(0);
+    setFeeds([]);
+    refetch();
+  }, [sortBy, id, queryClient, refetch]);
+
   useEffect(() => {
     if (inView && hasNextPage) {
       fetchNextPage();
     }
   }, [inView, hasNextPage, fetchNextPage]);
 
+  // feedsData 업데이트 시 feeds 배열을 업데이트
+  useEffect(() => {
+    if (feedsData?.pages) {
+      const newFeeds = feedsData.pages.flatMap((page) => page.items);
+      if (pageIndex === 0) {
+        setFeeds(newFeeds);
+      } else {
+        setFeeds((prevFeeds) => [...prevFeeds, ...newFeeds]);
+      }
+    }
+  }, [feedsData, pageIndex]);
+
   const handleSortChange = (option: SortOption) => {
     setSortBy(option);
     setIsDropdownOpen(false);
-    refetch();
   };
 
   useEffect(() => {
@@ -79,7 +103,7 @@ export default function ProfilePage({ isMyProfile, id }: ProfilePageProps) {
     };
   }, []);
 
-  const allFeeds = feedsData?.pages.flatMap((page) => page.items) ?? [];
+  const allFeeds = feeds;
 
   return (
     <div className={styles.container}>
@@ -122,8 +146,8 @@ export default function ProfilePage({ isMyProfile, id }: ProfilePageProps) {
             </div>
           </section>
           <section className={styles.cardContainer}>
-            {allFeeds.map((feed) => (
-              <div key={feed.id}>
+            {allFeeds.map((feed, index) => (
+              <div key={`${feed.id}-${index}`}>
                 <Card
                   title={feed.title}
                   cards={feed.cards}
