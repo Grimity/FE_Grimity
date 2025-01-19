@@ -121,12 +121,12 @@ export default function Profile({ isMyProfile, id }: ProfileProps) {
             <div className={styles.rightContainer}>
               <div className={styles.followEdit}>
                 <div className={styles.follow}>
-                  <p className={styles.follower} onClick={handleFollowingModal}>
+                  <div className={styles.follower} onClick={handleFollowingModal}>
                     팔로잉
                     <p className={styles.followerColor}>
                       {formatCurrency(userData.followingCount)}
                     </p>
-                  </p>
+                  </div>
                   <p className={styles.follower} onClick={handleFollowerModal}>
                     팔로워
                     <p className={styles.followerColor}>{formatCurrency(userData.followerCount)}</p>
@@ -152,7 +152,7 @@ export default function Profile({ isMyProfile, id }: ProfileProps) {
               </div>
               <div className={styles.linkContainer}>
                 {userData.links.map(({ linkName, link }, index) => (
-                  <p key={index}>
+                  <div key={index}>
                     <a
                       href={link}
                       className={styles.link}
@@ -161,7 +161,7 @@ export default function Profile({ isMyProfile, id }: ProfileProps) {
                     >
                       🔗 {linkName}
                     </a>
-                  </p>
+                  </div>
                 ))}
               </div>
             </div>

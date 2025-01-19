@@ -53,10 +53,10 @@ export default function ProfilePage({ isMyProfile, id }: ProfilePageProps) {
         <div className={styles.bar} />
         <div className={styles.feedContainer}>
           <section className={styles.header}>
-            <h2 className={styles.title}>
+            <div className={styles.title}>
               {isMyProfile ? "나의 그림" : "전체 그림"}
               <p className={styles.feedCount}>{userData?.feedCount}</p>
-            </h2>
+            </div>
             <div className={styles.sort}>
               최신순 <IconComponent name="down" width={20} height={20} />
             </div>
