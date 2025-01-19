@@ -55,8 +55,15 @@ export default function Notifications({ onClose }: NotificationsProps) {
     }
   };
 
-  // 읽은 알림은 아래로, 안 읽은 알림은 위로
-  const sortedNotifications = data.sort((a, b) => (a.isRead ? 1 : -1)).slice(0, 50);
+  // 읽은 알림은 아래로, 안 읽은 알림은 최신 알림 순으로 정렬
+  const sortedNotifications = data
+    .sort((a, b) => {
+      if (a.isRead === b.isRead) {
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+      }
+      return a.isRead ? 1 : -1;
+    })
+    .slice(0, 50);
 
   return (
     <div className={styles.container}>
