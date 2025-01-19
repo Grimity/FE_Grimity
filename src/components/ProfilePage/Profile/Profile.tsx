@@ -127,10 +127,10 @@ export default function Profile({ isMyProfile, id }: ProfileProps) {
                       {formatCurrency(userData.followingCount)}
                     </p>
                   </div>
-                  <p className={styles.follower} onClick={handleFollowerModal}>
+                  <div className={styles.follower} onClick={handleFollowerModal}>
                     팔로워
                     <p className={styles.followerColor}>{formatCurrency(userData.followerCount)}</p>
-                  </p>
+                  </div>
                 </div>
                 {isLoggedIn ? (
                   isMyProfile ? (
