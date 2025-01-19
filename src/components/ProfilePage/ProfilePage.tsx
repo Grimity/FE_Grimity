@@ -1,13 +1,13 @@
-import { useInfiniteQuery } from "react-query";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
-import { useEffect, useState, useMemo } from "react";
+import { useInfiniteQuery } from "react-query";
+import { useUserData } from "@/api/users/getId";
+import { getUserFeeds } from "@/api/users/getIdFeeds";
 import Profile from "./Profile/Profile";
 import styles from "./ProfilePage.module.scss";
 import IconComponent from "../Asset/Icon";
 import Card from "../Layout/WholeFeed/Card/Card";
 import { ProfilePageProps } from "./ProfilePage.types";
-import { useUserData } from "@/api/users/getId";
-import { getUserFeeds } from "@/api/users/getIdFeeds";
 
 type SortOption = "latest" | "likes" | "views" | "oldest";
 
@@ -21,6 +21,7 @@ const sortOptions: { value: SortOption; label: string }[] = [
 export default function ProfilePage({ isMyProfile, id }: ProfilePageProps) {
   const [sortBy, setSortBy] = useState<SortOption>("latest");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const { data: userData } = useUserData(id);
   const { ref, inView } = useInView();
 
@@ -79,6 +80,19 @@ export default function ProfilePage({ isMyProfile, id }: ProfilePageProps) {
     });
   }, [allFeeds, sortBy]);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <div className={styles.container}>
       <div className={styles.center}>
@@ -90,7 +104,7 @@ export default function ProfilePage({ isMyProfile, id }: ProfilePageProps) {
               {isMyProfile ? "나의 그림" : "전체 그림"}
               <p className={styles.feedCount}>{userData?.feedCount}</p>
             </div>
-            <div className={styles.sortWrapper}>
+            <div className={styles.sortWrapper} ref={dropdownRef}>
               <div
                 className={styles.sortButton}
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
