@@ -3,9 +3,9 @@ import { useQuery } from "react-query";
 
 export interface UserFeedsRequest {
   id: string;
-  tag?: string;
-  lastCreatedAt?: string;
-  lastId?: string;
+  size?: number;
+  sort?: "latest" | "like" | "view" | "oldest";
+  index?: number;
 }
 
 export interface UserFeedsResponse {
@@ -19,18 +19,17 @@ export interface UserFeedsResponse {
 }
 
 export async function getUserFeeds({
-  tag,
   id,
-  lastCreatedAt,
-  lastId,
+  size,
+  sort,
+  index,
 }: UserFeedsRequest): Promise<UserFeedsResponse[]> {
   try {
     const response = await BASE_URL.get(`/users/${id}/feeds`, {
       params: {
-        tag,
-        lastCreatedAt,
-        lastId,
-        limit: 12,
+        sort,
+        index,
+        limit: size,
       },
     });
 
@@ -46,8 +45,8 @@ export async function getUserFeeds({
   }
 }
 
-export function useUserFeeds({ id, tag, lastCreatedAt, lastId }: UserFeedsRequest) {
-  return useQuery<UserFeedsResponse[]>(["userFeeds", id, tag, lastCreatedAt, lastId], () =>
-    getUserFeeds({ id, tag, lastCreatedAt, lastId })
+export function useUserFeeds({ id, sort, index, size }: UserFeedsRequest) {
+  return useQuery<UserFeedsResponse[]>(["userFeeds", id, sort, index, size], () =>
+    getUserFeeds({ id, sort, index, size })
   );
 }

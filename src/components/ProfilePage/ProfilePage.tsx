@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { useInfiniteQuery } from "react-query";
 import { useUserData } from "@/api/users/getId";
@@ -9,14 +9,16 @@ import IconComponent from "../Asset/Icon";
 import Card from "../Layout/WholeFeed/Card/Card";
 import { ProfilePageProps } from "./ProfilePage.types";
 
-type SortOption = "latest" | "likes" | "views" | "oldest";
+type SortOption = "latest" | "like" | "view" | "oldest";
 
 const sortOptions: { value: SortOption; label: string }[] = [
   { value: "latest", label: "최신 순" },
-  { value: "likes", label: "좋아요 순" },
-  { value: "views", label: "조회수 순" },
+  { value: "like", label: "좋아요 순" },
+  { value: "view", label: "조회수 순" },
   { value: "oldest", label: "오래된 순" },
 ];
+
+const PAGE_SIZE = 12;
 
 export default function ProfilePage({ isMyProfile, id }: ProfilePageProps) {
   const [sortBy, setSortBy] = useState<SortOption>("latest");
@@ -29,56 +31,40 @@ export default function ProfilePage({ isMyProfile, id }: ProfilePageProps) {
     data: feedsData,
     fetchNextPage,
     hasNextPage,
-    isFetchingNextPage,
+    refetch,
   } = useInfiniteQuery(
-    ["userFeeds", id],
-    ({ pageParam = { lastCreatedAt: undefined, lastId: undefined } }) =>
-      getUserFeeds({
+    ["userFeeds", id, sortBy],
+    async ({ pageParam = 0 }) => {
+      const data = await getUserFeeds({
         id,
-        lastCreatedAt: pageParam.lastCreatedAt,
-        lastId: pageParam.lastId,
-      }),
+        size: PAGE_SIZE,
+        sort: sortBy,
+        index: pageParam,
+      });
+      return { items: data, nextPage: pageParam + 1 };
+    },
     {
       getNextPageParam: (lastPage) => {
-        if (!lastPage || lastPage.length < 12) return undefined;
-        const lastItem = lastPage[lastPage.length - 1];
-        return {
-          lastCreatedAt: lastItem.createdAt,
-          lastId: lastItem.id,
-        };
+        if (!lastPage.items || lastPage.items.length < PAGE_SIZE) {
+          return undefined;
+        }
+        return lastPage.nextPage;
       },
+      keepPreviousData: true,
     }
   );
 
   useEffect(() => {
-    if (inView && hasNextPage && !isFetchingNextPage) {
+    if (inView && hasNextPage) {
       fetchNextPage();
     }
-  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
+  }, [inView, hasNextPage, fetchNextPage]);
 
   const handleSortChange = (option: SortOption) => {
     setSortBy(option);
     setIsDropdownOpen(false);
+    refetch();
   };
-
-  const allFeeds = feedsData?.pages.flat() ?? [];
-
-  const sortedFeeds = useMemo(() => {
-    return [...allFeeds].sort((a, b) => {
-      switch (sortBy) {
-        case "latest":
-          return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-        case "oldest":
-          return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-        case "likes":
-          return b.likeCount - a.likeCount;
-        case "views":
-          return b.viewCount - a.viewCount;
-        default:
-          return 0;
-      }
-    });
-  }, [allFeeds, sortBy]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -92,6 +78,8 @@ export default function ProfilePage({ isMyProfile, id }: ProfilePageProps) {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  const allFeeds = feedsData?.pages.flatMap((page) => page.items) ?? [];
 
   return (
     <div className={styles.container}>
@@ -134,11 +122,11 @@ export default function ProfilePage({ isMyProfile, id }: ProfilePageProps) {
             </div>
           </section>
           <section className={styles.cardContainer}>
-            {sortedFeeds.map((feed) => (
+            {allFeeds.map((feed) => (
               <div key={feed.id}>
                 <Card
                   title={feed.title}
-                  cards={feed.cards || []}
+                  cards={feed.cards}
                   likeCount={feed.likeCount}
                   commentCount={feed.commentCount}
                   createdAt={feed.createdAt}
@@ -146,9 +134,8 @@ export default function ProfilePage({ isMyProfile, id }: ProfilePageProps) {
                 />
               </div>
             ))}
-            <div ref={ref} style={{ height: "10px" }} />
+            <div ref={ref} />
           </section>
-          {isFetchingNextPage && <div className={styles.loading}>Loading more...</div>}
         </div>
       </div>
     </div>
