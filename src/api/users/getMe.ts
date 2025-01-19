@@ -12,6 +12,7 @@ export interface MyInfoResponse {
   createdAt: string;
   followerCount: number;
   followingCount: number;
+  hasNotification: boolean;
 }
 
 export async function getMyInfo(): Promise<MyInfoResponse> {

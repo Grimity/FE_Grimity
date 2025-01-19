@@ -1,0 +1,54 @@
+@import "@/styles/globals.scss";
+
+.container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 16px;
+  border-radius: 12px;
+  background-color: $white;
+  border: 1px solid $gray15;
+  transition: background-color 0.2s;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $gray10;
+  }
+
+  &:active {
+    background-color: $gray20;
+  }
+
+  &.read {
+    opacity: 0.4;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    .message {
+      display: inline;
+      @include H6MD;
+      color: $gray70;
+
+      .actorName {
+        color: $green50;
+        word-break: break-word;
+      }
+    }
+  }
+
+  .iconWrapper {
+    display: flex;
+    gap: 4px;
+  }
+
+  .date {
+    @include H7MD;
+    color: $gray30;
+  }
+}

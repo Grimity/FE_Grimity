@@ -26,6 +26,15 @@
     cursor: pointer;
   }
 
+  .notificationWrapper {
+    position: relative;
+
+    .notification {
+      cursor: pointer;
+      position: relative;
+    }
+  }
+
   .uploadBtn {
     &:hover {
       animation: pulse 0.6s ease-in-out;

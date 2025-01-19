@@ -53,6 +53,9 @@ export const ICONS = {
   heartFullDetail: "/icon/detail-heart-full.svg",
   viewCount: "/icon/view-count.svg",
   likeCount: "/icon/like-count.svg",
+  notiFollow: "/icon/noti-follow.svg",
+  notiLike: "/icon/noti-like.svg",
+  notiComment: "/icon/noti-comment.svg",
   /* Image */
   logo: "/image/logo.svg",
   banner: "/image/banner.svg",
