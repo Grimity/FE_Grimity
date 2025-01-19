@@ -22,6 +22,9 @@ import { useRouter } from "next/router";
 import Tooltip from "../Tooltip/Tooltip";
 import Comment from "../Comment/Comment";
 import ShareBtn from "./ShareBtn/ShareBtn";
+import { usePreventScroll } from "@/utils/usePreventScroll";
+import Zoom from "react-medium-image-zoom";
+import "react-medium-image-zoom/dist/styles.css";
 
 export default function Detail({ id }: DetailProps) {
   const { isLoggedIn, user_id } = useRecoilValue(authState);
@@ -33,7 +36,10 @@ export default function Detail({ id }: DetailProps) {
   const [currentLikeCount, setCurrentLikeCount] = useState(0);
   const [viewCounted, setViewCounted] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
+  const [overlayImage, setOverlayImage] = useState<string | null>(null);
   const router = useRouter();
+
+  usePreventScroll(!!overlayImage);
 
   useEffect(() => {
     if (!details) return;
@@ -122,6 +128,10 @@ export default function Detail({ id }: DetailProps) {
       setCurrentLikeCount((prev) => prev + 1);
     }
     setIsLiked(!isLiked);
+  };
+
+  const handleImageClick = (image: string) => {
+    setOverlayImage(image);
   };
 
   return (
@@ -223,6 +233,7 @@ export default function Detail({ id }: DetailProps) {
                     height={0}
                     layout="intrinsic"
                     className={styles.cardImage}
+                    onClick={() => handleImageClick(card)}
                   />
                   {index === 1 && details.cards.length > 2 && !isExpanded && (
                     <>
@@ -251,9 +262,27 @@ export default function Detail({ id }: DetailProps) {
                     height={0}
                     layout="intrinsic"
                     className={styles.cardImage}
+                    onClick={() => handleImageClick(card)}
                   />
                 </div>
               ))}
+            {overlayImage && (
+              <div className={styles.overlay} onClick={() => setOverlayImage(null)}>
+                <div className={styles.overlayContent}>
+                  <Zoom>
+                    <img
+                      src={overlayImage}
+                      alt="Zoomed Image"
+                      style={{
+                        height: "90vh",
+                        objectFit: "cover",
+                      }}
+                      onClick={(event) => event.stopPropagation()}
+                    />
+                  </Zoom>
+                </div>
+              </div>
+            )}
             <section className={styles.btnStats}>
               {showTooltip && (
                 <Tooltip
