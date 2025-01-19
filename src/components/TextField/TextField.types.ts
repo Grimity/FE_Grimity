@@ -1,4 +1,5 @@
 export interface TextFieldProps {
+  ref?: React.Ref<HTMLInputElement>;
   placeholder: string;
   label?: string;
   isError?: boolean;

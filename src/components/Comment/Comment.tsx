@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import TextField from "../TextField/TextField";
 import styles from "./Comment.module.scss";
 import Image from "next/image";
@@ -18,15 +18,17 @@ import Link from "next/link";
 export default function Comment({ feedId, feedWriterId }: CommentProps) {
   const { isLoggedIn, user_id } = useRecoilValue(authState);
   const { data: userData, isLoading } = useUserData(isLoggedIn ? user_id : null);
-
   const { showToast } = useToast();
+
   const [comment, setComment] = useState("");
-  const [replyTo, setReplyTo] = useState<string | null>(null);
+  const [activeReplyId, setActiveReplyId] = useState<string | null>(null);
+  const commentInputRef = useRef<HTMLInputElement>(null);
 
   const { data: commentsData, refetch } = useGetFeedsComments({ feedId }) as {
     data: FeedsCommentsResponse | undefined;
     refetch: () => void;
   };
+
   const postCommentMutation = usePostFeedsComments();
   const deleteCommentMutation = useMutation(deleteComments, {
     onSuccess: () => {
@@ -43,7 +45,7 @@ export default function Comment({ feedId, feedWriterId }: CommentProps) {
   };
 
   const handleReply = (commentId: string) => {
-    setReplyTo(commentId);
+    setActiveReplyId(activeReplyId === commentId ? null : commentId);
   };
 
   const handleReport = () => {
@@ -61,23 +63,31 @@ export default function Comment({ feedId, feedWriterId }: CommentProps) {
       {
         feedId,
         content: comment,
-        parentCommentId: replyTo ?? undefined,
+        parentCommentId: activeReplyId ?? undefined,
       },
       {
         onSuccess: () => {
           setComment("");
-          setReplyTo(null);
+          setActiveReplyId(null);
           refetch();
         },
       }
     );
   };
 
+  useEffect(() => {
+    if (activeReplyId && commentInputRef.current) {
+      commentInputRef.current.focus();
+    }
+  }, [activeReplyId]);
+
   if (isLoading) {
     return <div>로딩 중...</div>;
   }
 
   const renderComment = (comment: FeedsCommentsResponse["comments"][number], isNested = false) => {
+    const isReplyActive = activeReplyId === comment.id;
+
     return (
       <div key={comment.id} className={`${styles.comment} ${isNested && styles.nestedComment}`}>
         {isNested && (
@@ -122,17 +132,9 @@ export default function Comment({ feedId, feedWriterId }: CommentProps) {
               {isLoggedIn && (
                 <div className={styles.replyBtnDropdown}>
                   {!isNested && (
-                    <>
-                      {!replyTo ? (
-                        <button onClick={() => handleReply(comment.id)} className={styles.replyBtn}>
-                          답글
-                        </button>
-                      ) : (
-                        <button onClick={() => setReplyTo(null)} className={styles.replyBtn}>
-                          취소
-                        </button>
-                      )}
-                    </>
+                    <button onClick={() => handleReply(comment.id)} className={styles.replyBtn}>
+                      {isReplyActive ? "취소" : "답글"}
+                    </button>
                   )}
 
                   {comment.writer.id === user_id ? (
@@ -163,7 +165,6 @@ export default function Comment({ feedId, feedWriterId }: CommentProps) {
             <p className={styles.createdAt}>{timeAgoOrFormattedDate(comment.createdAt)}</p>
           </div>
         </div>
-        {/* 답글이 있는 경우 */}
         {comment.childComments?.length > 0 && (
           <div className={styles.childComments}>
             {comment.childComments.map((reply) =>
@@ -207,6 +208,7 @@ export default function Comment({ feedId, feedWriterId }: CommentProps) {
             )}
 
             <TextField
+              ref={commentInputRef}
               placeholder={isLoggedIn ? "댓글 입력하기" : "회원만 댓글 달 수 있어요!"}
               isComment
               value={comment}
@@ -237,11 +239,11 @@ export default function Comment({ feedId, feedWriterId }: CommentProps) {
               />
             )}
           </div>
-          {replyTo && (
+          {activeReplyId && (
             <div className={styles.replyIndicator}>
               <div className={styles.message}>
                 <p className={styles.messageGreen}>
-                  {commentsData?.comments.find((c) => c.id === replyTo)?.writer.name}
+                  {commentsData?.comments.find((c) => c.id === activeReplyId)?.writer.name}
                 </p>
                 에게 답글 다는 중
               </div>
