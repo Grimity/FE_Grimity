@@ -29,7 +29,7 @@ export async function getUserFeeds({
       params: {
         sort,
         index,
-        limit: size,
+        size: size,
       },
     });
 
