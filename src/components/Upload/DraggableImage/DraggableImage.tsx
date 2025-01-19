@@ -8,6 +8,7 @@ export default function DraggableImage({
   index,
   moveImage,
   removeImage,
+  totalImages,
 }: DraggableImageProps) {
   const [{ isDragging }, drag] = useDrag({
     type: "IMAGE",
@@ -32,6 +33,8 @@ export default function DraggableImage({
     drop(element);
   };
 
+  const imageWidth = totalImages >= 2 ? 200 : 420;
+
   return (
     <div
       ref={dragDropRef}
@@ -40,7 +43,7 @@ export default function DraggableImage({
     >
       <Image
         src={image.url}
-        width={200}
+        width={imageWidth}
         height={0}
         layout="intrinsic"
         alt="Uploaded"

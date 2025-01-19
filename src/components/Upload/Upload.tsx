@@ -167,6 +167,7 @@ export default function Upload() {
                         index={index}
                         moveImage={moveImage}
                         removeImage={removeImage}
+                        totalImages={images.length}
                       />
                     ))}
                   </div>

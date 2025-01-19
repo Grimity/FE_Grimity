@@ -3,4 +3,5 @@ export interface DraggableImageProps {
   index: number;
   moveImage: (dragIndex: number, hoverIndex: number) => void;
   removeImage: (index: number) => void;
+  totalImages: number;
 }
