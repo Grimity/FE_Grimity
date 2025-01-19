@@ -48,11 +48,12 @@ export default function Upload() {
 
       const requests = filesToUpload.map((file) => ({
         type: "feed" as const,
-        ext: file.name.split(".").pop()?.toLowerCase() as "jpg" | "jpeg" | "png",
+        ext: file.name.split(".").pop()?.toLowerCase() as "jpg" | "jpeg" | "png" | "gif",
       }));
 
       const invalidFiles = filesToUpload.some(
-        (file) => !["jpg", "jpeg", "png"].includes(file.name.split(".").pop()?.toLowerCase() || "")
+        (file) =>
+          !["jpg", "jpeg", "png", "gif"].includes(file.name.split(".").pop()?.toLowerCase() || "")
       );
 
       if (invalidFiles) {
@@ -150,7 +151,7 @@ export default function Upload() {
                 <p className={styles.stroke}>*</p>이미지 (0/10)
               </div>
               <p className={styles.description}>
-                jpg, jpeg, png / 파일 크기 무제한 / 최대 10장 업로드
+                jpg, jpeg, png, gif / 파일 크기 무제한 / 최대 10장 업로드
               </p>
               <DndProvider backend={HTML5Backend}>
                 <div>
@@ -184,7 +185,7 @@ export default function Upload() {
                 id="file-upload"
                 type="file"
                 multiple
-                accept="image/png, image/jpeg"
+                accept="image/png, image/jpeg, image/jpg, image/gif"
                 style={{ display: "none" }}
                 onChange={(e) => e.target.files && uploadImagesToServer(e.target.files)}
               />
