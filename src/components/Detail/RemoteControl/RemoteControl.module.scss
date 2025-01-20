@@ -2,24 +2,42 @@
 
 .remoteControl {
   position: fixed;
-  bottom: 96px;
-  right: 40px;
-  width: 50px;
+  left: 50%;
+  top: 150px;
+  transform: translateX(-260px);
+  transition: opacity 0.3s;
+  opacity: 1;
+  display: inline-flex;
+  padding: 16px 12px;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  border-radius: 40px;
+  border: 1px solid $gray15;
+  background-color: $gray10;
+}
+
+.likeContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
-  padding: 14px 0;
-  background-color: $white;
-  border-radius: 40px;
-  transition: opacity 0.3s;
-  opacity: 1;
+  gap: 4px;
+}
+
+.count {
+  @include H6MD;
+  color: $gray90;
 }
 
 .controlButton {
+  width: 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   outline: none;
   border: none;
   background: none;
+  border-radius: 50%;
   cursor: pointer;
 
   &:hover {

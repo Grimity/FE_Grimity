@@ -18,9 +18,9 @@ export default function ShareBtn({ feedId, title, image, isRemoteControl }: Shar
   return (
     <div className={styles.shareBtn} onClick={handleOpenShareModal}>
       <IconComponent
-        name="shareDetail"
-        width={isRemoteControl ? 50 : 40}
-        height={isRemoteControl ? 50 : 40}
+        name={isRemoteControl ? "remoteShare" : "shareDetail"}
+        width={isRemoteControl ? 36 : 40}
+        height={isRemoteControl ? 36 : 40}
       />
     </div>
   );

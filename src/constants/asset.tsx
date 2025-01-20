@@ -56,6 +56,9 @@ export const ICONS = {
   notiFollow: "/icon/noti-follow.svg",
   notiLike: "/icon/noti-like.svg",
   notiComment: "/icon/noti-comment.svg",
+  remoteShare: "/icon/remote-share.svg",
+  remoteLike: "/icon/remote-like.svg",
+  remoteLikeFull: "/icon/remote-likefull.svg",
   /* Image */
   logo: "/image/logo.svg",
   banner: "/image/banner.svg",

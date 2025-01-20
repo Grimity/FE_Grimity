@@ -154,16 +154,17 @@ export default function Detail({ id }: DetailProps) {
 
   return (
     <div className={styles.container}>
-      {isScrollAbove && (
-        <RemoteControl
-          isLiked={isLiked}
-          onLikeClick={handleLikeClick}
-          feedId={id}
-          title={details?.title ?? ""}
-          image={details?.cards[0] ?? ""}
-        />
-      )}
       <div className={styles.center}>
+        {isScrollAbove && (
+          <RemoteControl
+            isLiked={isLiked}
+            onLikeClick={handleLikeClick}
+            feedId={id}
+            title={details?.title ?? ""}
+            image={details?.cards[0] ?? ""}
+            likeCount={details?.likeCount ?? 0}
+          />
+        )}
         {details && (
           <>
             <section className={styles.profileContainer}>

@@ -44,7 +44,7 @@ export default function Layout({ children }: LayoutProps) {
             role="button"
             tabIndex={0}
           >
-            <IconComponent name="up" width={30} height={30} />
+            <IconComponent name="up" width={28} height={28} />
           </div>
         </div>
       ) : (
@@ -56,7 +56,7 @@ export default function Layout({ children }: LayoutProps) {
             role="button"
             tabIndex={0}
           >
-            <IconComponent name="up" width={30} height={30} />
+            <IconComponent name="up" width={28} height={28} />
           </div>
         </div>
       )}

@@ -4,4 +4,5 @@ export interface RemoteControlProps {
   feedId: string;
   title: string;
   image: string;
+  likeCount: number;
 }
