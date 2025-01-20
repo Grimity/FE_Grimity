@@ -6,11 +6,12 @@ import { FreeMode } from "swiper/modules";
 import HotCard from "./HotCard/HotCard";
 import styles from "./HotFeed.module.scss";
 import { useHotFeed } from "@/api/feeds/getFeedsHot";
+import Loader from "@/components/Layout/Loader/Loader";
 
 export default function HotFeed() {
   const { data: hotFeeds, isLoading } = useHotFeed();
 
-  if (isLoading) return <p>로딩 중...</p>;
+  if (isLoading) return <Loader />;
 
   return (
     <div className={styles.container}>

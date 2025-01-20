@@ -26,6 +26,7 @@ import { usePreventScroll } from "@/utils/usePreventScroll";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 import RemoteControl from "./RemoteControl/RemoteControl";
+import Loader from "../Layout/Loader/Loader";
 
 export default function Detail({ id }: DetailProps) {
   const { isLoggedIn, user_id } = useRecoilValue(authState);
@@ -90,7 +91,7 @@ export default function Detail({ id }: DetailProps) {
   }, []);
 
   if (isLoading) {
-    return <div>로딩 중...</div>;
+    return <Loader />;
   }
 
   const handleShowMore = () => {

@@ -9,6 +9,7 @@ import { authState } from "@/states/authState";
 import router from "next/router";
 import Image from "next/image";
 import { usePopular } from "@/api/users/getPopular";
+import Loader from "@/components/Layout/Loader/Loader";
 
 export default function Nav() {
   const [mounted, setMounted] = useState(false);
@@ -37,7 +38,7 @@ export default function Nav() {
   }
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   return (

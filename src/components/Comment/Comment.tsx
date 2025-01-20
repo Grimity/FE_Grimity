@@ -14,6 +14,7 @@ import { useToast } from "@/utils/useToast";
 import { deleteComments } from "@/api/feeds-comments/deleteFeedComment";
 import { useMutation } from "react-query";
 import Link from "next/link";
+import Loader from "../Layout/Loader/Loader";
 
 export default function Comment({ feedId, feedWriterId }: CommentProps) {
   const { isLoggedIn, user_id } = useRecoilValue(authState);
@@ -82,7 +83,7 @@ export default function Comment({ feedId, feedWriterId }: CommentProps) {
   }, [activeReplyId]);
 
   if (isLoading) {
-    return <div>로딩 중...</div>;
+    return <Loader />;
   }
 
   const renderComment = (comment: FeedsCommentsResponse["comments"][number], isNested = false) => {

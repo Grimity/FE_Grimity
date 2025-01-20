@@ -13,6 +13,7 @@ import Button from "../Button/Button";
 import { putProfileImage } from "@/api/users/putMeImage";
 import router from "next/router";
 import { deleteMyProfileImage } from "@/api/users/deleteMeImage";
+import Loader from "../Layout/Loader/Loader";
 
 export default function ProfileEdit() {
   const { data: myData, isLoading, refetch } = useMyData();
@@ -165,7 +166,7 @@ export default function ProfileEdit() {
   };
 
   if (isLoading || name === null) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   return (

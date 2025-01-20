@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import Card from "./Card/Card";
 import styles from "./WholeFeed.module.scss";
 import { getFeeds, FeedsResponse } from "@/api/feeds/getFeeds";
+import Loader from "@/components/Layout/Loader/Loader";
 
 const ITEMS_PER_PAGE = 12;
 
@@ -36,7 +37,7 @@ export default function WholeFeed() {
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   const allFeeds = data?.pages.flat() ?? [];
