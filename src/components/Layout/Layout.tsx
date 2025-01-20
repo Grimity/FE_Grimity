@@ -39,7 +39,7 @@ export default function Layout({ children }: LayoutProps) {
           <Nav />
           {children}
           <div
-            className={`${styles.topButton} ${isScrollAbove ? styles.show : ""}`}
+            className={`${styles.topButton} ${isScrollAbove && styles.show}`}
             onClick={scrollToTop}
             role="button"
             tabIndex={0}
@@ -51,7 +51,7 @@ export default function Layout({ children }: LayoutProps) {
         <div className={styles.hideChildren}>
           {children}
           <div
-            className={`${styles.topButton} ${isScrollAbove ? styles.show : ""}`}
+            className={`${styles.topButton} ${isScrollAbove && styles.show}`}
             onClick={scrollToTop}
             role="button"
             tabIndex={0}

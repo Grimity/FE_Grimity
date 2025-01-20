@@ -4,7 +4,7 @@ import IconComponent from "@/components/Asset/Icon";
 import styles from "./ShareBtn.module.scss";
 import { ShareBtnProps } from "./ShareBtn.types";
 
-export default function ShareBtn({ feedId, title, image }: ShareBtnProps) {
+export default function ShareBtn({ feedId, title, image, isRemoteControl }: ShareBtnProps) {
   const [, setModal] = useRecoilState(modalState);
 
   const handleOpenShareModal = () => {
@@ -17,7 +17,11 @@ export default function ShareBtn({ feedId, title, image }: ShareBtnProps) {
 
   return (
     <div className={styles.shareBtn} onClick={handleOpenShareModal}>
-      <IconComponent name="shareDetail" width={40} height={40} />
+      <IconComponent
+        name="shareDetail"
+        width={isRemoteControl ? 50 : 40}
+        height={isRemoteControl ? 50 : 40}
+      />
     </div>
   );
 }

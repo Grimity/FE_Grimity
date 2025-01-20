@@ -1,0 +1,34 @@
+@import "@/styles/globals.scss";
+
+.remoteControl {
+  position: fixed;
+  bottom: 96px;
+  right: 40px;
+  width: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 0;
+  background-color: $white;
+  border-radius: 40px;
+  transition: opacity 0.3s;
+  opacity: 1;
+}
+
+.controlButton {
+  outline: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+
+  &:hover {
+    animation: pulse 0.5s ease-in-out;
+  }
+}
+
+@media (max-width: 1280px) {
+  .remoteControl {
+    display: none;
+  }
+}

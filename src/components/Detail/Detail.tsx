@@ -25,6 +25,7 @@ import ShareBtn from "./ShareBtn/ShareBtn";
 import { usePreventScroll } from "@/utils/usePreventScroll";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
+import RemoteControl from "./RemoteControl/RemoteControl";
 
 export default function Detail({ id }: DetailProps) {
   const { isLoggedIn, user_id } = useRecoilValue(authState);
@@ -37,6 +38,7 @@ export default function Detail({ id }: DetailProps) {
   const [viewCounted, setViewCounted] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
   const [overlayImage, setOverlayImage] = useState<string | null>(null);
+  const [isScrollAbove, setIsScrollAbove] = useState(false);
   const router = useRouter();
 
   usePreventScroll(!!overlayImage);
@@ -70,6 +72,21 @@ export default function Detail({ id }: DetailProps) {
       setShowTooltip(true);
       localStorage.setItem("firstDetailVisit", "true");
     }
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 300) {
+        setIsScrollAbove(true);
+      } else {
+        setIsScrollAbove(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   if (isLoading) {
@@ -136,6 +153,15 @@ export default function Detail({ id }: DetailProps) {
 
   return (
     <div className={styles.container}>
+      {isScrollAbove && (
+        <RemoteControl
+          isLiked={isLiked}
+          onLikeClick={handleLikeClick}
+          feedId={id}
+          title={details?.title ?? ""}
+          image={details?.cards[0] ?? ""}
+        />
+      )}
       <div className={styles.center}>
         {details && (
           <>
