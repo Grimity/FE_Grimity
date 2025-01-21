@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import Button from "../Button/Button";
 import TextField from "../TextField/TextField";
 import styles from "./Upload.module.scss";
@@ -10,8 +10,7 @@ import router from "next/router";
 import { useMutation } from "react-query";
 import { FeedsRequest, FeedsResponse, postFeeds } from "@/api/feeds/postFeeds";
 import { AxiosError } from "axios";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import DraggableImage from "./DraggableImage/DraggableImage";
 
 export default function Upload() {
@@ -86,15 +85,19 @@ export default function Upload() {
     }
   };
 
-  const moveImage = useCallback((dragIndex: number, hoverIndex: number) => {
+  const onDragEnd = (result: DropResult) => {
+    if (!result.destination) return;
+
+    const sourceIndex = result.source.index;
+    const destinationIndex = result.destination.index;
+
     setImages((prevImages) => {
       const newImages = [...prevImages];
-      const draggedImage = newImages[dragIndex];
-      newImages.splice(dragIndex, 1);
-      newImages.splice(hoverIndex, 0, draggedImage);
+      const [removed] = newImages.splice(sourceIndex, 1);
+      newImages.splice(destinationIndex, 0, removed);
       return newImages;
     });
-  }, []);
+  };
 
   const removeImage = (index: number) => {
     setImages(images.filter((_, i) => i !== index));
@@ -153,25 +156,33 @@ export default function Upload() {
               <p className={styles.description}>
                 jpg, jpeg, png, gif / 파일 크기 무제한 / 최대 10장 업로드
               </p>
-              <DndProvider backend={HTML5Backend}>
+              <DragDropContext onDragEnd={onDragEnd}>
                 <div>
                   {images.length === 0 && (
                     <label htmlFor="file-upload" className={styles.uploadBtn}>
                       <Image src="/image/upload.svg" width={420} height={268} alt="그림 올리기" />
                     </label>
                   )}
-                  <div className={styles.imageContainer}>
-                    {images.map((image, index) => (
-                      <DraggableImage
-                        key={image.name}
-                        image={image}
-                        index={index}
-                        moveImage={moveImage}
-                        removeImage={removeImage}
-                        totalImages={images.length}
-                      />
-                    ))}
-                  </div>
+                  <Droppable droppableId="images" direction="horizontal">
+                    {(provided) => (
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.droppableProps}
+                        className={styles.imageContainer}
+                      >
+                        {images.map((image, index) => (
+                          <DraggableImage
+                            key={image.name}
+                            image={image}
+                            index={index}
+                            removeImage={removeImage}
+                            totalImages={images.length}
+                          />
+                        ))}
+                        {provided.placeholder}
+                      </div>
+                    )}
+                  </Droppable>
                   {images.length > 0 && images.length < 10 && (
                     <div className={styles.addBtnContainer}>
                       <label htmlFor="file-upload" className={styles.addImageBtn}>
@@ -180,7 +191,7 @@ export default function Upload() {
                     </div>
                   )}
                 </div>
-              </DndProvider>
+              </DragDropContext>
               <input
                 id="file-upload"
                 type="file"

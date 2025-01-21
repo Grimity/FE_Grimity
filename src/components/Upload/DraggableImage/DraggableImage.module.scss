@@ -9,3 +9,11 @@
   right: 8px;
   cursor: pointer;
 }
+
+.image {
+  cursor: grab;
+
+  &:active {
+    cursor: grabbing;
+  }
+}
