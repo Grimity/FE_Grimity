@@ -266,14 +266,10 @@ export default function Detail({ id }: DetailProps) {
                   {index === 1 && details.cards.length > 2 && !isExpanded && (
                     <>
                       <div className={styles.gradient} />
-                      <div
-                        onClick={handleShowMore}
-                        className={styles.showMore}
-                        role="button"
-                        tabIndex={0}
-                      >
-                        그림 더보기
-                        <IconComponent name="down" width={16} height={16} />
+                      <div onClick={handleShowMore} className={styles.showMore}>
+                        <Button size="s" type="primary">
+                          그림 더보기
+                        </Button>
                       </div>
                     </>
                   )}
